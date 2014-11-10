@@ -1,4 +1,4 @@
-/*
+﻿/*
  1. Record through Selenium IDE, that how we will take take screenshot from browserstack and save screenshot on system by click the download link.
  2. Copy the code provided from selenium IDE and paste into Intellij IDEA java class.
  Do some programming in java:-
@@ -166,15 +166,7 @@ public class HCL_Screens_BrowserStack {
         driver.findElement(By.id("screenshots")).clear();
         driver.findElement(By.id("screenshots")).sendKeys(url);
         driver.findElement(By.id("btnSnapshot")).click();
-        /*
-        TODO: Wait for some defined time for button to be clicked and if button not clicked in that time than call
-        TODO: a function for click the button.
-         */
 
-        /*
-        TODO: Wait for "Zipping" and if "Zipping" appear with "1 time out" text than call a function for again enter
-        TODO: click snapshot button through driver.
-         */
         // Driver will wait until text 'ZIPPING' not present at element by id 'zipper'.
         wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("zipper"), "ZIPPING"));
 
@@ -205,6 +197,7 @@ public class HCL_Screens_BrowserStack {
         // Loop will continue till the download process of files complete.
         for(;;) {
             // List only those files that have extension “.png” and “.jpg”.
+	    // TODO: FileNameFilter class.
             FilenameFilter fileNameFilter = new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String name) {
@@ -229,10 +222,6 @@ public class HCL_Screens_BrowserStack {
             // Returns the array of files of particular extensions.
             File[] listOfFiles = folder.listFiles(fileNameFilter);
 
-            /*
-            TODO: Wait for some defined time for 5 snapshot and if 5 snapshot not downloaded in that time than
-            TODO: call a function for again click the download link of image that not created through driver.
-            */
             // If any file have "crdownload" text in name, it means download process not complete.
             if(listOfFiles.length == 5) {
                 int flag = 1;
