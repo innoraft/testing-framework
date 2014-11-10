@@ -1,5 +1,6 @@
 /**
- *Test will performed on a phantomJS browser through phantomJS driver. Test will be  *headless means without GUI.
+ * In these program, Test will performed on a phantomJS browser through phantomJS driver. 
+ * Test will be headless means without GUI.
  */
 
 package Headless;

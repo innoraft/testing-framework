@@ -1,3 +1,9 @@
+/**
+ * In these program, fetch the values from excel file in 2-D array than with these values perform the testing
+ * on websites and after that result will be stored in excel file. Result will be stored opposite to those values 
+ * for which testing performed.
+ */
+
 package Selenium;
 
 import org.apache.poi.ss.usermodel.*;
