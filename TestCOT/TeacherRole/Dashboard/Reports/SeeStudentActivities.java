@@ -5,6 +5,8 @@ package TestCOT.TeacherRole.Dashboard.Reports;
  */
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
+
+import TestCOT.Common.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -23,11 +25,16 @@ public class SeeStudentActivities {
         driver = new FirefoxDriver();
         baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.get(baseUrl + "/");
     }
 
     @Test
     public void testSeeStudentActivities() throws Exception {
+        Functions func = new Functions(driver);
+        func.CheckLogin();
+        func.LoginRole("Teacher");
         driver.get(baseUrl + "/teacher-reports");
+
         driver.findElement(By.linkText("Student Activities")).click();
         driver.findElement(By.id("edit-combine-1")).clear();
         driver.findElement(By.id("edit-combine-1")).sendKeys("paul");

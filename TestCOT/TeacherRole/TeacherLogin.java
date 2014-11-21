@@ -5,6 +5,8 @@ package TestCOT.TeacherRole;
  */
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
+
+import TestCOT.Common.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -23,18 +25,14 @@ public class TeacherLogin {
         driver = new FirefoxDriver();
         baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.get(baseUrl + "/");
     }
 
     @Test
     public void testTeacherLogin() throws Exception {
-        driver.get(baseUrl + "/");
-        driver.findElement(By.linkText("Log In")).click();
-        driver.findElement(By.xpath("//div[@id='page-wrapper']/div/div[2]/div/div/div/div/div/div/ul/li[9]")).click();
-        driver.findElement(By.id("edit-name")).clear();
-        driver.findElement(By.id("edit-name")).sendKeys("mukesh.agarwal@gmail.com");
-        driver.findElement(By.id("edit-pass")).clear();
-        driver.findElement(By.id("edit-pass")).sendKeys("password");
-        driver.findElement(By.id("edit-submit--7")).click();
+        Functions func = new Functions(driver);
+        func.CheckLogin();
+        func.LoginRole("Teacher");
     }
 
     @After

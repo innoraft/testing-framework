@@ -5,6 +5,8 @@ package TestCOT.StudentRole.Iplan;
  */
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
+
+import TestCOT.Common.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -15,48 +17,81 @@ import org.openqa.selenium.support.ui.Select;
 public class AddCoursesInIplan {
     private WebDriver driver;
     private String baseUrl;
+    private int Max = 10;
+    private int IntegerValue = 0;
+    private String[] Tracking = null;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/student-planner";
+        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.get(baseUrl + "/");
     }
 
     @Test
     public void testAddCoursesInIplan() throws Exception {
-        driver.get(baseUrl + "/student-planner");
-        driver.findElement(By.id("nav-group-home")).click();
-        driver.findElement(By.linkText("iPlan")).click();
-        driver.findElement(By.linkText("iPlan")).click();
+        Functions func = new Functions(driver);
+        func.CheckLogin();
+        func.LoginRole("Student");
+        driver.get(baseUrl + "/student-planner?track=891361");
+
+        // Click Add To Planner
+        // Add Course To Planner
         driver.findElement(By.linkText("Add to Planner")).click();
-        driver.findElement(By.id("grade-12")).click();
-        driver.findElement(By.xpath("(//input[@name='semester'])[2]")).click();
-        driver.findElement(By.id("edit-submit")).click();
-        driver.findElement(By.id("subject-social_science")).click();
-        driver.findElement(By.id("grade-9")).click();
+        // Click Grade
         driver.findElement(By.id("grade-11")).click();
+        // Click Duration
+        driver.findElement(By.xpath("(//input[@name='semester'])[2]")).click();
+        // Click Save
         driver.findElement(By.id("edit-submit")).click();
-        driver.findElement(By.linkText("Home")).click();
+        // Add Another Course To Planner
+        // Click Subject
+        driver.findElement(By.id("subject-social_science")).click();
+        // Click Grade
+        driver.findElement(By.id("grade-10")).click();
+        driver.findElement(By.id("grade-12")).click();
+        // Click Save
+        driver.findElement(By.xpath("//div[@id='edit-actions']/input")).click();
+
+        // Click Home
+        driver.findElement(By.xpath("//div[@id='nav-group-home']")).click();
+        // Click IPlan
         driver.findElement(By.linkText("iPlan")).click();
-        driver.findElement(By.linkText("iPlan")).click();
+
+        // Click Plan Approvals
         driver.findElement(By.cssSelector("span.course-acceptance-link")).click();
+        // Close Plan Approvals
         driver.findElement(By.cssSelector("div.close-button > img")).click();
-        driver.findElement(By.linkText("Accept")).click();
+        // Click Accept
+        driver.findElement(By.linkText("ACCEPT")).click();
+        // Click Plan Approvals
         driver.findElement(By.cssSelector("span.course-acceptance-link")).click();
+        // Close Plan Approvals
         driver.findElement(By.cssSelector("div.close-button > img")).click();
+
+        // Click Add External Courses
         driver.findElement(By.linkText("Add External Courses")).click();
+        // Select Subject
         new Select(driver.findElement(By.id("edit-subjects-list"))).selectByVisibleText("Mathematics");
+        // Enter Course Name
         driver.findElement(By.id("edit-course-name")).clear();
-        driver.findElement(By.id("edit-course-name")).sendKeys("complex number");
+        Tracking = func.RandomWords(2);
+        driver.findElement(By.id("edit-course-name")).sendKeys(Tracking[0] + " " + Tracking[1]);
+        // Select Grade
         new Select(driver.findElement(By.id("edit-grade"))).selectByVisibleText("9");
+        // Enter Course Credits
         driver.findElement(By.id("edit-course-credits")).clear();
-        driver.findElement(By.id("edit-course-credits")).sendKeys("12");
+        IntegerValue = func.RandomIntegerNumber(Max);
+        driver.findElement(By.id("edit-course-credits")).sendKeys(String.valueOf(IntegerValue));
+        // Select Duration
         new Select(driver.findElement(By.id("edit-duration"))).selectByVisibleText("Second Semester");
+        // Click Submit Button
+        driver.findElement(By.xpath("//*[@id=\"edit-submit-1416487385\"]")).click();
+        // Click PDF Link
         driver.findElement(By.linkText("print")).click();
-        driver.findElement(By.cssSelector("b")).click();
     }
 
     @After
@@ -102,3 +137,4 @@ public class AddCoursesInIplan {
     }
 }
 
+// How to write code for submit button

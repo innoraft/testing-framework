@@ -5,6 +5,8 @@ package TestCOT.StudentRole.CollegeApp;
  */
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
+
+import TestCOT.Common.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -23,13 +25,15 @@ public class GoToCollegeApp {
         driver = new FirefoxDriver();
         baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.get(baseUrl + "/");
     }
 
     @Test
     public void testGoToCollegeApp() throws Exception {
-        driver.get(baseUrl + "/");
-        driver.findElement(By.linkText("Home")).click();
-        driver.findElement(By.linkText("Colleges")).click();
+        Functions func = new Functions(driver);
+        func.CheckLogin();
+        func.LoginRole("Student");
+        driver.findElement(By.xpath("//div[@id='nav-group-home']")).click();
         driver.findElement(By.linkText("Colleges")).click();
     }
 

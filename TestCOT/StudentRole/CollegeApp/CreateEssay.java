@@ -5,6 +5,8 @@ package TestCOT.StudentRole.CollegeApp;
  */
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
+
+import TestCOT.Common.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -15,6 +17,8 @@ import org.openqa.selenium.support.ui.Select;
 public class CreateEssay {
     private WebDriver driver;
     private String baseUrl;
+    private String[] Tracking = null;
+    private String TrackingValues = "";
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
@@ -23,24 +27,43 @@ public class CreateEssay {
         driver = new FirefoxDriver();
         baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.get(baseUrl + "/");
     }
 
     @Test
     public void testCreateEssay() throws Exception {
+        Functions func = new Functions(driver);
+        func.CheckLogin();
+        func.LoginRole("Student");
         driver.get(baseUrl + "/college-search");
-        driver.findElement(By.linkText("Essays")).click();
-        driver.findElement(By.linkText("Essays")).click();
-        driver.findElement(By.linkText("Create your first essay")).click();
+
+        driver.findElement(By.linkText("ESSAYS")).click();
+        driver.findElement(By.linkText("ESSAYS")).click();
+
+        if(isElementPresent(By.linkText("Create Your First Essay"))) {
+            driver.findElement(By.linkText("Create Your First Essay")).click();
+        } else if (isElementPresent(By.linkText("Add Essay Topic"))) {
+            driver.findElement(By.linkText("Add Essay Topic")).click();
+        }
+
         new Select(driver.findElement(By.id("edit-field-essay-type-und"))).selectByVisibleText("Scholarship");
         driver.findElement(By.id("edit-field-essay-university-und-0-value")).clear();
-        driver.findElement(By.id("edit-field-essay-university-und-0-value")).sendKeys("mnit");
+        Tracking = func.RandomWords(1);
+        driver.findElement(By.id("edit-field-essay-university-und-0-value")).sendKeys(Tracking[0]);
         driver.findElement(By.id("edit-body-und-0-value")).clear();
-        driver.findElement(By.id("edit-body-und-0-value")).sendKeys("good university");
+        Tracking = func.RandomWords(2);
+        driver.findElement(By.id("edit-body-und-0-value")).sendKeys(Tracking[0] + " " + Tracking[1]);
         driver.findElement(By.linkText("+")).click();
-        driver.findElement(By.cssSelector("html.CSS1Compat")).click();
+        driver.findElement(By.id("cke_8_label")).click();
+        driver.findElement(By.cssSelector("textarea.cke_source.cke_enable_context_menu")).clear();
+        Tracking = func.RandomWords(8);
+        for(int i= 0 ; i < Tracking.length ; i++) {
+            TrackingValues = TrackingValues + " " + Tracking[i];
+        }
+        driver.findElement(By.cssSelector("textarea.cke_source.cke_enable_context_menu")).sendKeys("<p>" + TrackingValues + " </p>");
         driver.findElement(By.id("edit-save-temp")).click();
-        driver.findElement(By.linkText("Essays")).click();
-        driver.findElement(By.linkText("Essays")).click();
+        driver.findElement(By.linkText("ESSAYS")).click();
+        driver.findElement(By.linkText("ESSAYS")).click();
     }
 
     @After

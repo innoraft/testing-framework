@@ -5,6 +5,8 @@ package TestCOT.StudentRole.Iplan;
  */
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
+
+import TestCOT.Common.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -23,20 +25,23 @@ public class AddCourseRequest {
         driver = new FirefoxDriver();
         baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.get(baseUrl + "/");
     }
 
     @Test
     public void testAddCourseRequest() throws Exception {
+        Functions func = new Functions(driver);
+        func.CheckLogin();
+        func.LoginRole("Student");
         driver.get(baseUrl + "/student-planner?track=891361");
-        driver.findElement(By.linkText("Course Planner")).click();
-        driver.findElement(By.linkText("Course Planner")).click();
+
+        driver.findElement(By.linkText("COURSE PLANNER")).click();
         driver.findElement(By.linkText("Add Class")).click();
         driver.findElement(By.id("subject-social_science")).click();
         driver.findElement(By.id("grade-9")).click();
         driver.findElement(By.id("grade-12")).click();
         driver.findElement(By.id("edit-submit")).click();
         driver.findElement(By.id("subject-foreign_languages")).click();
-        driver.findElement(By.id("grade-9")).click();
         driver.findElement(By.id("grade-9")).click();
         driver.findElement(By.id("edit-submit")).click();
         driver.findElement(By.id("grade-9")).click();

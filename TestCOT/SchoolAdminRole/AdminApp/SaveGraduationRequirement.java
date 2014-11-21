@@ -18,7 +18,7 @@ public class SaveGraduationRequirement {
     private WebDriver driver;
     private String baseUrl;
     private String[] Tracking = null;
-    private String TrackingValues = null;
+    private String TrackingValues = "";
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 

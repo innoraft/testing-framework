@@ -5,32 +5,41 @@ package TestCOT.TeacherRole.Messages;
  */
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
+
+import TestCOT.Common.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class GoToMessageApp {
     private WebDriver driver;
     private String baseUrl;
+    private WebDriverWait wait;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
+        wait = new WebDriverWait(driver, 400);
         baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.get(baseUrl + "/");
     }
 
     @Test
     public void testGoToMessageApp() throws Exception {
-        driver.get(baseUrl + "/");
+        Functions func = new Functions(driver);
+        func.CheckLogin();
+        func.LoginRole("Teacher");
         driver.findElement(By.id("nav-group-home")).click();
         driver.findElement(By.linkText("Messages (1 new)")).click();
-        driver.findElement(By.linkText("Messages (1 new)")).click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText("BROADCAST")));
     }
 
     @After

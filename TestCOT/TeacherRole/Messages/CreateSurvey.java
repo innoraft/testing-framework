@@ -5,6 +5,8 @@ package TestCOT.TeacherRole.Messages;
  */
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
+
+import TestCOT.Common.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -15,6 +17,8 @@ import org.openqa.selenium.support.ui.Select;
 public class CreateSurvey {
     private WebDriver driver;
     private String baseUrl;
+    private String[] Tracking = null;
+    private String TrackingValues = null;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
@@ -23,16 +27,24 @@ public class CreateSurvey {
         driver = new FirefoxDriver();
         baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.get(baseUrl + "/");
     }
 
     @Test
     public void testCreateSurvey() throws Exception {
+        Functions func = new Functions(driver);
+        func.CheckLogin();
+        func.LoginRole("Teacher");
         driver.get(baseUrl + "/messages");
-        driver.findElement(By.linkText("Survey")).click();
-        driver.findElement(By.linkText("Survey")).click();
-        driver.findElement(By.linkText("Create Survey")).click();
+
+        driver.findElement(By.linkText("SURVEY")).click();
+        driver.findElement(By.linkText("CREATE SURVEY")).click();
         driver.findElement(By.id("edit-survey-title")).clear();
-        driver.findElement(By.id("edit-survey-title")).sendKeys("at what time he does his homework");
+        Tracking = func.RandomWords(7);
+        for(int i= 0 ; i < Tracking.length ; i++) {
+            TrackingValues = TrackingValues + " " + Tracking[i];
+        }
+        driver.findElement(By.id("edit-survey-title")).sendKeys(TrackingValues);
         driver.findElement(By.id("edit-new")).click();
         driver.findElement(By.linkText("Configure")).click();
         driver.findElement(By.id("edit-title")).clear();
@@ -115,3 +127,5 @@ public class CreateSurvey {
         }
     }
 }
+
+// Write code for drag and drop of element.

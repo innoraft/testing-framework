@@ -25,7 +25,7 @@ public class SignupStudent {
     @Test
     public void testSignupStudent() throws Exception {
         driver.get(baseUrl + "/");
-        driver.findElement(By.linkText("sign up")).click();
+        driver.findElement(By.linkText("SIGN UP")).click();
         driver.findElement(By.id("edit-lookup")).clear();
         driver.findElement(By.id("edit-lookup")).sendKeys("282010");
         driver.findElement(By.id("edit-lookup-submit")).click();

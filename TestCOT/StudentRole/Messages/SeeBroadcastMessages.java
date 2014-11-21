@@ -5,6 +5,8 @@ package TestCOT.StudentRole.Messages;
  */
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
+
+import TestCOT.Common.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -23,21 +25,31 @@ public class SeeBroadcastMessages {
         driver = new FirefoxDriver();
         baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.get(baseUrl + "/");
     }
 
     @Test
     public void testSeeBroadcastMessages() throws Exception {
+        Functions func = new Functions(driver);
+        func.CheckLogin();
+        func.LoginRole("Student");
         driver.get(baseUrl + "/messages");
-        driver.findElement(By.linkText("Broadcast")).click();
-        driver.findElement(By.linkText("Broadcast")).click();
+
+        // Click Broadcast
+        driver.findElement(By.linkText("BROADCAST")).click();
+        // Click Subject
         driver.findElement(By.cssSelector("a.use-ajax.ajax-processed")).click();
+        // Close Subject
         driver.findElement(By.cssSelector("span.close-button > img")).click();
+
+        // Remove Subject
         driver.findElement(By.linkText("Remove")).click();
+        // Click No button
         driver.findElement(By.xpath("(//button[@type='button'])[5]")).click();
+        // Remove Subject
         driver.findElement(By.linkText("Remove")).click();
-        driver.findElement(By.xpath("//div[7]/div/a/span")).click();
-        driver.findElement(By.linkText("Remove")).click();
-        driver.findElement(By.xpath("(//button[@type='button'])[5]")).click();
+        // Click Yes Subject
+        driver.findElement(By.xpath("(//button[@type='button'])[4]")).click();
     }
 
     @After
@@ -83,3 +95,4 @@ public class SeeBroadcastMessages {
     }
 }
 
+// Send message by school admin or teacher to test.

@@ -70,9 +70,21 @@ public class Functions {
         driver.findElement(By.id("edit-submit--7")).click();
     }
 
+    public int RandomIntegerNumberBetweenRange(int Max, int Min) throws IOException {
+        Random random = new Random();
+        int number = random.nextInt(Max - Min) + 6;
+        return number;
+    }
+
     public int RandomIntegerNumber(int Max) throws IOException {
         Random random = new Random();
         int number = random.nextInt(Max) + 1;
+        return number;
+    }
+
+    public int RandomPercentage() throws IOException {
+        Random random = new Random();
+        int number = random.nextInt(10) * 10;
         return number;
     }
 

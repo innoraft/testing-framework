@@ -5,6 +5,8 @@ package TestCOT.StudentRole.Messages;
  */
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
+
+import TestCOT.Common.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -23,13 +25,17 @@ public class ReplyToSurvey {
         driver = new FirefoxDriver();
         baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.get(baseUrl + "/");
     }
 
     @Test
     public void testReplyToSurvey() throws Exception {
+        Functions func = new Functions(driver);
+        func.CheckLogin();
+        func.LoginRole("Student");
         driver.get(baseUrl + "/messages");
-        driver.findElement(By.linkText("Survey")).click();
-        driver.findElement(By.linkText("Survey")).click();
+
+        driver.findElement(By.linkText("SURVEY")).click();
         driver.findElement(By.linkText("at what time he does his homework")).click();
         driver.findElement(By.id("edit-new-1415714436558-two")).click();
         new Select(driver.findElement(By.id("edit-new-1415714439254"))).selectByVisibleText("3 PM");

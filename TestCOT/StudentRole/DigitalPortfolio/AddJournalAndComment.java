@@ -3,51 +3,84 @@ package TestCOT.StudentRole.DigitalPortfolio;
 /**
  * Created by om on 11/12/2014.
  */
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
+import java.sql.Driver;
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
+
+import TestCOT.Common.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AddJournalAndComment {
     private WebDriver driver;
     private String baseUrl;
+    private WebDriverWait wait;
+    private String[] Tracking = null;
+    private String TrackingValues = "";
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
+        wait = new WebDriverWait(driver, 100);
         baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.get(baseUrl + "/");
     }
 
     @Test
     public void testAddJournalAndComment() throws Exception {
-        driver.findElement(By.linkText("Journal")).click();
-        driver.findElement(By.linkText("Journal")).click();
+        Functions func = new Functions(driver);
+        func.CheckLogin();
+        func.LoginRole("Student");
+        driver.get(baseUrl + "/journals");
+
+        driver.findElement(By.linkText("JOURNAL")).click();
+        // Create journal entry
         driver.findElement(By.linkText("New Journal Entry")).click();
+        // Enter Title
         driver.findElement(By.id("edit-title")).clear();
-        driver.findElement(By.id("edit-title")).sendKeys("visit pune");
-        driver.findElement(By.cssSelector("html.CSS1Compat")).click();
+        Tracking = func.RandomWords(2);
+        driver.findElement(By.id("edit-title")).sendKeys(Tracking[0] + " " + Tracking[1]);
+        // Fill CKEditor
+        driver.findElement(By.id("cke_83_label")).click();
+        driver.findElement(By.cssSelector("textarea.cke_source.cke_enable_context_menu")).clear();
+        Tracking = func.RandomWords(8);
+        for(int i= 0 ; i < Tracking.length ; i++) {
+            TrackingValues = TrackingValues + " " + Tracking[i];
+        }
+        driver.findElement(By.cssSelector("textarea.cke_source.cke_enable_context_menu")).sendKeys("<p>" + TrackingValues + " </p>");
+        // Upload file
         driver.findElement(By.id("botr-upload-button")).click();
-        driver.findElement(By.name("file")).clear();
-        driver.findElement(By.name("file")).sendKeys("/home/akash/Videos/Andaman & Nicobar Islands(2 sec video)-BzosVry7nc4.mp4");
-        driver.findElement(By.cssSelector("p > input[name=\"title\"]")).clear();
-        driver.findElement(By.cssSelector("p > input[name=\"title\"]")).sendKeys("pune visit");
-        driver.findElement(By.cssSelector("input.botr-upload-submit.form-submit")).click();
+        driver.findElement(By.className("botr-upload-file")).sendKeys("C:\\Users\\om\\Downloads\\Andaman & Nicobar Islands(2 sec video)-BzosVry7nc4.mp4");
+        driver.findElement(By.xpath("//input[@value='Upload']")).click();
+        // Wait for upload
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.botr-close > img")));
+        // Save journal entry
         driver.findElement(By.id("edit-submit")).click();
+        // Click Add New Comment
         driver.findElement(By.id("comment-add")).click();
         driver.findElement(By.id("edit-comment-body-und-0-value")).clear();
-        driver.findElement(By.id("edit-comment-body-und-0-value")).sendKeys("nice trip ;)");
+        Tracking = func.RandomWords(2);
+        driver.findElement(By.id("edit-comment-body-und-0-value")).sendKeys(Tracking[0] + " " + Tracking[1]);
         driver.findElement(By.id("edit-submit")).click();
-        driver.findElement(By.id("comment-count-891401")).click();
+        // Click 2 Comment
+        driver.findElement(By.className("comment-count")).click();
+        // Click Add New Comment
         driver.findElement(By.id("comment-add")).click();
         driver.findElement(By.id("edit-comment-body-und-0-value")).clear();
-        driver.findElement(By.id("edit-comment-body-und-0-value")).sendKeys("nice...");
+        Tracking = func.RandomWords(2);
+        driver.findElement(By.id("edit-comment-body-und-0-value")).sendKeys(Tracking[0] + " " + Tracking[1]);
         driver.findElement(By.id("edit-submit")).click();
     }
 
@@ -93,4 +126,3 @@ public class AddJournalAndComment {
         }
     }
 }
-

@@ -5,6 +5,8 @@ package TestCOT.TeacherRole.Dashboard;
  */
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
+
+import TestCOT.Common.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -23,10 +25,14 @@ public class ScholarshipWishlist {
         driver = new FirefoxDriver();
         baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.get(baseUrl + "/");
     }
 
     @Test
     public void testScholarshipWishlist() throws Exception {
+        Functions func = new Functions(driver);
+        func.CheckLogin();
+        func.LoginRole("Teacher");
         driver.get(baseUrl + "/students-dashboard/75486");
         driver.findElement(By.xpath("(//a[contains(text(),'Scholarships')])[2]")).click();
         driver.findElement(By.linkText("Remove from Wish List")).click();

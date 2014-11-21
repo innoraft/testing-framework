@@ -5,6 +5,8 @@ package TestCOT.SchoolAdminRole.Messages;
  */
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
+
+import TestCOT.Common.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -23,13 +25,16 @@ public class GoToMessageApp {
         driver = new FirefoxDriver();
         baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.get(baseUrl + "/");
     }
 
     @Test
     public void testGoToMessageApp() throws Exception {
-        driver.get(baseUrl + "/");
+        Functions func = new Functions(driver);
+        func.CheckLogin();
+        func.LoginRole("SchoolAdmin");
+
         driver.findElement(By.id("nav-group-home")).click();
-        driver.findElement(By.linkText("Messages")).click();
         driver.findElement(By.linkText("Messages")).click();
     }
 

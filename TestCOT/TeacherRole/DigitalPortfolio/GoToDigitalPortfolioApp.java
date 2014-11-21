@@ -5,6 +5,8 @@ package TestCOT.TeacherRole.DigitalPortfolio;
  */
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
+
+import TestCOT.Common.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -23,13 +25,15 @@ public class GoToDigitalPortfolioApp {
         driver = new FirefoxDriver();
         baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.get(baseUrl + "/");
     }
 
     @Test
     public void testGoToDigitalPortfolioApp() throws Exception {
-        driver.get(baseUrl + "/");
-        driver.findElement(By.id("nav-group-home")).click();
-        driver.findElement(By.linkText("Digital Portfolio")).click();
+        Functions func = new Functions(driver);
+        func.CheckLogin();
+        func.LoginRole("Teacher");
+        driver.findElement(By.xpath("//div[@id='nav-group-home']")).click();
         driver.findElement(By.linkText("Digital Portfolio")).click();
     }
 

@@ -5,6 +5,8 @@ package TestCOT.TeacherRole.DigitalPortfolio;
  */
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
+
+import TestCOT.Common.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -23,13 +25,17 @@ public class SeeStudentShowcase {
         driver = new FirefoxDriver();
         baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.get(baseUrl + "/");
     }
 
     @Test
     public void testSeeStudentShowcase() throws Exception {
+        Functions func = new Functions(driver);
+        func.CheckLogin();
+        func.LoginRole("Teacher");
         driver.get(baseUrl + "/journals/75486");
-        driver.findElement(By.linkText("Showcases")).click();
-        driver.findElement(By.linkText("Showcases")).click();
+
+        driver.findElement(By.linkText("SHOWCASES")).click();
         driver.findElement(By.linkText("journey description")).click();
         driver.findElement(By.cssSelector("#cot-botr-thumbnail-JTbg1ZRa > img.botr-thumbnail")).click();
         driver.findElement(By.cssSelector("#cot-botr-video-JTbg1ZRa > div.close-button-wrapper > a.close-button > img")).click();
@@ -79,3 +85,4 @@ public class SeeStudentShowcase {
     }
 }
 
+// Write code for single chosen select list and for cancel download dialog.

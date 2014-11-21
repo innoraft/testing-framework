@@ -5,6 +5,8 @@ package TestCOT.TeacherRole.DigitalPortfolio;
  */
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
+
+import TestCOT.Common.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -15,6 +17,8 @@ import org.openqa.selenium.support.ui.Select;
 public class AddCommentInJournal {
     private WebDriver driver;
     private String baseUrl;
+    private String CheckComment = null;
+    private String[] Tracking = null;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
@@ -23,19 +27,26 @@ public class AddCommentInJournal {
         driver = new FirefoxDriver();
         baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.get(baseUrl + "/");
     }
 
     @Test
     public void testAddCommentInJournal() throws Exception {
+        Functions func = new Functions(driver);
+        func.CheckLogin();
+        func.LoginRole("Teacher");
         driver.get(baseUrl + "/journals/75486");
-        driver.findElement(By.linkText("Journal")).click();
-        driver.findElement(By.linkText("Journal")).click();
-        driver.findElement(By.id("comment-count-891401")).click();
+
+        driver.findElement(By.linkText("JOURNAL")).click();
+        String journal = driver.findElement(By.cssSelector("div.block-title > a")).getText();
+        // Number of comments
+        driver.findElement(By.xpath("//div[5]/a")).click();
         driver.findElement(By.id("comment-add")).click();
         driver.findElement(By.id("edit-comment-body-und-0-value")).clear();
-        driver.findElement(By.id("edit-comment-body-und-0-value")).sendKeys("good trip :P");
+        Tracking = func.RandomWords(3);
+        driver.findElement(By.id("edit-comment-body-und-0-value")).sendKeys(Tracking[0] + " " + Tracking[1] + " " + Tracking[2]);
         driver.findElement(By.id("edit-submit")).click();
-        driver.findElement(By.linkText("visit pune")).click();
+        driver.findElement(By.linkText(journal)).click();
         driver.findElement(By.linkText("November 2014")).click();
     }
 

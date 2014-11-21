@@ -5,53 +5,87 @@ package TestCOT.StudentRole.DigitalPortfolio;
  */
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
+
+import TestCOT.Common.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AddShowcase {
     private WebDriver driver;
     private String baseUrl;
+    private WebDriverWait wait;
+    private String[] Tracking = null;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
+        wait = new WebDriverWait(driver, 100);
         baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.get(baseUrl + "/");
     }
 
     @Test
     public void testAddShowcase() throws Exception {
+        Functions func = new Functions(driver);
+        func.CheckLogin();
+        func.LoginRole("Student");
         driver.get(baseUrl + "/journals");
-        driver.findElement(By.linkText("Showcases")).click();
-        driver.findElement(By.linkText("Showcases")).click();
+
+        // Click Showcases
+        driver.findElement(By.linkText("SHOWCASES")).click();
+        // Click New Showcases
         driver.findElement(By.linkText("New Showcase")).click();
+
+        // Fill Showcase Detail
+        // Enter Title
         driver.findElement(By.id("edit-title")).clear();
-        driver.findElement(By.id("edit-title")).sendKeys("visit manali");
+        Tracking = func.RandomWords(2);
+        driver.findElement(By.id("edit-title")).sendKeys(Tracking[0] + " " + Tracking[1]);
+
+        // Enter Description
         driver.findElement(By.id("edit-field-showcase-description-und-0-value")).clear();
-        driver.findElement(By.id("edit-field-showcase-description-und-0-value")).sendKeys("fun and only fun ;)");
+        Tracking = func.RandomWords(4);
+        driver.findElement(By.id("edit-field-showcase-description-und-0-value")).sendKeys(Tracking[0] + " " + Tracking[1] + " " + Tracking[2] + " " + Tracking[3]);
+
+        // Click Skills Required
         driver.findElement(By.id("edit-field-showcase-skills-acquired-und-8")).click();
         driver.findElement(By.id("edit-field-showcase-skills-acquired-und-17")).click();
         driver.findElement(By.id("edit-field-showcase-skills-acquired-und-14")).click();
         driver.findElement(By.id("edit-field-showcase-skills-acquired-und-15")).click();
+
+        // Upload Audio/Video
         driver.findElement(By.id("botr-upload-button")).click();
-        driver.findElement(By.name("file")).clear();
-        driver.findElement(By.name("file")).sendKeys("/home/akash/Videos/Andaman & Nicobar Islands(2 sec video)-BzosVry7nc4.mp4");
-        driver.findElement(By.cssSelector("p > input[name=\"title\"]")).clear();
-        driver.findElement(By.cssSelector("p > input[name=\"title\"]")).sendKeys("manali trip");
-        driver.findElement(By.cssSelector("input.botr-upload-submit.form-submit")).click();
+        driver.findElement(By.className("botr-upload-file")).sendKeys("C:\\Users\\om\\Downloads\\Andaman & Nicobar Islands(2 sec video)-BzosVry7nc4.mp4");
+        driver.findElement(By.xpath("(//input[@value='Upload'])[3]")).click();
+        // Wait for upload
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.botr-close > img")));
+
+        //Upload Image
+        driver.findElement(By.id("showcase-upload-img")).click();
+        driver.findElement(By.id("edit-field-showcase-images-und-0-upload")).sendKeys("C:\\Users\\om\\Downloads\\Business Process Outsourcing (BPO) Services_Market Segments_Healthcare BPO Services.jpg");
+        driver.findElement(By.id("edit-field-showcase-images-und-0-upload-button")).click();
+        // Wait for upload
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("edit-field-showcase-images-und-0-upload-button")));
+
+        // Upload document
         driver.findElement(By.id("showcase-upload-doc")).click();
-        driver.findElement(By.id("edit-field-showcase-documents-und-0-upload")).clear();
-        driver.findElement(By.id("edit-field-showcase-documents-und-0-upload")).sendKeys("/home/akash/Desktop/a.doc");
-        driver.findElement(By.id("edit-field-showcase-documents-und-0-description")).clear();
-        driver.findElement(By.id("edit-field-showcase-documents-und-0-description")).sendKeys("journy");
-        driver.findElement(By.id("edit-field-showcase-documents-und-0-description")).clear();
-        driver.findElement(By.id("edit-field-showcase-documents-und-0-description")).sendKeys("journey description");
+        driver.findElement(By.id("edit-field-showcase-documents-und-0-upload")).sendKeys("C:\\Users\\om\\Downloads\\Integration_with_Other_Tools.pdf");
+        driver.findElement(By.id("edit-field-showcase-documents-und-0-upload-button")).click();
+        // Wait for upload
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("edit-field-showcase-documents-und-0-upload-button")));
+        // Enter Title
+        driver.findElement(By.id("edit-field-showcase-documents-und-0-description")).sendKeys("business");
+
+        // Save Showcase Detail
         driver.findElement(By.id("edit-submit")).click();
     }
 
@@ -97,4 +131,3 @@ public class AddShowcase {
         }
     }
 }
-
