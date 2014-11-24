@@ -1,4 +1,4 @@
-package TestCOT.SchoolAdminRole.Messages;
+package TestCOT.TeacherRole.Messages;
 
 /**
  * Created by om on 11/12/2014.
@@ -12,14 +12,13 @@ import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class SendBroadcastMessage_Pending {
+public class SendMessages {
     private WebDriver driver;
     private String baseUrl;
+    private String[] Tracking = null;
+    private String TrackingValues = null;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
@@ -32,42 +31,47 @@ public class SendBroadcastMessage_Pending {
     }
 
     @Test
-    public void testSendBroadcastMessage() throws Exception {
+    public void testSendMessages() throws Exception {
         Functions func = new Functions(driver);
         func.CheckLogin();
-        func.LoginRole("SchoolAdmin");
-        driver.get(baseUrl + "/messages/broadcast");
+        func.LoginRole("Teacher");
+        driver.get(baseUrl + "/messages");
 
+        // Click Dialog
+        driver.findElement(By.linkText("DIALOG")).click();
 
+        // Send Message
+        // Click Subject "Hello"
+        driver.findElement(By.linkText("Hello")).click();
+        // Enter Message
+        driver.findElement(By.id("edit-body-value--2")).clear();
+        Tracking = func.RandomWords(10);
+        for(int i= 0 ; i < Tracking.length ; i++) {
+            TrackingValues = TrackingValues + " " + Tracking[i];
+        }
+        driver.findElement(By.id("edit-body-value--2")).sendKeys(TrackingValues);
+        // Click Send Message
+        driver.findElement(By.xpath("//div[@id='edit-actions--3']/input")).click();
 
-        driver.findElement(By.linkText("BROADCAST")).click();
-//        Select clickThis = new Select(driver.findElement(By.cssSelector("b")));
-//        clickThis.selectByVisibleText("6th grade");
-//        try {
-//            WebDriverWait wait = new WebDriverWait(driver, /*seconds=*/10);
-//            Select select = new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("b"))));
-//            select.deselectAll();
-//            select.selectByVisibleText("6th grade");
-//
-//        } catch (NoSuchElementException ex) {
-//            System.out.println("PAGE SOURCE: \n" + driver.getPageSource());
-//            ex.printStackTrace();
-//        }
+        // Send Message
+        // Select Options
+        driver.findElement(By.xpath("//div[@id='edit_recipient_individuals_chzn']/ul")).click();
+        driver.findElement(By.xpath("//*[@id=\"edit_recipient_individuals_chzn_o_0\"]")).click();
+        // Enter Subject
         driver.findElement(By.id("edit-subject")).click();
         driver.findElement(By.id("edit-subject")).clear();
-        driver.findElement(By.id("edit-subject")).sendKeys("hello student,");
+        Tracking = func.RandomWords(2);
+        driver.findElement(By.id("edit-subject")).sendKeys(Tracking[0] + " " + Tracking[1]);
+        // Enter Message
+        driver.findElement(By.id("edit-body-value")).click();
         driver.findElement(By.id("edit-body-value")).clear();
-        driver.findElement(By.id("edit-body-value")).sendKeys("Bring science book.");
-        driver.findElement(By.id("edit-submit--2")).click();
-        driver.findElement(By.linkText("hello student,")).click();
-        driver.findElement(By.cssSelector("span.close-button > img")).click();
-    }
-
-    private void clickAt(By by) throws InterruptedException {
-        Thread.sleep(1500);
-        Actions builder = new Actions(driver);
-        WebElement tagElement = driver.findElement(by);
-        builder.moveToElement(tagElement).click().perform();
+        Tracking = func.RandomWords(6);
+        for(int i= 0 ; i < Tracking.length ; i++) {
+            TrackingValues = TrackingValues + " " + Tracking[i];
+        }
+        driver.findElement(By.id("edit-body-value")).sendKeys(TrackingValues);
+        // Click Send Message
+        driver.findElement(By.xpath("//div[@id='edit-actions--2']/input")).click();
     }
 
     @After
@@ -113,4 +117,4 @@ public class SendBroadcastMessage_Pending {
     }
 }
 
-// How to write automate code for select the item from select list.
+// Write code for multiple chosen select list.

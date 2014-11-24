@@ -3,6 +3,7 @@ package TestCOT.TeacherRole.Dashboard;
 /**
  * Created by om on 11/12/2014.
  */
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 
@@ -14,9 +15,11 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class SeeClassEnrolled_Pending {
+public class SendSMS {
     private WebDriver driver;
     private String baseUrl;
+    private String[] Tracking = null;
+    private String TrackingValues = null;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
@@ -29,18 +32,49 @@ public class SeeClassEnrolled_Pending {
     }
 
     @Test
-    public void testSeeClassEnrolled() throws Exception {
+    public void testSendSms() throws Exception {
         Functions func = new Functions(driver);
         func.CheckLogin();
         func.LoginRole("Teacher");
         driver.get(baseUrl + "/students-dashboard/75486");
 
-        driver.findElement(By.linkText("Current Enrolled Classes")).click();
-        driver.findElement(By.linkText("Mukesh Agrarwal")).click();
-        driver.findElement(By.cssSelector("span.confirm-button > img")).click();
-        driver.findElement(By.linkText("Sumeet Pareek")).click();
-        driver.findElement(By.cssSelector("div.cot-overlay.75516-891276 > div.cot-overlay-content > div.close-button-wrapper > span.confirm-button > img")).click();
-        driver.findElement(By.cssSelector("a.chzn-single.chzn-single-with-drop > span")).click();
+        // Click SMS
+        driver.findElement(By.linkText("SMS")).click();
+
+        // Send Message
+        // Click Individuals
+        driver.findElement(By.id("edit-recipient-type-0")).click();
+        // Select Options
+        driver.findElement(By.xpath("//div[@id='edit_recipient_individuals_chzn']/ul/li/input")).click();
+        driver.findElement(By.xpath("//*[@id=\"edit_recipient_individuals_chzn_o_0\"]")).click();
+        // Enter Message
+        driver.findElement(By.id("edit-body")).click();
+        driver.findElement(By.id("edit-body")).clear();
+        Tracking = func.RandomWords(7);
+        for(int i= 0 ; i < Tracking.length ; i++) {
+            TrackingValues = TrackingValues + " " + Tracking[i];
+        }
+        driver.findElement(By.id("edit-body")).sendKeys(TrackingValues);
+        // Click Send Message
+        driver.findElement(By.xpath("//form[@id='teacher-dashboard-message-form']/div/input")).click();
+        Thread.sleep(2000);
+
+        // Send message
+        // Click Groups
+        driver.findElement(By.id("edit-recipient-type-1")).click();
+        // Select Options
+        driver.findElement(By.xpath("//div[@id='edit_recipient_groups_chzn']/ul/li/input")).click();
+        driver.findElement(By.xpath("//*[@id=\"edit_recipient_groups_chzn_o_0\"]")).click();
+        // Enter Message
+        driver.findElement(By.id("edit-body")).click();
+        driver.findElement(By.id("edit-body")).clear();
+        Tracking = func.RandomWords(7);
+        for(int i= 0 ; i < Tracking.length ; i++) {
+            TrackingValues = TrackingValues + " " + Tracking[i];
+        }
+        driver.findElement(By.id("edit-body")).sendKeys(TrackingValues);
+        // Click Send Message
+        driver.findElement(By.xpath("//form[@id='teacher-dashboard-message-form']/div/input")).click();
     }
 
     @After
@@ -86,4 +120,4 @@ public class SeeClassEnrolled_Pending {
     }
 }
 
-// Selenium IDE step 36 not visible at site.
+// Write code for single chosen select list.

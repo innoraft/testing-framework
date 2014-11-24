@@ -1,4 +1,4 @@
-package TestCOT.TeacherRole.Messages;
+package TestCOT.TeacherRole.DigitalPortfolio;
 
 /**
  * Created by om on 11/12/2014.
@@ -14,11 +14,9 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class SendMessages_Pending {
+public class SeeStudentResume {
     private WebDriver driver;
     private String baseUrl;
-    private String[] Tracking = null;
-    private String TrackingValues = null;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
@@ -31,35 +29,18 @@ public class SendMessages_Pending {
     }
 
     @Test
-    public void testSendMessages() throws Exception {
+    public void testSeeStudentResume() throws Exception {
         Functions func = new Functions(driver);
         func.CheckLogin();
         func.LoginRole("Teacher");
-        driver.get(baseUrl + "/messages");
+        driver.get(baseUrl + "/journals/75501");
 
-        driver.findElement(By.linkText("DIALOG")).click();
-        // Click "Hello"
-        driver.findElement(By.cssSelector("a.use-ajax.ajax-processed")).click();
-        driver.findElement(By.id("edit-body-value--2")).clear();
-        Tracking = func.RandomWords(10);
-        for(int i= 0 ; i < Tracking.length ; i++) {
-            TrackingValues = TrackingValues + " " + Tracking[i];
-        }
-        driver.findElement(By.id("edit-body-value--2")).sendKeys(TrackingValues);
-        driver.findElement(By.id("edit-submit--3")).click();
-        driver.findElement(By.cssSelector("label.compact-form-label")).click();
-        driver.findElement(By.id("edit-subject")).click();
-        driver.findElement(By.id("edit-subject")).clear();
-        Tracking = func.RandomWords(2);
-        driver.findElement(By.id("edit-subject")).sendKeys(Tracking[0] + " " + Tracking[1]);
-        driver.findElement(By.id("edit-body-value")).click();
-        driver.findElement(By.id("edit-body-value")).clear();
-        Tracking = func.RandomWords(6);
-        for(int i= 0 ; i < Tracking.length ; i++) {
-            TrackingValues = TrackingValues + " " + Tracking[i];
-        }
-        driver.findElement(By.id("edit-body-value")).sendKeys(TrackingValues);
-        driver.findElement(By.id("edit-submit--2")).click();
+        // Click Resume
+        driver.findElement(By.linkText("RESUME")).click();
+        // Select Options
+        driver.findElement(By.xpath("//div[@id='edit_students_chzn']/a/div/b")).click();
+        driver.findElement(By.xpath("//*[@id=\"edit_students_chzn_o_1\"]")).click();
+        Thread.sleep(2000);
     }
 
     @After
@@ -105,4 +86,4 @@ public class SendMessages_Pending {
     }
 }
 
-// Write code for multiple chosen select list.
+// Write code for single chosen select list.

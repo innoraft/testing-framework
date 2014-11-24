@@ -99,15 +99,12 @@ public class CreateHomework {
 
         // Assign Homework
         // Enter Due Date
-        driver.findElement(By.id("edit-due-date-4356-datepicker-popup-0")).click();
-        driver.findElement(By.linkText("4")).click();
-        // Enter Due Date
-        driver.findElement(By.id("edit-due-date-4361-datepicker-popup-0")).click();
-        driver.findElement(By.linkText("13")).click();
+        driver.findElement(By.xpath("//input")).click();
+        driver.findElement(By.linkText("11")).click();
         // Select Grading Period
         new Select(driver.findElement(By.id("edit-field-gradebook-submit-semester-und"))).selectByVisibleText("First Semester");
         // Select Grading Standard
-        new Select(driver.findElement(By.id("edit-field-gradebook-grading-standard-und"))).selectByVisibleText("algebra grading standard");
+        new Select(driver.findElement(By.id("edit-field-gradebook-grading-standard-und"))).selectByVisibleText("algebra grading");
         // Select Student
         new Select(driver.findElement(By.name("assign_students_unsel"))).selectByVisibleText("[10] Basant Sharma");
         // Click "+" Symbol

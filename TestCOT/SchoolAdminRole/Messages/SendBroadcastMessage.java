@@ -1,4 +1,4 @@
-package TestCOT.StudentRole.Dashboard;
+package TestCOT.SchoolAdminRole.Messages;
 
 /**
  * Created by om on 11/12/2014.
@@ -12,12 +12,16 @@ import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class AddCollegeStatusInCollegeMenu_Pending {
+public class SendBroadcastMessage {
     private WebDriver driver;
     private String baseUrl;
     private String[] Tracking = null;
+    private String TrackingValues = null;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
@@ -30,34 +34,44 @@ public class AddCollegeStatusInCollegeMenu_Pending {
     }
 
     @Test
-    public void testAddCollegeStatusInCollegeMenu() throws Exception {
+    public void testSendBroadcastMessage() throws Exception {
         Functions func = new Functions(driver);
         func.CheckLogin();
-        func.LoginRole("Student");
-        driver.get(baseUrl + "/students-dashboard");
+        func.LoginRole("SchoolAdmin");
+        driver.get(baseUrl + "/messages/broadcast");
 
-        // Click Colleges
-        driver.findElement(By.xpath("(//a[contains(text(),'Colleges')])[2]")).click();
-        driver.findElement(By.cssSelector("div.10756")).click();
-        driver.findElement(By.cssSelector("div.cot-overlay-content > div.10756")).click();
-        driver.findElement(By.id("edit-title")).clear();
-        Tracking = func.RandomWords(1);
-        driver.findElement(By.id("edit-title")).sendKeys(Tracking[0] + " " + Tracking[1]);
-        driver.findElement(By.xpath("'//input[@type=\"submit\" and @title=\"SAVE\"]'")).click();
-        driver.findElement(By.xpath("//div[@id='edit-select-status']/div")).click();
-        driver.findElement(By.id("edit-status-options-5")).click();
-        driver.findElement(By.xpath("//div[@id='edit-status-options']/div[5]/label")).click();
-        driver.findElement(By.id("edit-checkbox-applied--2")).click();
-        driver.findElement(By.xpath("//div[@id='edit-select-status--2']/div")).click();
-        driver.findElement(By.id("edit-status-options-4--2")).click();
-        driver.findElement(By.xpath("//div[@id='edit-status-options--2']/div[4]/label")).click();
-        driver.findElement(By.cssSelector("div.10726")).click();
-        driver.findElement(By.id("edit-checkbox-checklist--14")).click();
-        driver.findElement(By.id("edit-checkbox-checklist--13")).click();
-        driver.findElement(By.id("edit-checkbox-checklist--12")).click();
-        driver.findElement(By.id("edit-checkbox-checklist--16")).click();
-        driver.findElement(By.id("edit-checkbox-checklist--15")).click();
-        driver.findElement(By.xpath("//div[@id='page-wrapper']/div/div[5]/div/div/div/div[5]/div/div/div/div[2]/div/div/div[2]/div[2]/div[4]/div/div[2]/div[2]/span/img")).click();
+        // Click Broadcast
+        driver.findElement(By.linkText("BROADCAST")).click();
+        // Select Grade
+        driver.findElement(By.xpath("//div[@id='edit_get_grades_chzn']/a/div/b")).click();
+        driver.findElement(By.xpath("//*[@id=\"edit_get_grades_chzn_o_4\"]")).click();
+        // Enter Subject
+        driver.findElement(By.id("edit-subject")).click();
+        driver.findElement(By.id("edit-subject")).clear();
+        Tracking = func.RandomWords(2);
+        driver.findElement(By.id("edit-subject")).sendKeys(Tracking[0] + " " + Tracking[1]);
+        // Enter Message
+        driver.findElement(By.id("edit-body-value")).clear();
+        Tracking = func.RandomWords(8);
+        for(int i= 0 ; i < Tracking.length ; i++) {
+            TrackingValues = TrackingValues + " " + Tracking[i];
+        }
+        driver.findElement(By.id("edit-body-value")).sendKeys(TrackingValues);
+        // Click Send Message
+        driver.findElement(By.xpath("//div[5]/input")).click();
+
+        // Click Subject
+        driver.findElement(By.cssSelector("a.use-ajax.ajax-processed")).click();
+        Thread.sleep(2000);
+        // Click Close Button
+        driver.findElement(By.cssSelector("span.close-button > img")).click();
+    }
+
+    private void clickAt(By by) throws InterruptedException {
+        Thread.sleep(1500);
+        Actions builder = new Actions(driver);
+        WebElement tagElement = driver.findElement(by);
+        builder.moveToElement(tagElement).click().perform();
     }
 
     @After
@@ -103,3 +117,4 @@ public class AddCollegeStatusInCollegeMenu_Pending {
     }
 }
 
+// How to write automate code for select the item from select list.

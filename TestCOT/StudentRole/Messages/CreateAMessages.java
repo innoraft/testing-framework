@@ -14,7 +14,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class CreateAMessages_Pending {
+public class CreateAMessages {
     private WebDriver driver;
     private String baseUrl;
     private String[] Tracking = null;
@@ -42,8 +42,8 @@ public class CreateAMessages_Pending {
 
         // Send Message
         // Select Options
-        Select name = new Select(driver.findElement(By.xpath("//div[@id='edit_recipient_individuals_chzn']/ul")));
-        name.selectByVisibleText("Sumeet Pareek");
+        driver.findElement(By.xpath("//div[@id='edit_recipient_individuals_chzn']/ul")).click();
+        driver.findElement(By.xpath("//*[@id=\"edit_recipient_individuals_chzn_o_1\"]")).click();
         // Enter Subject
         driver.findElement(By.id("edit-subject")).click();
         driver.findElement(By.id("edit-subject")).clear();
@@ -57,8 +57,9 @@ public class CreateAMessages_Pending {
         }
         driver.findElement(By.id("edit-body-value")).sendKeys(TrackingValues);
         // Click Send Message
-        driver.findElement(By.id("edit-submit--2")).click();
+        driver.findElement(By.xpath("//div[@id='edit-actions--2']/input")).click();
 
+        // Send Message
         // Click Subject
         driver.findElement(By.cssSelector("a.use-ajax.ajax-processed")).click();
         // Enter Message
@@ -69,10 +70,12 @@ public class CreateAMessages_Pending {
         }
         driver.findElement(By.id("edit-body-value--2")).sendKeys("this is a dummy message");
         // Click Send Message
-        driver.findElement(By.id("edit-submit--3")).click();
+        driver.findElement(By.xpath("//div[@id='edit-actions--3']/input")).click();
 
         // To Remove Message
         driver.findElement(By.linkText("Remove")).click();
+        // Click "Yes" Button
+        driver.findElement(By.xpath("//div[11]/div/button")).click();
         // To Undone Removed Message
         driver.findElement(By.linkText("undone")).click();
     }
@@ -119,5 +122,3 @@ public class CreateAMessages_Pending {
         }
     }
 }
-
-// Write code multiple chosen select list(select options)

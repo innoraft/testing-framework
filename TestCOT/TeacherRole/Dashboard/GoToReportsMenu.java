@@ -34,6 +34,7 @@ public class GoToReportsMenu {
         func.CheckLogin();
         func.LoginRole("Teacher");
         driver.get(baseUrl + "/students-dashboard/75486");
+        // Click Reports
         driver.findElement(By.linkText("REPORTS")).click();
     }
 

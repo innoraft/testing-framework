@@ -32,6 +32,7 @@ public class SubmitTest_Pending {
         func.LoginRole("Student");
         driver.get(baseUrl + "/assigned-lesson");
 
+        // Click Assigned Tests
         driver.findElement(By.linkText("ASSIGNED TESTS")).click();
         driver.findElement(By.linkText("Complete Test")).click();
         driver.findElement(By.xpath("//div/div/div/input")).click();

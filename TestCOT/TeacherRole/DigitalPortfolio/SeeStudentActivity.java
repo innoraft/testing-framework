@@ -1,4 +1,4 @@
-package TestCOT.TeacherRole.Dashboard;
+package TestCOT.TeacherRole.DigitalPortfolio;
 
 /**
  * Created by om on 11/12/2014.
@@ -14,7 +14,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class ClassSchedule_Pending {
+public class SeeStudentActivity {
     private WebDriver driver;
     private String baseUrl;
     private boolean acceptNextAlert = true;
@@ -29,19 +29,18 @@ public class ClassSchedule_Pending {
     }
 
     @Test
-    public void testClassSchedule() throws Exception {
+    public void testSeeStudentActivity() throws Exception {
         Functions func = new Functions(driver);
         func.CheckLogin();
         func.LoginRole("Teacher");
-        driver.get(baseUrl + "/students-dashboard/75486");
+        driver.get(baseUrl + "/journals/75486");
 
-        driver.findElement(By.linkText("Class Schedule")).click();
-        driver.findElement(By.cssSelector("div.add-student-teacher-assignment")).click();
-        driver.findElement(By.id("edit-student-75496")).click();
-        driver.findElement(By.xpath("//table[@id='891266-891306']/tbody/tr/td[4]/div")).click();
-        driver.findElement(By.id("edit-student-75496")).click();
-        driver.findElement(By.id("edit-student-75496")).click();
-        driver.findElement(By.id("edit-student-75496")).click();
+        // Click Activities
+        driver.findElement(By.linkText("ACTIVITIES")).click();
+        // Select Options
+        driver.findElement(By.xpath("//div[@id='edit_students_chzn']/a/div/b")).click();
+        driver.findElement(By.xpath("//*[@id=\"edit_students_chzn_o_1\"]")).click();
+        Thread.sleep(2000);
     }
 
     @After
@@ -87,4 +86,4 @@ public class ClassSchedule_Pending {
     }
 }
 
-// Steps not visible at site.
+// Write code for single chosen select list.

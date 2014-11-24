@@ -14,6 +14,7 @@ import org.openqa.selenium.support.ui.Select;
 public class CreateDigitalTest_Pending {
     private WebDriver driver;
     private String baseUrl;
+    private String[] Tracking = null;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
@@ -32,22 +33,39 @@ public class CreateDigitalTest_Pending {
         func.LoginRole("Teacher");
         driver.get(baseUrl + "/lesson-library");
 
+        // Click Online Tests
         driver.findElement(By.linkText("ONLINE TESTS")).click();
+        // Create Online Tests
         driver.findElement(By.linkText("Create Online Tests")).click();
+
+        // Online Test Form
+        // Enter Test Title
         driver.findElement(By.id("edit-title")).clear();
-        driver.findElement(By.id("edit-title")).sendKeys("number system");
-        driver.findElement(By.id("edit-submit")).click();
-        driver.findElement(By.cssSelector("label")).click();
+        Tracking = func.RandomWords(2);
+        driver.findElement(By.id("edit-title")).sendKeys(Tracking[0] + " " + Tracking[1]);
+        // Click Save Button
+        driver.findElement(By.xpath("//form[@id='onlinetest-title-form']/div/input")).click();
+
+        // Create Test
+        // Add a Field
+
+        // Enter Title
         driver.findElement(By.id("edit-title")).clear();
-        driver.findElement(By.id("edit-title")).sendKeys("Whole number starts from");
+        Tracking = func.RandomWords(2);
+        driver.findElement(By.id("edit-title")).sendKeys(Tracking[0] + " " + Tracking[1]);
+        // Click Options
         driver.findElement(By.xpath("//form[@id='form-builder-field-configure']/div/ul/li[2]/span")).click();
+        // Remove One Option
         driver.findElement(By.xpath("//table[@id='edit-options-options-field-widget']/tbody/tr[3]/td[3]/a[2]")).click();
-        driver.findElement(By.xpath("//input[@value='Choice 1']")).click();
+        // Enter Value For First Option
         driver.findElement(By.xpath("//input[@value='Choice 1']")).clear();
         driver.findElement(By.xpath("//input[@value='Choice 1']")).sendKeys("0");
+        // Enter Value For Second Option
         driver.findElement(By.xpath("//input[@value='Choice 2']")).clear();
         driver.findElement(By.xpath("//input[@value='Choice 2']")).sendKeys("1");
+        // Click Save Test Button
         driver.findElement(By.linkText("Save Test")).click();
+
         driver.findElement(By.id("edit-new-1415860870029")).click();
         driver.findElement(By.id("edit-max-marks")).clear();
         driver.findElement(By.id("edit-max-marks")).sendKeys("5");

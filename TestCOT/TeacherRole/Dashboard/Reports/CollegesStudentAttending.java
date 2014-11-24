@@ -12,17 +12,21 @@ import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CollegesStudentAttending {
     private WebDriver driver;
     private String baseUrl;
+    private WebDriverWait wait;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
+        wait = new WebDriverWait(driver, 7);
         baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
@@ -35,25 +39,41 @@ public class CollegesStudentAttending {
         func.LoginRole("Teacher");
         driver.get(baseUrl + "/teacher-reports");
 
+        // Click Colleges Students Attending
         driver.findElement(By.linkText("Colleges Students Attending")).click();
+
+        // Enter Name
         driver.findElement(By.id("edit-combine")).clear();
         driver.findElement(By.id("edit-combine")).sendKeys("pa");
+        // Click Search
         driver.findElement(By.id("edit-submit-college-destination")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ajax-progress-throbber")));
+        // Enter Name
         driver.findElement(By.id("edit-combine")).clear();
         driver.findElement(By.id("edit-combine")).sendKeys("ama");
+        // Click Search
         driver.findElement(By.id("edit-submit-college-destination")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ajax-progress-throbber")));
+        // Enter Name
         driver.findElement(By.id("edit-combine")).clear();
         driver.findElement(By.id("edit-combine")).sendKeys("sh");
+       // Click Search
         driver.findElement(By.id("edit-submit-college-destination")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ajax-progress-throbber")));
+
+        // Select Class of
+        driver.findElement(By.className("chzn-single")).click();
+        driver.findElement(By.xpath("//*[@id=\"edit_field_user_class_of_value_chzn_o_3\"]")).click();
+        // Enter Name
         driver.findElement(By.id("edit-combine")).clear();
-        driver.findElement(By.id("edit-combine")).sendKeys("g");
+        driver.findElement(By.id("edit-combine")).sendKeys("av");
+        // Click Search
         driver.findElement(By.id("edit-submit-college-destination")).click();
-        driver.findElement(By.linkText("Any")).click();
-        driver.findElement(By.id("edit-submit-college-destination")).click();
-        driver.findElement(By.id("edit-combine")).clear();
-        driver.findElement(By.id("edit-combine")).sendKeys("");
-        driver.findElement(By.id("edit-submit-college-destination")).click();
-        driver.findElement(By.cssSelector("img.image-style-none")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ajax-progress-throbber")));
+
+        // Click PDF Link
+        driver.findElement(By.xpath("//div[3]/a/img")).click();
+        Thread.sleep(200);
     }
 
     @After

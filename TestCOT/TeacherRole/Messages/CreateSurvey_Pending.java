@@ -14,7 +14,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class CreateSurvey {
+public class CreateSurvey_Pending {
     private WebDriver driver;
     private String baseUrl;
     private String[] Tracking = null;
@@ -37,15 +37,18 @@ public class CreateSurvey {
         func.LoginRole("Teacher");
         driver.get(baseUrl + "/messages");
 
+        // Click Survey
         driver.findElement(By.linkText("SURVEY")).click();
+
+        // Click Create Survey
         driver.findElement(By.linkText("CREATE SURVEY")).click();
+        // Enter Title
         driver.findElement(By.id("edit-survey-title")).clear();
-        Tracking = func.RandomWords(7);
-        for(int i= 0 ; i < Tracking.length ; i++) {
-            TrackingValues = TrackingValues + " " + Tracking[i];
-        }
-        driver.findElement(By.id("edit-survey-title")).sendKeys(TrackingValues);
-        driver.findElement(By.id("edit-new")).click();
+        Tracking = func.RandomWords(2);
+        driver.findElement(By.id("edit-survey-title")).sendKeys(Tracking[0] + " " + Tracking[1]);
+        // Click Create New Survey
+        driver.findElement(By.id("//form[@id='survey-builder-new-form']/div/input")).click();
+
         driver.findElement(By.linkText("Configure")).click();
         driver.findElement(By.id("edit-title")).clear();
         driver.findElement(By.id("edit-title")).sendKeys("Time");

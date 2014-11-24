@@ -28,12 +28,14 @@ public class AddDealineForCollege_Pending {
     @Test
     public void testAddDealineForCollege() throws Exception {
         driver.get(baseUrl + "/college-search");
+
+        // Click WishList
         driver.findElement(By.linkText("Wishlist")).click();
-        driver.findElement(By.linkText("Wishlist")).click();
+        // Click ACT
         driver.findElement(By.id("edit-act-sat-select-act")).click();
-        driver.findElement(By.cssSelector("label.option")).click();
+        // Click Target Scores
         driver.findElement(By.id("edit-act-select-score-target-score")).click();
-        driver.findElement(By.xpath("//form[@id='college-wishlist-filter-form']/div/table/tbody/tr[2]/td/div/label")).click();
+
         driver.findElement(By.xpath("//div[@id='act_math_slider_jq_slider']/a")).click();
         driver.findElement(By.id("edit-user-deadline-datepicker-popup-0")).click();
         driver.findElement(By.linkText("21")).click();

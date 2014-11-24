@@ -1,4 +1,4 @@
-package TestCOT.TeacherRole.DigitalPortfolio;
+package TestCOT.TeacherRole.Dashboard;
 
 /**
  * Created by om on 11/12/2014.
@@ -12,32 +12,54 @@ import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class SeeStudentActivity_Pending {
+public class ClassSchedule {
     private WebDriver driver;
     private String baseUrl;
+    private WebDriverWait wait;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
+        wait = new WebDriverWait(driver, 20);
         baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
     }
 
     @Test
-    public void testSeeStudentActivity() throws Exception {
+    public void testClassSchedule() throws Exception {
         Functions func = new Functions(driver);
         func.CheckLogin();
         func.LoginRole("Teacher");
-        driver.get(baseUrl + "/journals/75486");
+        driver.get(baseUrl + "/students-dashboard/75486");
 
-        driver.findElement(By.linkText("ACTIVITIES")).click();
-        driver.findElement(By.cssSelector("a.chzn-single.chzn-single-with-drop > span")).click();
-        driver.findElement(By.cssSelector("a.chzn-single.chzn-single-with-drop > span")).click();
+        // Click Class Schedule
+        driver.findElement(By.linkText("Class Schedule")).click();
+
+        // Add Student
+        // Click Add
+        driver.findElement(By.xpath("//td[5]/div")).click();
+        // Select Grade
+        new Select(driver.findElement(By.xpath("//form[@id='get-school-students-reassign']/div/div/select"))).selectByVisibleText("Grade 10");
+        // Check Student
+        driver.findElement(By.xpath("//td/div/input")).click();
+        // Click Add Button
+        driver.findElement(By.xpath("//form[@id='relocate-teacher-add-student']/div/input")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//form[@id='relocate-teacher-add-student']/div/input")));
+
+        // Remove Student
+        // Click Edit
+        driver.findElement(By.xpath("//td[4]/div")).click();
+        // Check Student
+        driver.findElement(By.xpath("//td/div/input")).click();
+        // Click Remove
+        driver.findElement(By.xpath("//div[2]/div/div/div/div/div/div/form/div/input")).click();
     }
 
     @After
@@ -83,4 +105,4 @@ public class SeeStudentActivity_Pending {
     }
 }
 
-// Write code for single chosen select list.
+// Steps not visible at site.

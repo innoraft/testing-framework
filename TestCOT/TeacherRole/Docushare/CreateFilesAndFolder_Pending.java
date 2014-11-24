@@ -35,6 +35,7 @@ public class CreateFilesAndFolder_Pending {
         func.LoginRole("Teacher");
         driver.get(baseUrl + "/document-locker");
 
+        // Click Docushare
         driver.findElement(By.linkText("DOCUSHARE")).click();
         driver.findElement(By.xpath("//div[@id='page-wrapper']/div/div[5]/div/div/div/div[5]/div/div/div/div[2]/div/div/div/ul/li[2]/div/span")).click();
         driver.findElement(By.xpath("//div[@id='page-wrapper']/div/div[5]/div/div/div/div[5]/div/div/div/div[2]/div/div/div/ul/li[3]/div/span")).click();

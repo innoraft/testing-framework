@@ -34,7 +34,9 @@ public class ScholarshipWishlist {
         func.CheckLogin();
         func.LoginRole("Teacher");
         driver.get(baseUrl + "/students-dashboard/75486");
+        // Click Scholarships
         driver.findElement(By.xpath("(//a[contains(text(),'Scholarships')])[2]")).click();
+        // Click Remove From Wish List
         driver.findElement(By.linkText("Remove from Wish List")).click();
     }
 

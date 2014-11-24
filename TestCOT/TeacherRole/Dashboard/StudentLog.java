@@ -12,19 +12,22 @@ import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class StudentLog_Pending {
+public class StudentLog {
     private WebDriver driver;
     private String baseUrl;
+    private WebDriverWait wait;
     private String[] Tracking = null;
-    private String CheckEntry = null;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
+        wait = new WebDriverWait(driver, 20);
         baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
@@ -37,40 +40,54 @@ public class StudentLog_Pending {
         func.LoginRole("Teacher");
         driver.get(baseUrl + "/students-dashboard/75486");
 
+        // Click Student Log
         driver.findElement(By.linkText("Student Log")).click();
         if(isElementPresent(By.linkText("Click here to create a log entry"))) {
+            // Click "Click Here To Create a Log Entry"
             driver.findElement(By.linkText("Click here to create a log entry")).click();
-//        driver.findElement(By.cssSelector("a.chzn-single.chzn-single-with-drop > span")).click();
-//        driver.findElement(By.cssSelector("#edit_field_stu_log_message_type_und_chzn > a.chzn-single > span")).click();
+            // Select Message Type
+            driver.findElement(By.xpath("//div[@id='edit_field_stu_log_message_type_und_chzn']/a/span")).click();
+            driver.findElement(By.xpath("//*[@id=\"edit_field_stu_log_message_type_und_chzn_o_1\"]")).click();
+            // Enter Title
             driver.findElement(By.id("edit-title")).click();
             driver.findElement(By.id("edit-title")).clear();
             Tracking = func.RandomWords(2);
             driver.findElement(By.id("edit-title")).sendKeys(Tracking[0] + " " + Tracking[1]);
-            CheckEntry = Tracking[0] + " " + Tracking[1];
-//        driver.findElement(By.cssSelector("input.default")).click();
-//        driver.findElement(By.cssSelector("#student-log-entry-node-form > div")).click();
+            // Select Name of Student
+            driver.findElement(By.xpath("//div[@id='edit_more_students_chzn']/ul/li/input")).click();
+            driver.findElement(By.xpath("//*[@id=\"edit_more_students_chzn_o_1\"]")).click();
+            // Enter Description
             driver.findElement(By.id("edit-field-log-entry-description-und-0-value")).clear();
             Tracking = func.RandomWords(2);
             driver.findElement(By.id("edit-field-log-entry-description-und-0-value")).sendKeys(Tracking[0] + " " + Tracking[1]);
-            // TODO: Write code for submit button.
+            // Click Save Button
+            driver.findElement(By.xpath("//div[11]/input")).click();
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[11]/input")));
         } else if(isElementPresent(By.linkText("+"))) {
-            driver.findElement(By.linkText("Click here to create a log entry")).click();
-//        driver.findElement(By.cssSelector("a.chzn-single.chzn-single-with-drop > span")).click();
-//        driver.findElement(By.cssSelector("#edit_field_stu_log_message_type_und_chzn > a.chzn-single > span")).click();
+            // Click "+" Symbol
+            driver.findElement(By.linkText("+")).click();
+            // Select Message Type
+            driver.findElement(By.xpath("//div[@id='edit_field_stu_log_message_type_und_chzn']/a/span")).click();
+            driver.findElement(By.xpath("//*[@id=\"edit_field_stu_log_message_type_und_chzn_o_1\"]")).click();
+            // Enter Title
             driver.findElement(By.id("edit-title")).click();
             driver.findElement(By.id("edit-title")).clear();
             Tracking = func.RandomWords(2);
             driver.findElement(By.id("edit-title")).sendKeys(Tracking[0] + " " + Tracking[1]);
-            CheckEntry = Tracking[0] + " " + Tracking[1];
-//        driver.findElement(By.cssSelector("input.default")).click();
-//        driver.findElement(By.cssSelector("#student-log-entry-node-form > div")).click();
+            // Select Name of Student
+            driver.findElement(By.xpath("//div[@id='edit_more_students_chzn']/ul/li/input")).click();
+            driver.findElement(By.xpath("//*[@id=\"edit_more_students_chzn_o_1\"]")).click();
+            // Enter Description
             driver.findElement(By.id("edit-field-log-entry-description-und-0-value")).clear();
             Tracking = func.RandomWords(2);
             driver.findElement(By.id("edit-field-log-entry-description-und-0-value")).sendKeys(Tracking[0] + " " + Tracking[1]);
-            // TODO: Write code for submit button.
+            // Click Save Button
+            driver.findElement(By.xpath("//div[11]/input")).click();
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[11]/input")));
         }
 
-        driver.findElement(By.linkText(CheckEntry)).click();
+        driver.findElement(By.xpath("//td[2]/a")).click();
+        Thread.sleep(1000);
         driver.findElement(By.cssSelector("span.close-button > img")).click();
     }
 

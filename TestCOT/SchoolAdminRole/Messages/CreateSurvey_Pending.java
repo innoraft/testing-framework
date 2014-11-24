@@ -36,12 +36,19 @@ public class CreateSurvey_Pending {
         func.LoginRole("SchoolAdmin");
         driver.get(baseUrl + "/messages/broadcast");
 
+        // Click Survey
         driver.findElement(By.linkText("SURVEY")).click();
+        // Click Create Survey
         driver.findElement(By.linkText("CREATE SURVEY")).click();
+
+        // Add Survey
+        // Enter Title
         driver.findElement(By.id("edit-survey-title")).clear();
         Tracking = func.RandomWords(2);
         driver.findElement(By.id("edit-survey-title")).sendKeys(Tracking[0], " ", Tracking[1]);
-        driver.findElement(By.id("edit-new")).click();
+        // Click Create New Survey
+        driver.findElement(By.xpath("//form[@id='survey-builder-new-form']/div/input")).click();
+
 
         driver.findElement(By.cssSelector("label")).click();
         driver.findElement(By.id("edit-title")).clear();

@@ -12,17 +12,21 @@ import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SeeStudentActivities {
     private WebDriver driver;
     private String baseUrl;
+    private WebDriverWait wait;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
+        wait = new WebDriverWait(driver, 7);
         baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
@@ -35,19 +39,33 @@ public class SeeStudentActivities {
         func.LoginRole("Teacher");
         driver.get(baseUrl + "/teacher-reports");
 
+        // Click Student Activities
         driver.findElement(By.linkText("Student Activities")).click();
+
+        // Enter Name
         driver.findElement(By.id("edit-combine-1")).clear();
         driver.findElement(By.id("edit-combine-1")).sendKeys("paul");
+        // Click Search
         driver.findElement(By.id("edit-submit-administration-students")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ajax-progress-throbber")));
+        // Enter Name
         driver.findElement(By.id("edit-combine-1")).clear();
         driver.findElement(By.id("edit-combine-1")).sendKeys("shar");
+        // Click Search
         driver.findElement(By.id("edit-submit-administration-students")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ajax-progress-throbber")));
+        // Enter Name
         driver.findElement(By.id("edit-combine-1")).clear();
         driver.findElement(By.id("edit-combine-1")).sendKeys("shar pau");
+        // Click Search
         driver.findElement(By.id("edit-submit-administration-students")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ajax-progress-throbber")));
+        // Enter Name
         driver.findElement(By.id("edit-combine-1")).clear();
         driver.findElement(By.id("edit-combine-1")).sendKeys("shar pal");
+        // Click Search
         driver.findElement(By.id("edit-submit-administration-students")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ajax-progress-throbber")));
     }
 
     @After

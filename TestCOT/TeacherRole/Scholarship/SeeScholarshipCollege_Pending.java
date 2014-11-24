@@ -33,6 +33,8 @@ public class SeeScholarshipCollege_Pending {
         Functions func = new Functions(driver);
         func.CheckLogin();
         func.LoginRole("Teacher");
+        driver.get(baseUrl + "/scholarship-search/75501");
+
         driver.findElement(By.xpath("//div[@id='nav-group-home']")).click();
         driver.findElement(By.linkText("Scholarships")).click();
         driver.findElement(By.cssSelector("a.chzn-single.chzn-single-with-drop > span")).click();

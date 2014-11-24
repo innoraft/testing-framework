@@ -36,9 +36,18 @@ public class CreateEnrolledClasses_Pending {
         func.LoginRole("Student");
         driver.get(baseUrl + "/students-dashboard");
 
+        // Click Dashboard
         driver.findElement(By.linkText("DASHBOARD")).click();
+        // Click Current Enrolled Classes
         driver.findElement(By.linkText("Current Enrolled Classes")).click();
+        // Click "+" Symbol
         driver.findElement(By.cssSelector("div.plus-symbol")).click();
+
+        // Select Classes
+        // Select Subject
+        driver.findElement(By.xpath("//div[@id='edit_subjects_filter_chzn']/a/span")).click();
+        driver.findElement(By.xpath("//*[@id=\"edit_subjects_filter_chzn_o_1\"]")).click();
+        // Wait For Course
         driver.findElement(By.cssSelector("b")).click();
 //        List<WebElement> options = driver.findElements(By.cssSelector("b"));
 //        for (WebElement option : options) {

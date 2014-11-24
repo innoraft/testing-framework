@@ -71,8 +71,8 @@ public class CreateDigitalLesson {
 
         // Click "+" Symbol
         driver.findElement(By.xpath("//form[@id='get-lesson-unit-widgets-form']/div/div[2]/div")).click();
-        // Wait for 1 second
-        Thread.sleep(2000);
+        // Wait For "Add Text" Link
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.half-textarea-widget.lesson-unit-create-widget-link")));
         // Click Add Text
         driver.findElement(By.cssSelector("div.half-textarea-widget.lesson-unit-create-widget-link")).click();
 
@@ -95,8 +95,8 @@ public class CreateDigitalLesson {
 
         // Click "+" Symbol
         driver.findElement(By.xpath("//form[@id='get-lesson-unit-widgets-form']/div/div[2]/div")).click();
-        // Wait for 1 second
-        Thread.sleep(2000);
+        // Wait For "Add Image" Link
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.image-widget.lesson-unit-create-widget-link")));
         // Click Add Image
         driver.findElement(By.cssSelector("div.image-widget.lesson-unit-create-widget-link")).click();
 

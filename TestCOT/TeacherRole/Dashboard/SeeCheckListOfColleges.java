@@ -12,17 +12,23 @@ import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SeeCheckListOfColleges {
     private WebDriver driver;
     private String baseUrl;
+    private String SearchValue = null;
+    private WebDriverWait wait;
+    private String[] Tracking = null;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
+        wait = new WebDriverWait(driver, 10);
         baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
@@ -34,14 +40,26 @@ public class SeeCheckListOfColleges {
         func.CheckLogin();
         func.LoginRole("Teacher");
         driver.get(baseUrl + "/students-dashboard/75486");
+
+        // Click Colleges
         driver.findElement(By.xpath("(//a[contains(text(),'Colleges')])[2]")).click();
+        // Check Applied
         driver.findElement(By.id("edit-checkbox-applied--2")).click();
-        driver.findElement(By.cssSelector("div.10756")).click();
-        driver.findElement(By.id("edit-checkbox-checklist--10")).click();
-        driver.findElement(By.id("edit-checkbox-checklist--8")).click();
-        driver.findElement(By.id("edit-checkbox-checklist--6")).click();
-        driver.findElement(By.cssSelector("span.confirm-button > img")).click();
-        driver.findElement(By.cssSelector("a.chzn-single.chzn-single-with-drop > span")).click();
+        // Click Book Icon
+        driver.findElement(By.xpath("//tr[2]/td/div[2]")).click();
+        // Click Checklist
+        driver.findElement(By.xpath("//div[2]/div[6]/div/div[2]/div")).click();
+        // Add Item To Checklist
+        // Enter Application Item
+        driver.findElement(By.id("edit-title")).clear();
+        Tracking = func.RandomWords(1);
+        SearchValue = Tracking[0];
+        driver.findElement(By.id("edit-title")).sendKeys(Tracking[0]);
+        // Click Save Button
+        driver.findElement(By.xpath("//div[@id='edit-actions--3']/input")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@id='edit-actions--3']/input")));
+        // Search Application Item
+        System.out.println(driver.findElement(By.linkText(SearchValue)).getLocation());
     }
 
     @After

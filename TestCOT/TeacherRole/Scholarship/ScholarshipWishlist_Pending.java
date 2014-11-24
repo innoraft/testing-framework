@@ -35,6 +35,7 @@ public class ScholarshipWishlist_Pending {
         func.LoginRole("Teacher");
         driver.get(baseUrl + "/scholarship-search/75501");
 
+        // Click Scholarship Wish List
         driver.findElement(By.linkText("SCHOLARSHIP WISH LIST")).click();
         driver.findElement(By.xpath("//td[6]/a")).click();
         driver.findElement(By.cssSelector("a.chzn-single.chzn-single-with-drop > span")).click();
