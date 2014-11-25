@@ -33,7 +33,9 @@ public class GoToDocushareApp {
         Functions func = new Functions(driver);
         func.CheckLogin();
         func.LoginRole("Teacher");
+        // Click Home
         driver.findElement(By.xpath("//div[@id='nav-group-home']")).click();
+        // Click Docushare
         driver.findElement(By.linkText("DocuShare")).click();
     }
 

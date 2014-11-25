@@ -34,7 +34,9 @@ public class GoToApp {
         Functions func = new Functions(driver);
         func.CheckLogin();
         func.LoginRole("Teacher");
+        // Click Home
         driver.findElement(By.xpath("//div[@id='nav-group-home']")).click();
+        // Click GradeBook
         driver.findElement(By.linkText("Gradebook")).click();
         wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText("ASSIGNMENTS")));
     }

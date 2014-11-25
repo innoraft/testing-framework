@@ -35,11 +35,18 @@ public class SeeStudentShowcase {
         func.LoginRole("Teacher");
         driver.get(baseUrl + "/journals/75486");
 
+        // Click Showcases
         driver.findElement(By.linkText("SHOWCASES")).click();
+        // Click Journey Description
         driver.findElement(By.linkText("journey description")).click();
+        // Click Video
         driver.findElement(By.cssSelector("#cot-botr-thumbnail-JTbg1ZRa > img.botr-thumbnail")).click();
+        // Close Video
         driver.findElement(By.cssSelector("#cot-botr-video-JTbg1ZRa > div.close-button-wrapper > a.close-button > img")).click();
-        driver.findElement(By.cssSelector("a.chzn-single.chzn-single-with-drop > span")).click();
+        // Select Options
+        driver.findElement(By.xpath("//div[@id='edit_students_chzn']/a/span")).click();
+        driver.findElement(By.xpath("//*[@id=\"edit_students_chzn_o_1\"]")).click();
+        Thread.sleep(300);
     }
 
     @After

@@ -33,7 +33,7 @@ public class AddMilestoneInItask_Pending {
         Functions func = new Functions(driver);
         func.CheckLogin();
         func.LoginRole("Teacher");
-        driver.get(baseUrl + "/student-planner/75486?track=891361");
+        driver.get(baseUrl + "/student-planner");
 
         driver.findElement(By.linkText("ITASKS")).click();
         // Career & Majors

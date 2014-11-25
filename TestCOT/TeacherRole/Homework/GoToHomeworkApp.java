@@ -34,8 +34,11 @@ public class GoToHomeworkApp {
         Functions func = new Functions(driver);
         func.CheckLogin();
         func.LoginRole("Teacher");
+        // Click Home
         driver.findElement(By.xpath("//div[@id='nav-group-home']")).click();
+        // Click Lessons & Homework
         driver.findElement(By.linkText("Lessons & Homework")).click();
+        // Click Homework Library
         wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText("HOMEWORK LIBRARY")));
     }
 

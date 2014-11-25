@@ -9,11 +9,14 @@ import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CreateGradingStandard {
     private WebDriver driver;
     private String baseUrl;
+    private WebDriverWait wait;
     private String[] Tracking = null;
     private int percentage = 0;
     private boolean acceptNextAlert = true;
@@ -22,6 +25,7 @@ public class CreateGradingStandard {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
+        wait = new WebDriverWait(driver, 20);
         baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
@@ -34,34 +38,50 @@ public class CreateGradingStandard {
         func.LoginRole("Teacher");
         driver.get(baseUrl + "/my-assignments");
 
+        // Click Grading Standards
         driver.findElement(By.linkText("GRADING STANDARDS")).click();
         if(isElementPresent(By.linkText("Click Here"))) {
+            // Click "Click Here"
             driver.findElement(By.linkText("Click Here")).click();
+            // Select Course
             new Select(driver.findElement(By.id("edit-field-gr-std-course-ref-und"))).selectByVisibleText("algebra");
-            driver.findElement(By.id("edit-title")).clear();
+            // Enter Grading Attributes
+            driver.findElement(By.xpath("//form[@id='grading-standard-node-form']/div/div[3]/input")).clear();
             Tracking = func.RandomWords(2);
-            driver.findElement(By.id("edit-title")).sendKeys(Tracking[0] + " " + Tracking[1]);
+            driver.findElement(By.xpath("//form[@id='grading-standard-node-form']/div/div[3]/input")).sendKeys(Tracking[0] + " " + Tracking[1]);
+            // Enter Weight
             driver.findElement(By.id("edit-field-gr-std-weight-und-0-value")).clear();
-            percentage = func.RandomPercentage();
-            driver.findElement(By.id("edit-field-gr-std-weight-und-0-value")).sendKeys(String.valueOf(percentage));
-            driver.findElement(By.cssSelector("css=#edit-actions > #edit-submit")).click();
+            driver.findElement(By.id("edit-field-gr-std-weight-und-0-value")).sendKeys(String.valueOf(1));
+            // Click Save Button
+            driver.findElement(By.xpath("//div[6]/input")).click();
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[6]/input")));
         } else if (isElementPresent(By.linkText("+"))) {
+            // Click "+" Symbol
             driver.findElement(By.linkText("+")).click();
+            // Select Course
             new Select(driver.findElement(By.id("edit-field-gr-std-course-ref-und"))).selectByVisibleText("algebra");
-            driver.findElement(By.id("edit-title")).clear();
+            // Enter Grading Attributes
+            driver.findElement(By.xpath("//form[@id='grading-standard-node-form']/div/div[3]/input")).clear();
             Tracking = func.RandomWords(2);
-            driver.findElement(By.id("edit-title")).sendKeys(Tracking[0] + " " + Tracking[1]);
+            driver.findElement(By.xpath("//form[@id='grading-standard-node-form']/div/div[3]/input")).sendKeys(Tracking[0] + " " + Tracking[1]);
+            // Enter Weight
             driver.findElement(By.id("edit-field-gr-std-weight-und-0-value")).clear();
-            percentage = func.RandomPercentage();
-            driver.findElement(By.id("edit-field-gr-std-weight-und-0-value")).sendKeys(String.valueOf(percentage));
-            driver.findElement(By.cssSelector("css=#edit-actions > #edit-submit")).click();
+            driver.findElement(By.id("edit-field-gr-std-weight-und-0-value")).sendKeys(String.valueOf(1));
+            // Click Save Button
+            driver.findElement(By.xpath("//div[6]/input")).click();
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[6]/input")));
         }
 
-        driver.findElement(By.linkText("Edit")).click();
-        driver.findElement(By.xpath("(//input[@id='edit-title'])[2]")).clear();
+        // Click Edit
+        driver.findElement(By.xpath("//td[3]/a")).click();
+        // Enter Grading Attributes
+        driver.findElement(By.xpath("//form[@id='grading-standard-node-form']/div/div[2]/input")).clear();
         Tracking = func.RandomWords(2);
-        driver.findElement(By.xpath("(//input[@id='edit-title'])[2]")).sendKeys(Tracking[0] + " " + Tracking[1]);
-        driver.findElement(By.cssSelector("#edit-actions > #edit-submit")).click();
+        driver.findElement(By.xpath("//form[@id='grading-standard-node-form']/div/div[2]/input")).sendKeys(Tracking[0] + " " + Tracking[1]);
+        // Click Save
+        driver.findElement(By.xpath("//div[@id='edit-actions']/input")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@id='edit-actions']/input")));
+        Thread.sleep(300);
     }
 
     @After

@@ -1,4 +1,8 @@
-package TestCOT.TeacherRole.Homework;
+package TestCOT.TeacherRole.Gradebook;
+
+/**
+ * Created by om on 11/19/2014.
+ */
 
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
@@ -11,9 +15,10 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class SeeSubmittedTest {
+public class EnterMarksSubmitGrades_Pending {
     private WebDriver driver;
     private String baseUrl;
+    private int IntegerValue = 0;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
@@ -26,18 +31,29 @@ public class SeeSubmittedTest {
     }
 
     @Test
-    public void testSeeSubmitted() throws Exception {
+    public void testEnterMarksSubmitGrade() throws Exception {
         Functions func = new Functions(driver);
         func.CheckLogin();
         func.LoginRole("Teacher");
-        driver.get(baseUrl + "/lesson-library");
+        driver.get(baseUrl + "/my-assignments");
 
-        driver.findElement(By.linkText("ONLINE TESTS")).click();
-        driver.findElement(By.linkText("Grade Test")).click();
-        driver.findElement(By.linkText("Grade Test")).click();
-        driver.findElement(By.linkText("5")).click();
-        driver.findElement(By.id("edit-submit-marks")).click();
-        driver.findElement(By.cssSelector("span.iframe-close-button > img")).click();
+        // Click Submit Grades
+        driver.findElement(By.linkText("SUBMIT GRADES")).click();
+
+        // Assign Assignment Number To Student
+        driver.findElement(By.id("edit-4341-marks-75486")).clear();
+        IntegerValue = func.RandomIntegerNumber(5);
+        driver.findElement(By.id("edit-4341-marks-75486")).sendKeys(String.valueOf(IntegerValue));
+        driver.findElement(By.id("edit-4346-marks-75486")).clear();
+        IntegerValue = func.RandomIntegerNumber(8);
+        driver.findElement(By.id("edit-4346-marks-75486")).sendKeys(String.valueOf(IntegerValue));
+        driver.findElement(By.id("edit-4351-marks-75486")).clear();
+        IntegerValue = func.RandomIntegerNumber(3);
+        driver.findElement(By.id("edit-4351-marks-75486")).sendKeys(String.valueOf(IntegerValue));
+        driver.findElement(By.id("edit-comments-75486")).clear();
+        driver.findElement(By.id("edit-comments-75486")).sendKeys("Good.");
+        // Click Save Button
+        driver.findElement(By.xpath("//form[@id='gradebook-grade-submit--2']/div/input[3]")).click();
     }
 
     @After
@@ -82,3 +98,5 @@ public class SeeSubmittedTest {
         }
     }
 }
+
+// Unable to find the steps on site.

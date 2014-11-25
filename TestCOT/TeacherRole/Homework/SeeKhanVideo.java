@@ -9,17 +9,21 @@ import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SeeKhanVideo {
     private WebDriver driver;
     private String baseUrl;
+    private WebDriverWait wait;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
+        wait = new WebDriverWait(driver, 5);
         baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
@@ -32,11 +36,22 @@ public class SeeKhanVideo {
         func.LoginRole("Teacher");
         driver.get(baseUrl + "/lesson-library");
 
+        // Click Khan Academy
         driver.findElement(By.linkText("KHAN ACADEMY")).click();
+
+        // Click Science
         driver.findElement(By.id("science")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ajax-waiting")));
+        // Click Physics
         driver.findElement(By.id("physics")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ajax-waiting")));
+        // Click Work And Energy
         driver.findElement(By.id("work-and-energy")).click();
-        driver.findElement(By.cssSelector("#3mier94pbnU > td.ka-video > div.ka-play")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ajax-waiting")));
+
+        // Click Video
+        driver.findElement(By.xpath("//tr[2]/td/div")).click();
+        // Click Close Button
         driver.findElement(By.cssSelector("a.close-button > img")).click();
     }
 

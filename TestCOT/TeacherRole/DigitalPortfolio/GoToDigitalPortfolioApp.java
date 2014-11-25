@@ -33,7 +33,9 @@ public class GoToDigitalPortfolioApp {
         Functions func = new Functions(driver);
         func.CheckLogin();
         func.LoginRole("Teacher");
+        // Click Home
         driver.findElement(By.xpath("//div[@id='nav-group-home']")).click();
+        // Click Digital Portfolio
         driver.findElement(By.linkText("Digital Portfolio")).click();
     }
 

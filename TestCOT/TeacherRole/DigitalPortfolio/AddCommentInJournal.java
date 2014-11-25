@@ -37,17 +37,26 @@ public class AddCommentInJournal {
         func.LoginRole("Teacher");
         driver.get(baseUrl + "/journals/75486");
 
+        // Click Journal
         driver.findElement(By.linkText("JOURNAL")).click();
-        String journal = driver.findElement(By.cssSelector("div.block-title > a")).getText();
-        // Number of comments
+        // Click Comments
         driver.findElement(By.xpath("//div[5]/a")).click();
+
+        // Click Add New Comment
         driver.findElement(By.id("comment-add")).click();
+        // Enter Comment
         driver.findElement(By.id("edit-comment-body-und-0-value")).clear();
         Tracking = func.RandomWords(3);
         driver.findElement(By.id("edit-comment-body-und-0-value")).sendKeys(Tracking[0] + " " + Tracking[1] + " " + Tracking[2]);
-        driver.findElement(By.id("edit-submit")).click();
-        driver.findElement(By.linkText(journal)).click();
-        driver.findElement(By.linkText("November 2014")).click();
+        // Click Save Button
+        driver.findElement(By.xpath("//div[@id='edit-actions']/input")).click();
+
+        // Store Journal Name
+        String Journal = driver.findElement(By.cssSelector("div.block-title")).getText();
+        // Click Journal at Recent Post
+        driver.findElement(By.linkText(Journal)).click();
+        // Click Date at Archives
+        driver.findElement(By.xpath("//section[2]/div/div/div/div/div/ul/li/a")).click();
     }
 
     @After
