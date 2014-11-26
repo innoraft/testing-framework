@@ -3,20 +3,21 @@ package TestCOT.StudentRole.Iplan;
 /**
  * Created by om on 11/12/2014.
  */
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 
-import TestCOT.Common.Functions;
+import TestCOT.CommonFunctions.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SaveGoalAndTickTask {
     private WebDriver driver;
     private String baseUrl;
+    private WebDriverWait wait;
     private String[] Tracking = null;
     private String TrackingValues = "";
     private boolean acceptNextAlert = true;
@@ -25,7 +26,8 @@ public class SaveGoalAndTickTask {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://collegeontrackra.prod.acquia-sites.com";
+        wait = new WebDriverWait(driver, 10);
+        baseUrl = "http://satishtest.devcloud.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
     }
@@ -37,23 +39,32 @@ public class SaveGoalAndTickTask {
         func.LoginRole("Student");
         driver.get(baseUrl + "/long-term-planner");
 
+        // Click ITasks
         driver.findElement(By.linkText("ITASKS")).click();
+
         // Click Careers & Majors
         driver.findElement(By.cssSelector("div.careers-major-link")).click();
+        // Close Careers & Majors
         driver.findElement(By.cssSelector("div.close-button > img")).click();
+
         // Click My Goals
         driver.findElement(By.cssSelector("div.ltp-milestone-goal-link")).click();
+        // Click Source
         driver.findElement(By.id("cke_8_label")).click();
+        // Enter Goal
         driver.findElement(By.cssSelector("textarea.cke_source.cke_enable_context_menu")).clear();
         Tracking = func.RandomWords(5);
         for(int i= 0 ; i < Tracking.length ; i++) {
             TrackingValues = TrackingValues + " " + Tracking[i];
         }
         driver.findElement(By.cssSelector("textarea.cke_source.cke_enable_context_menu")).sendKeys(TrackingValues);
+        // Click Save Button
         driver.findElement(By.id("edit-submit")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("edit-submit")));
+
         // Click Title
         driver.findElement(By.cssSelector("div.title")).click();
-        driver.findElement(By.id("edit-task-status-891356-1")).click();
+        // Close Title
         driver.findElement(By.cssSelector("span.close-button > img")).click();
     }
 

@@ -1,20 +1,18 @@
-package TestCOT.StudentRole.Iplan;
+package TestCOT.SchoolAdminRole.Dashboard;
 
 /**
  * Created by om on 11/12/2014.
  */
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 
-import TestCOT.Common.Functions;
+import TestCOT.CommonFunctions.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
 
-public class AddCourseRequest {
+public class ActionOnCourseRequest_Pending {
     private WebDriver driver;
     private String baseUrl;
     private boolean acceptNextAlert = true;
@@ -23,29 +21,22 @@ public class AddCourseRequest {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
+        baseUrl = "http://satishtest.devcloud.acquia-sites.com";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
     }
 
     @Test
-    public void testAddCourseRequest() throws Exception {
+    public void testActionOnCourseRequest() throws Exception {
         Functions func = new Functions(driver);
         func.CheckLogin();
-        func.LoginRole("Student");
-        driver.get(baseUrl + "/student-planner?track=891361");
+        func.LoginRole("SchoolAdmin");
+        driver.get(baseUrl + "/students-dashboard");
 
-        driver.findElement(By.linkText("COURSE PLANNER")).click();
-        driver.findElement(By.linkText("Add Class")).click();
-        driver.findElement(By.id("subject-social_science")).click();
-        driver.findElement(By.id("grade-9")).click();
-        driver.findElement(By.id("grade-12")).click();
-        driver.findElement(By.id("edit-submit")).click();
-        driver.findElement(By.id("subject-foreign_languages")).click();
-        driver.findElement(By.id("grade-9")).click();
-        driver.findElement(By.id("edit-submit")).click();
-        driver.findElement(By.id("grade-9")).click();
-        driver.findElement(By.id("edit-submit")).click();
+        // Click Dashboard
+        driver.findElement(By.linkText("Dashboard")).click();
+        driver.findElement(By.id("edit-course-request-status-891821-accept")).click();
+        driver.findElement(By.id("edit-course-request-status-891816-reject")).click();
     }
 
     @After
@@ -90,4 +81,3 @@ public class AddCourseRequest {
         }
     }
 }
-

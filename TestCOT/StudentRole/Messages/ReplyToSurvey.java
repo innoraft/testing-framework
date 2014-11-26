@@ -3,16 +3,14 @@ package TestCOT.StudentRole.Messages;
 /**
  * Created by om on 11/12/2014.
  */
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 
-import TestCOT.Common.Functions;
+import TestCOT.CommonFunctions.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
 
 public class ReplyToSurvey {
     private WebDriver driver;
@@ -35,11 +33,12 @@ public class ReplyToSurvey {
         func.LoginRole("Student");
         driver.get(baseUrl + "/messages");
 
+        // Click Survey
         driver.findElement(By.linkText("SURVEY")).click();
-        driver.findElement(By.linkText("at what time he does his homework")).click();
-        driver.findElement(By.id("edit-new-1415714436558-two")).click();
-        new Select(driver.findElement(By.id("edit-new-1415714439254"))).selectByVisibleText("3 PM");
-        driver.findElement(By.id("edit-submit")).click();
+        // Click At First Survey
+        driver.findElement(By.xpath("//td/a")).click();
+        // Click Submit Button
+        driver.findElement(By.xpath("//input[5]")).click();
     }
 
     @After

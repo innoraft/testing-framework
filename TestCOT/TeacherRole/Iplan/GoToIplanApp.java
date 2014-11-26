@@ -3,17 +3,15 @@ package TestCOT.TeacherRole.Iplan;
 /**
  * Created by om on 11/12/2014.
  */
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 
-import TestCOT.Common.Functions;
+import TestCOT.CommonFunctions.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class GoToIplanApp {
@@ -37,7 +35,9 @@ public class GoToIplanApp {
         Functions func = new Functions(driver);
         func.CheckLogin();
         func.LoginRole("Teacher");
+        // Click Home
         driver.findElement(By.xpath("//div[@id='nav-group-home']")).click();
+        // Click IPlan
         driver.findElement(By.linkText("iPlan")).click();
         wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText("COURSE PLANNER")));
     }

@@ -3,17 +3,15 @@ package TestCOT.SchoolAdminRole.AdminApp;
 /**
  * Created by om on 11/12/2014.
  */
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
-import TestCOT.Common.*;
+import TestCOT.CommonFunctions.*;
 
-public class SaveCourseRequirement {
+public class SaveCourseRequirement_Pending {
     private WebDriver driver;
     private String baseUrl;
     private int Max = 50;

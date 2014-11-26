@@ -1,14 +1,11 @@
-package TestCOT.Common;
+package TestCOT.CommonFunctions;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.io.IOException;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -46,14 +43,14 @@ public class Functions {
             UserName = "";
             Password = "";
         } else if (Role.equals("Student")) {
-            UserName = "basant.sharma@gmail.com";
-            Password = "password";
+            UserName = "anna@anna.com";
+            Password = "annalu";
         } else if (Role.equals("Teacher")) {
             UserName = "mukesh.agarwal@gmail.com";
             Password = "password";
         } else if (Role.equals("SchoolAdmin")) {
-            UserName = "akashjain132@gmail.com";
-            Password = "password";
+            UserName = "dewanzeng";
+            Password = "marketing1234";
         } else if (Role.equals("ContentManager")) {
             UserName = "amantest";
             Password = "password";

@@ -3,13 +3,12 @@ package TestCOT.StudentRole.DocushareApp;
 /**
  * Created by om on 11/12/2014.
  */
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 
-import TestCOT.Common.Functions;
+import TestCOT.CommonFunctions.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -29,7 +28,7 @@ public class CreateFolderAndFiles {
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
         wait = new WebDriverWait(driver, 20);
-        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
+        baseUrl = "http://satishtest.devcloud.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         driver.get(baseUrl + "/");
@@ -40,13 +39,14 @@ public class CreateFolderAndFiles {
         Functions func = new Functions(driver);
         func.CheckLogin();
         func.LoginRole("Student");
-
         driver.get(baseUrl + "/document-locker");
+
         // Click Docushare
         driver.findElement(By.linkText("DOCUSHARE")).click();
-
         // Click Upload Document
         driver.findElement(By.cssSelector("span.show-file-add-form")).click();
+
+        // Add To Document Locker
         // Enter Document Name
         driver.findElement(By.id("edit-title")).clear();
         Tracking = func.RandomWords(3);
@@ -54,24 +54,29 @@ public class CreateFolderAndFiles {
         // Upload File
         driver.findElement(By.id("edit-field-doc-loc-uploaded-file-und-0-upload")).sendKeys("C:\\Users\\om\\Downloads\\abc.txt");
         // Click Save
-        driver.findElement(By.xpath("//input[@id='edit-submit']")).click();
+        driver.findElement(By.xpath("//form/div/div[2]/input")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//form/div/div[2]/input")));
 
         // Click Hidden Checkbox using Actions Class
         WebElement Element = driver.findElement(By.xpath("//form[@id='views-form-views-document-locker-files-block']/div/div[2]"));
         WebElement HiddenElement = driver.findElement(By.xpath("//form[@id='views-form-views-document-locker-files-block']/div/div[2]/div[3]/span/div/input"));
         Actions action = new Actions(driver);
+        // Move To Element
         action.moveToElement(Element).perform();
-        Thread.sleep(2000);
+        // Wait For Checkbox To Be Shown
+        Thread.sleep(200);
+        // Click Checkbox
         action.click(HiddenElement).perform();
         // Click download button
         driver.findElement(By.id("edit-files-submit")).click();
 
-        // Check Document
+        // See Document in Different Form
         driver.findElement(By.cssSelector("span.show-file-list-form.file-showing-form")).click();
         driver.findElement(By.cssSelector("span.show-file-grid-form.file-showing-form")).click();
 
         // Click New Folder
         driver.findElement(By.cssSelector("span.show-folder-add-form")).click();
+        // Create Folder
         // Enter Folder Name
         driver.findElement(By.id("edit-title--2")).clear();
         Tracking = func.RandomWords(2);
@@ -79,8 +84,8 @@ public class CreateFolderAndFiles {
         // Select Parent
         new Select(driver.findElement(By.id("edit-field-doc-loc-parent-folder-und"))).selectByVisibleText("Personal");
         // Click Save
-        driver.findElement(By.xpath("//*[@id=\"edit-submit--2\"]")).click();
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.linkText("//*[@id=\"edit-submit--2\"]")));
+        driver.findElement(By.xpath("//div[3]/input")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.linkText("//div[3]/input")));
     }
 
     @After

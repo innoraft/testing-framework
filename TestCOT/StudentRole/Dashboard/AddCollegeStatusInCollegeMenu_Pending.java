@@ -3,16 +3,14 @@ package TestCOT.StudentRole.Dashboard;
 /**
  * Created by om on 11/12/2014.
  */
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 
-import TestCOT.Common.Functions;
+import TestCOT.CommonFunctions.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
 
 public class AddCollegeStatusInCollegeMenu_Pending {
     private WebDriver driver;
@@ -24,7 +22,7 @@ public class AddCollegeStatusInCollegeMenu_Pending {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
+        baseUrl = "http://satishtest.devcloud.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
     }
@@ -38,6 +36,7 @@ public class AddCollegeStatusInCollegeMenu_Pending {
 
         // Click Colleges
         driver.findElement(By.xpath("(//a[contains(text(),'Colleges')])[2]")).click();
+
         driver.findElement(By.cssSelector("div.10756")).click();
         driver.findElement(By.cssSelector("div.cot-overlay-content > div.10756")).click();
         driver.findElement(By.id("edit-title")).clear();

@@ -1,16 +1,14 @@
 package TestCOT.SchoolAdminRole.Homework;
 
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 
-import TestCOT.Common.Functions;
+import TestCOT.CommonFunctions.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class GoToApp {
@@ -23,8 +21,8 @@ public class GoToApp {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        wait = new WebDriverWait(driver, 400);
-        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
+        wait = new WebDriverWait(driver, 10);
+        baseUrl = "http://satishtest.devcloud.acquia-sites.com";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
     }
@@ -34,7 +32,9 @@ public class GoToApp {
         Functions func = new Functions(driver);
         func.CheckLogin();
         func.LoginRole("SchoolAdmin");
+        // Click Home
         driver.findElement(By.xpath("//div[@id='nav-group-home']")).click();
+        // Click Lessons & Homework
         driver.findElement(By.linkText("Lessons & Homework")).click();
         wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText("HOMEWORK ASSIGNMENTS")));
     }

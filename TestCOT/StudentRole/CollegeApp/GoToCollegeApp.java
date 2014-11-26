@@ -3,16 +3,14 @@ package TestCOT.StudentRole.CollegeApp;
 /**
  * Created by om on 11/12/2014.
  */
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 
-import TestCOT.Common.Functions;
+import TestCOT.CommonFunctions.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
 
 public class GoToCollegeApp {
     private WebDriver driver;
@@ -33,7 +31,9 @@ public class GoToCollegeApp {
         Functions func = new Functions(driver);
         func.CheckLogin();
         func.LoginRole("Student");
+        // Click Home
         driver.findElement(By.xpath("//div[@id='nav-group-home']")).click();
+        // Click Colleges
         driver.findElement(By.linkText("Colleges")).click();
     }
 

@@ -1,17 +1,18 @@
-package TestCOT.TeacherRole;
+package TestCOT.StudentRole.Iplan;
 
-import java.util.regex.Pattern;
+/**
+ * Created by om on 11/12/2014.
+ */
 import java.util.concurrent.TimeUnit;
 
-import TestCOT.Common.Functions;
+import TestCOT.CommonFunctions.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
 
-public class CreateGroup {
+public class AddCourseRequest_Pending {
     private WebDriver driver;
     private String baseUrl;
     private boolean acceptNextAlert = true;
@@ -20,33 +21,31 @@ public class CreateGroup {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
+        baseUrl = "http://satishtest.devcloud.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
     }
 
     @Test
-    public void testCreateAGroup() throws Exception {
+    public void testAddCourseRequest() throws Exception {
         Functions func = new Functions(driver);
         func.CheckLogin();
-        func.LoginRole("Teacher");
+        func.LoginRole("Student");
+        driver.get(baseUrl + "/student-planner");
 
-        driver.findElement(By.cssSelector("div.top-logout-list.top-menu")).click();
-        driver.findElement(By.linkText("My Account")).click();
-        driver.findElement(By.linkText("MY GROUPS")).click();
-        driver.findElement(By.linkText("CREATE NEW GROUP")).click();
-        driver.findElement(By.id("edit-gname")).clear();
-        driver.findElement(By.id("edit-gname")).sendKeys("faltu");
-        driver.findElement(By.id("edit-submit-create-relation-group--2")).click();
-        driver.findElement(By.cssSelector("a.chzn-single.chzn-single-with-drop > span")).click();
-        driver.findElement(By.cssSelector("a.chzn-single.chzn-single-with-drop > span")).click();
-        driver.findElement(By.xpath("//div[@id='page-wrapper']/div/div[5]/div/div/div/div[5]/div/div/div/div/div[2]/div/div/div")).click();
-        driver.findElement(By.linkText("remove")).click();
-        driver.findElement(By.xpath("(//button[@type='button'])[4]")).click();
-        driver.findElement(By.id("edit-delete-group-button")).click();
-        driver.findElement(By.xpath("(//button[@type='button'])[4]")).click();
-        driver.findElement(By.linkText("My Team")).click();
-        driver.findElement(By.linkText("My Team")).click();
+        // Click Course Planner
+        driver.findElement(By.linkText("COURSE PLANNER")).click();
+        //
+        driver.findElement(By.linkText("Add Class")).click();
+        driver.findElement(By.id("subject-social_science")).click();
+        driver.findElement(By.id("grade-9")).click();
+        driver.findElement(By.id("grade-12")).click();
+        driver.findElement(By.id("edit-submit")).click();
+        driver.findElement(By.id("subject-foreign_languages")).click();
+        driver.findElement(By.id("grade-9")).click();
+        driver.findElement(By.id("edit-submit")).click();
+        driver.findElement(By.id("grade-9")).click();
+        driver.findElement(By.id("edit-submit")).click();
     }
 
     @After
@@ -92,4 +91,3 @@ public class CreateGroup {
     }
 }
 
-// Write code for multiple chosen select list.

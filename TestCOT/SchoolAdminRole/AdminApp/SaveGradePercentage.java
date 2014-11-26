@@ -3,18 +3,14 @@ package TestCOT.SchoolAdminRole.AdminApp;
 /**
  * Created by om on 11/12/2014.
  */
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 
-import TestCOT.Common.Functions;
+import TestCOT.CommonFunctions.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
 
-import org.junit.experimental.max.MaxCore;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
 
 public class SaveGradePercentage {
     private WebDriver driver;
@@ -27,7 +23,7 @@ public class SaveGradePercentage {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
+        baseUrl = "http://satishtest.devcloud.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
     }
@@ -39,32 +35,39 @@ public class SaveGradePercentage {
         func.LoginRole("SchoolAdmin");
         driver.get(baseUrl + "/discipline-admin");
 
+        // Click Grade Percentage
         driver.findElement(By.linkText("Grade Percentages")).click();
-        // Check radioButton "Letter Grading" selected or not. If not, than select it.
+
+        // Check "Letter Grading" Checked or not. If not, than Check it.
         if (!driver.findElement(By.id("edit-system-1")).isSelected()) {
             driver.findElement(By.id("edit-system-1")).click();
         }
+        // Enter Minimum Passing Grade Equivalence
         driver.findElement(By.id("edit-passing-marks")).clear();
         DecimalValue = func.RandomDecimalNumber(Max);
         driver.findElement(By.id("edit-passing-marks")).sendKeys(String.valueOf(DecimalValue));
+        // Enter Minimum Passing Grade Transfer
         driver.findElement(By.id("edit-min-pass-t")).clear();
         DecimalValue = func.RandomDecimalNumber(Max);
         driver.findElement(By.id("edit-min-pass-t")).sendKeys(String.valueOf(DecimalValue));
-        driver.findElement(By.id("edit-submit--4")).click();
-        driver.findElement(By.id("edit-submit--5")).click();
-
-        // Check "Remove" button for "Signature" presented or not. If present than click it.
+        // Click Save For Minimum Passing Grade Equivalence
+        driver.findElement(By.xpath("//form[3]/div/div/input")).click();
+        // Click Save For Minimum Passing Grade Transfer
+        driver.findElement(By.xpath("//form[4]/div/div/input")).click();
+        // Check "Remove" button for "Signature" present or not. If present than click it.
         if(isElementPresent(By.id("edit-field-transcript-signature-und-0-remove-button"))) {
             driver.findElement(By.id("edit-field-transcript-signature-und-0-remove-button")).click();
         }
-        driver.findElement(By.id("edit-field-transcript-signature-und-0-upload")).sendKeys("C:\\Users\\om\\Downloads\\Business Process Outsourcing (BPO) Services_Market Segments_Healthcare BPO Services.jpg");
-
-        // Check "Remove" button for "School logo" presented or not. If present than click it.
+        // Upload File
+        driver.findElement(By.id("edit-field-transcript-signature-und-0-upload")).sendKeys("C:\\Users\\om\\Downloads\\abc.jpg");
+        // Check "Remove" button for "School logo" present or not. If present than click it.
         if(isElementPresent(By.id("edit-field-transcript-school-logo-und-0-remove-button"))) {
             driver.findElement(By.id("edit-field-transcript-school-logo-und-0-remove-button")).click();
         }
-        driver.findElement(By.id("edit-field-transcript-school-logo-und-0-upload")).sendKeys("C:\\Users\\om\\Downloads\\Business Process Outsourcing (BPO) Services_Service Portfolio_Technical Support Services (2).jpg");
-        driver.findElement(By.id("edit-submit--7")).click();
+        // Upload File
+        driver.findElement(By.id("edit-field-transcript-school-logo-und-0-upload")).sendKeys("C:\\Users\\om\\Downloads\\xyz.jpg");
+        // Click Save
+        driver.findElement(By.xpath("//div[4]/input")).click();
     }
 
     @After

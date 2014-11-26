@@ -3,17 +3,15 @@ package TestCOT.StudentRole.DigitalPortfolio;
 /**
  * Created by om on 11/12/2014.
  */
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 
-import TestCOT.Common.Functions;
+import TestCOT.CommonFunctions.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AddActivity {
@@ -31,7 +29,7 @@ public class AddActivity {
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
         wait = new WebDriverWait(driver, 400);
-        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
+        baseUrl = "http://satishtest.devcloud.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
     }
@@ -47,32 +45,43 @@ public class AddActivity {
         driver.findElement(By.linkText("ACTIVITIES")).click();
         // Click Create Activity
         driver.findElement(By.linkText("CREATE ACTIVITY")).click();
-        // Fill Activity form
+
+        // Create Activity
+        // Enter Activity
         driver.findElement(By.id("edit-field-activity-activities-und-0-value")).clear();
         Tracking = func.RandomWords(2);
         driver.findElement(By.id("edit-field-activity-activities-und-0-value")).sendKeys(Tracking[0] + " " + Tracking[1]);
+        // Enter Grade
         driver.findElement(By.id("edit-field-activity-grade-und-0-value")).clear();
         IntegerValue = func.RandomIntegerNumberBetweenRange(Max, Min);
         driver.findElement(By.id("edit-field-activity-grade-und-0-value")).sendKeys(String.valueOf(IntegerValue));
+        // Enter Hours Per Week
         driver.findElement(By.id("edit-field-activity-hours-p-week-und-0-value")).clear();
         Max = 168;
         IntegerValue = func.RandomIntegerNumber(Max);
         driver.findElement(By.id("edit-field-activity-hours-p-week-und-0-value")).sendKeys(String.valueOf(IntegerValue));
+        // Enter Weeks Per Year
         driver.findElement(By.id("edit-field-activity-weeks-p-year-und-0-value")).clear();
         Max = 52;
         IntegerValue = func.RandomIntegerNumber(Max);
         driver.findElement(By.id("edit-field-activity-weeks-p-year-und-0-value")).sendKeys(String.valueOf(IntegerValue));
+        // Enter Positions
         driver.findElement(By.id("edit-field-activity-positions-und-0-value")).clear();
         Tracking = func.RandomWords(1);
         driver.findElement(By.id("edit-field-activity-positions-und-0-value")).sendKeys(Tracking[0]);
+        // Check Citizenship
         driver.findElement(By.id("edit-field-activity-skills-acquired-und-citizenship")).click();
+        // Check Self-Motivation
         driver.findElement(By.id("edit-field-activity-skills-acquired-und-self-motivation")).click();
+        // Check Initiative
         driver.findElement(By.id("edit-field-activity-skills-acquired-und-initiative")).click();
+        // Check Leadership
         driver.findElement(By.id("edit-field-activity-skills-acquired-und-leadership")).click();
+        // Check Technical Mastery
         driver.findElement(By.id("edit-field-activity-skills-acquired-und-technical-mastery")).click();
-        // Save the activity form
-        driver.findElement(By.xpath("//*[@id=\"edit-submit--5\"]")).click();
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.linkText("//*[@id=\"edit-submit--5\"]")));
+        // Click Save Button
+        driver.findElement(By.xpath("//form/div/div[9]/input")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.linkText("//form/div/div[9]/input")));
     }
 
     @After

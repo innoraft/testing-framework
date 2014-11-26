@@ -3,20 +3,22 @@ package TestCOT.StudentRole.Iplan;
 /**
  * Created by om on 11/12/2014.
  */
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 
-import TestCOT.Common.Functions;
+import TestCOT.CommonFunctions.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AddCoursesInIplan {
     private WebDriver driver;
     private String baseUrl;
+    private WebDriverWait wait;
     private int Max = 10;
     private int IntegerValue = 0;
     private String[] Tracking = null;
@@ -26,7 +28,8 @@ public class AddCoursesInIplan {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com";
+        wait = new WebDriverWait(driver, 10);
+        baseUrl = "http://satishtest.devcloud.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
     }
@@ -36,17 +39,19 @@ public class AddCoursesInIplan {
         Functions func = new Functions(driver);
         func.CheckLogin();
         func.LoginRole("Student");
-        driver.get(baseUrl + "/student-planner?track=891361");
+        driver.get(baseUrl + "/student-planner");
 
         // Click Add To Planner
-        // Add Course To Planner
         driver.findElement(By.linkText("Add to Planner")).click();
+
+        // Add Course To Planner
         // Click Grade
         driver.findElement(By.id("grade-11")).click();
         // Click Duration
         driver.findElement(By.xpath("(//input[@name='semester'])[2]")).click();
         // Click Save
-        driver.findElement(By.id("edit-submit")).click();
+        driver.findElement(By.xpath("//div[@id='edit-actions']/input")).click();
+
         // Add Another Course To Planner
         // Click Subject
         driver.findElement(By.id("subject-social_science")).click();
@@ -74,6 +79,8 @@ public class AddCoursesInIplan {
 
         // Click Add External Courses
         driver.findElement(By.linkText("Add External Courses")).click();
+
+        // External Courses
         // Select Subject
         new Select(driver.findElement(By.id("edit-subjects-list"))).selectByVisibleText("Mathematics");
         // Enter Course Name
@@ -89,9 +96,11 @@ public class AddCoursesInIplan {
         // Select Duration
         new Select(driver.findElement(By.id("edit-duration"))).selectByVisibleText("Second Semester");
         // Click Submit Button
-        driver.findElement(By.xpath("//*[@id=\"edit-submit-1416487385\"]")).click();
+        driver.findElement(By.xpath("//div[2]/div/form/div/input[3]")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[2]/div/form/div/input[3]")));
+
         // Click PDF Link
-        driver.findElement(By.linkText("print")).click();
+        driver.findElement(By.cssSelector("a.print-pdf.print")).click();
     }
 
     @After

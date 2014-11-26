@@ -1,15 +1,13 @@
 package TestCOT.StudentRole.Homework;
 
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 
-import TestCOT.Common.Functions;
+import TestCOT.CommonFunctions.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
 
 public class ReadDigitalLesson {
     private WebDriver driver;
@@ -20,7 +18,7 @@ public class ReadDigitalLesson {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
+        baseUrl = "http://satishtest.devcloud.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
     }
@@ -32,7 +30,9 @@ public class ReadDigitalLesson {
         func.LoginRole("Student");
         driver.get(baseUrl + "/assigned-lesson");
 
+        // Click Assigned Lessons
         driver.findElement(By.linkText("ASSIGNED LESSONS")).click();
+        // Click "What is Quadratic Equation"
         driver.findElement(By.linkText("what is quadratic equation")).click();
     }
 

@@ -1,26 +1,28 @@
 package TestCOT.StudentRole.Homework;
 
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 
-import TestCOT.Common.Functions;
+import TestCOT.CommonFunctions.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class KhanAcademy {
     private WebDriver driver;
     private String baseUrl;
+    private WebDriverWait wait;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
+        wait = new WebDriverWait(driver, 5);
+        baseUrl = "http://satishtest.devcloud.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
     }
@@ -32,11 +34,22 @@ public class KhanAcademy {
         func.LoginRole("Student");
         driver.get(baseUrl + "/assigned-lesson");
 
+        // Click Khan Academy
         driver.findElement(By.linkText("KHAN ACADEMY")).click();
+
+        // Click Science
         driver.findElement(By.id("science")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ajax-waiting")));
+        // Click Organic Chemistry
         driver.findElement(By.id("organic-chemistry")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ajax-waiting")));
+        // Click Organic Structures
         driver.findElement(By.id("organic-structures")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ajax-waiting")));
+
+        // Click Video
         driver.findElement(By.cssSelector("#IOD5Wb-FKyw > td.ka-video > div.ka-play")).click();
+        // Close Video
         driver.findElement(By.cssSelector("a.close-button > img")).click();
     }
 

@@ -1,20 +1,15 @@
-package TestCOT.SchoolAdminRole.Dashboard;
+package TestCOT.StudentRole;
 
-/**
- * Created by om on 11/12/2014.
- */
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 
-import TestCOT.Common.Functions;
+import TestCOT.CommonFunctions.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
 
-public class ActionOnCourseRequest {
+public class EditUserProfilePage_Pending {
     private WebDriver driver;
     private String baseUrl;
     private boolean acceptNextAlert = true;
@@ -29,15 +24,20 @@ public class ActionOnCourseRequest {
     }
 
     @Test
-    public void testActionOnCourseRequest() throws Exception {
+    public void testEditUserProfilePage() throws Exception {
         Functions func = new Functions(driver);
         func.CheckLogin();
-        func.LoginRole("SchoolAdmin");
-        driver.get(baseUrl + "/students-dashboard");
-
-        driver.findElement(By.linkText("Dashboard")).click();
-        driver.findElement(By.id("edit-course-request-status-891821-accept")).click();
-        driver.findElement(By.id("edit-course-request-status-891816-reject")).click();
+        func.LoginRole("Student");
+        driver.findElement(By.cssSelector("img[alt=\"my image\"]")).click();
+        driver.findElement(By.linkText("My Account")).click();
+        driver.findElement(By.linkText("Edit")).click();
+        driver.findElement(By.id("edit-field-user-address2-und-0-value")).clear();
+        driver.findElement(By.id("edit-field-user-address2-und-0-value")).sendKeys("3/228 jaipur road");
+        driver.findElement(By.id("edit-submit")).click();
+        driver.findElement(By.linkText("Edit")).click();
+        driver.findElement(By.id("edit-field-user-my-digital-presence-und-1")).click();
+        driver.findElement(By.id("edit-field-user-my-digital-presence-und-0")).click();
+        driver.findElement(By.id("edit-submit")).click();
     }
 
     @After

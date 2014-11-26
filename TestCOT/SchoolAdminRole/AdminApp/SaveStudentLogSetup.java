@@ -3,20 +3,21 @@ package TestCOT.SchoolAdminRole.AdminApp;
 /**
  * Created by om on 11/12/2014.
  */
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 
-import TestCOT.Common.Functions;
+import TestCOT.CommonFunctions.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SaveStudentLogSetup {
     private WebDriver driver;
     private String baseUrl;
+    private WebDriverWait wait;
     private int Max = 50;
     private int IntegerValue = 0;
     private String[] Tracking = null;
@@ -26,7 +27,8 @@ public class SaveStudentLogSetup {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
+        wait = new WebDriverWait(driver, 10);
+        baseUrl = "http://satishtest.devcloud.acquia-sites.com";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
     }
@@ -38,27 +40,47 @@ public class SaveStudentLogSetup {
         func.LoginRole("SchoolAdmin");
         driver.get(baseUrl + "/graduation_requirement_tracking");
 
+        // Click Student Log Setup
         driver.findElement(By.linkText("Student Log Setup")).click();
+
         if(isElementPresent(By.linkText("Click here to add a Message type entry"))) {
+            // Click "Click here to add a Message type entry"
             driver.findElement(By.linkText("Click here to add a Message type entry")).click();
+            // Enter Message Types
             driver.findElement(By.id("edit-incidents-type")).clear();
             Tracking = func.RandomWords(1);
             driver.findElement(By.id("edit-incidents-type")).sendKeys(Tracking[0]);
+            // Enter Points
             driver.findElement(By.id("edit-incident-points")).clear();
             IntegerValue = func.RandomIntegerNumber(Max);
             driver.findElement(By.id("edit-incident-points")).sendKeys(String.valueOf(IntegerValue));
+            // Click Save Button
             driver.findElement(By.id("edit-attendance-submit")).click();
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("edit-attendance-submit")));
         } else if (isElementPresent(By.cssSelector("div.plus-symbol"))) {
+            // Click "+" Symbol
             driver.findElement(By.cssSelector("div.plus-symbol")).click();
+            // Enter Message Types
             driver.findElement(By.id("edit-incidents-type")).clear();
             Tracking = func.RandomWords(1);
             driver.findElement(By.id("edit-incidents-type")).sendKeys(Tracking[0]);
+            // Enter Points
             driver.findElement(By.id("edit-incident-points")).clear();
             IntegerValue = func.RandomIntegerNumber(Max);
             driver.findElement(By.id("edit-incident-points")).sendKeys(String.valueOf(IntegerValue));
+            // Click Save Button
             driver.findElement(By.id("edit-attendance-submit")).click();
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("edit-attendance-submit")));
         }
+
+        // Click Cross Button
+        driver.findElement(By.cssSelector("span.confirm-button > img")).click();
+        // Click Yes
+        driver.findElement(By.id("edit-submit")).click();
+
+        // Check Yes Checkbox
         driver.findElement(By.id("edit-parents-email-1")).click();
+        // Click Save
         driver.findElement(By.id("edit-parent-submit")).click();
     }
 

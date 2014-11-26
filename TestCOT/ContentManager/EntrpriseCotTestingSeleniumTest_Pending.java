@@ -13,7 +13,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class EntrpriseCotTestingSeleniumTest {
+public class EntrpriseCotTestingSeleniumTest_Pending {
     private WebDriver driver;
     private String baseUrl;
     private boolean acceptNextAlert = true;

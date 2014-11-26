@@ -9,7 +9,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class SignupTeacher {
+public class SignupStudent_Pending {
     private WebDriver driver;
     private String baseUrl;
     private boolean acceptNextAlert = true;
@@ -23,20 +23,26 @@ public class SignupTeacher {
     }
 
     @Test
-    public void testSignupTeacher() throws Exception {
+    public void testSignupStudent() throws Exception {
         driver.get(baseUrl + "/");
         driver.findElement(By.linkText("SIGN UP")).click();
-        driver.findElement(By.id("edit-user-option-teacher")).click();
         driver.findElement(By.id("edit-lookup")).clear();
         driver.findElement(By.id("edit-lookup")).sendKeys("282010");
         driver.findElement(By.id("edit-lookup-submit")).click();
-        driver.findElement(By.id("edit-teacher-email-address")).clear();
-        driver.findElement(By.id("edit-teacher-email-address")).sendKeys("mukesh.agarwal@gmail.com");
-        driver.findElement(By.id("edit-teacher-password-pass1")).clear();
-        driver.findElement(By.id("edit-teacher-password-pass1")).sendKeys("password");
-        driver.findElement(By.id("edit-teacher-password-pass2")).clear();
-        driver.findElement(By.id("edit-teacher-password-pass2")).sendKeys("password");
-        driver.findElement(By.id("edit-teacher-submit")).click();
+        driver.findElement(By.id("edit-student-student-id")).clear();
+        driver.findElement(By.id("edit-student-student-id")).sendKeys("900099");
+        driver.findElement(By.id("edit-student-last-name")).clear();
+        driver.findElement(By.id("edit-student-last-name")).sendKeys("Sharma");
+        driver.findElement(By.id("edit-student-email-address")).clear();
+        driver.findElement(By.id("edit-student-email-address")).sendKeys("basant.sharma@gmail.com");
+        driver.findElement(By.id("edit-student-password-pass1")).clear();
+        driver.findElement(By.id("edit-student-password-pass1")).sendKeys("password");
+        driver.findElement(By.id("edit-student-password-pass2")).clear();
+        driver.findElement(By.id("edit-student-password-pass2")).sendKeys("password");
+        driver.findElement(By.id("edit-gender-male")).click();
+        driver.findElement(By.id("edit-ethnicity-unknown")).click();
+        driver.findElement(By.id("edit-race-white")).click();
+        driver.findElement(By.id("edit-student-submit")).click();
         driver.findElement(By.id("edit-legal-accept")).click();
         driver.findElement(By.id("edit-save")).click();
     }

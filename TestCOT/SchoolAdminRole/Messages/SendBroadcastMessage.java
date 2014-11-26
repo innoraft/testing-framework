@@ -3,19 +3,15 @@ package TestCOT.SchoolAdminRole.Messages;
 /**
  * Created by om on 11/12/2014.
  */
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 
-import TestCOT.Common.Functions;
+import TestCOT.CommonFunctions.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SendBroadcastMessage {
     private WebDriver driver;
@@ -28,7 +24,7 @@ public class SendBroadcastMessage {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
+        baseUrl = "http://satishtest.devcloud.acquia-sites.com";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
     }
@@ -42,6 +38,8 @@ public class SendBroadcastMessage {
 
         // Click Broadcast
         driver.findElement(By.linkText("BROADCAST")).click();
+
+        // Send Broadcast
         // Select Grade
         driver.findElement(By.xpath("//div[@id='edit_get_grades_chzn']/a/div/b")).click();
         driver.findElement(By.xpath("//*[@id=\"edit_get_grades_chzn_o_4\"]")).click();
@@ -62,7 +60,7 @@ public class SendBroadcastMessage {
 
         // Click Subject
         driver.findElement(By.cssSelector("a.use-ajax.ajax-processed")).click();
-        Thread.sleep(2000);
+        Thread.sleep(200);
         // Click Close Button
         driver.findElement(By.cssSelector("span.close-button > img")).click();
     }

@@ -3,21 +3,15 @@ package TestCOT.StudentRole.DigitalPortfolio;
 /**
  * Created by om on 11/12/2014.
  */
-import java.awt.*;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.KeyEvent;
-import java.sql.Driver;
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 
-import TestCOT.Common.Functions;
+import TestCOT.CommonFunctions.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AddJournalAndComment {
@@ -33,7 +27,7 @@ public class AddJournalAndComment {
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
         wait = new WebDriverWait(driver, 100);
-        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
+        baseUrl = "http://satishtest.devcloud.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
     }
@@ -45,43 +39,47 @@ public class AddJournalAndComment {
         func.LoginRole("Student");
         driver.get(baseUrl + "/journals");
 
+        // Click Journal
         driver.findElement(By.linkText("JOURNAL")).click();
-        // Create journal entry
+        // Click New Journal Entry
         driver.findElement(By.linkText("New Journal Entry")).click();
+
+        // Add Journal Entry
         // Enter Title
         driver.findElement(By.id("edit-title")).clear();
         Tracking = func.RandomWords(2);
         driver.findElement(By.id("edit-title")).sendKeys(Tracking[0] + " " + Tracking[1]);
-        // Fill CKEditor
+        // Click Source
         driver.findElement(By.id("cke_83_label")).click();
+        // Enter Description
         driver.findElement(By.cssSelector("textarea.cke_source.cke_enable_context_menu")).clear();
         Tracking = func.RandomWords(8);
         for(int i= 0 ; i < Tracking.length ; i++) {
             TrackingValues = TrackingValues + " " + Tracking[i];
         }
         driver.findElement(By.cssSelector("textarea.cke_source.cke_enable_context_menu")).sendKeys("<p>" + TrackingValues + " </p>");
-        // Upload file
+        // Click Upload Video
         driver.findElement(By.id("botr-upload-button")).click();
         driver.findElement(By.className("botr-upload-file")).sendKeys("C:\\Users\\om\\Downloads\\Andaman & Nicobar Islands(2 sec video)-BzosVry7nc4.mp4");
+        // Click Upload
         driver.findElement(By.xpath("//input[@value='Upload']")).click();
         // Wait for upload
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.botr-close > img")));
         // Save journal entry
-        driver.findElement(By.id("edit-submit")).click();
+        driver.findElement(By.xpath("//div[2]/input")).click();
+
         // Click Add New Comment
         driver.findElement(By.id("comment-add")).click();
+        // Enter Comment
         driver.findElement(By.id("edit-comment-body-und-0-value")).clear();
         Tracking = func.RandomWords(2);
         driver.findElement(By.id("edit-comment-body-und-0-value")).sendKeys(Tracking[0] + " " + Tracking[1]);
-        driver.findElement(By.id("edit-submit")).click();
-        // Click 2 Comment
-        driver.findElement(By.className("comment-count")).click();
-        // Click Add New Comment
-        driver.findElement(By.id("comment-add")).click();
-        driver.findElement(By.id("edit-comment-body-und-0-value")).clear();
-        Tracking = func.RandomWords(2);
-        driver.findElement(By.id("edit-comment-body-und-0-value")).sendKeys(Tracking[0] + " " + Tracking[1]);
-        driver.findElement(By.id("edit-submit")).click();
+        // Click Save
+        driver.findElement(By.xpath("//form/div/div[2]/input")).click();
+
+        // Click Comment
+        driver.findElement(By.xpath("//div[5]/a")).click();
+        Thread.sleep(300);
     }
 
     @After

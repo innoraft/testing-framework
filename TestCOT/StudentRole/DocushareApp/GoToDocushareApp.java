@@ -3,16 +3,14 @@ package TestCOT.StudentRole.DocushareApp;
 /**
  * Created by om on 11/12/2014.
  */
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 
-import TestCOT.Common.Functions;
+import TestCOT.CommonFunctions.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
 
 public class GoToDocushareApp {
     private WebDriver driver;
@@ -33,8 +31,9 @@ public class GoToDocushareApp {
         Functions func = new Functions(driver);
         func.CheckLogin();
         func.LoginRole("Student");
+        // Click Home
         driver.findElement(By.xpath("//div[@id='nav-group-home']")).click();
-        driver.findElement(By.linkText("DocuShare")).click();
+        // Click DocuShare
         driver.findElement(By.linkText("DocuShare")).click();
     }
 

@@ -1,8 +1,5 @@
-package TestCOT.TeacherRole.DigitalPortfolio;
+package TestCOT.TeacherRole;
 
-/**
- * Created by om on 11/12/2014.
- */
 import java.util.concurrent.TimeUnit;
 
 import TestCOT.CommonFunctions.Functions;
@@ -12,7 +9,7 @@ import static org.junit.Assert.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class SeeStudentActivity {
+public class CreateGroup_Pending {
     private WebDriver driver;
     private String baseUrl;
     private boolean acceptNextAlert = true;
@@ -27,18 +24,27 @@ public class SeeStudentActivity {
     }
 
     @Test
-    public void testSeeStudentActivity() throws Exception {
+    public void testCreateAGroup() throws Exception {
         Functions func = new Functions(driver);
         func.CheckLogin();
         func.LoginRole("Teacher");
-        driver.get(baseUrl + "/journals/75486");
 
-        // Click Activities
-        driver.findElement(By.linkText("ACTIVITIES")).click();
-        // Select Options
-        driver.findElement(By.xpath("//div[@id='edit_students_chzn']/a/div/b")).click();
-        driver.findElement(By.xpath("//*[@id=\"edit_students_chzn_o_1\"]")).click();
-        Thread.sleep(2000);
+        driver.findElement(By.cssSelector("div.top-logout-list.top-menu")).click();
+        driver.findElement(By.linkText("My Account")).click();
+        driver.findElement(By.linkText("MY GROUPS")).click();
+        driver.findElement(By.linkText("CREATE NEW GROUP")).click();
+        driver.findElement(By.id("edit-gname")).clear();
+        driver.findElement(By.id("edit-gname")).sendKeys("faltu");
+        driver.findElement(By.id("edit-submit-create-relation-group--2")).click();
+        driver.findElement(By.cssSelector("a.chzn-single.chzn-single-with-drop > span")).click();
+        driver.findElement(By.cssSelector("a.chzn-single.chzn-single-with-drop > span")).click();
+        driver.findElement(By.xpath("//div[@id='page-wrapper']/div/div[5]/div/div/div/div[5]/div/div/div/div/div[2]/div/div/div")).click();
+        driver.findElement(By.linkText("remove")).click();
+        driver.findElement(By.xpath("(//button[@type='button'])[4]")).click();
+        driver.findElement(By.id("edit-delete-group-button")).click();
+        driver.findElement(By.xpath("(//button[@type='button'])[4]")).click();
+        driver.findElement(By.linkText("My Team")).click();
+        driver.findElement(By.linkText("My Team")).click();
     }
 
     @After
@@ -84,4 +90,4 @@ public class SeeStudentActivity {
     }
 }
 
-// Write code for single chosen select list.
+// Write code for multiple chosen select list.

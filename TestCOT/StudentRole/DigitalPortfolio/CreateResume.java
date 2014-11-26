@@ -3,16 +3,14 @@ package TestCOT.StudentRole.DigitalPortfolio;
 /**
  * Created by om on 11/12/2014.
  */
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 
-import TestCOT.Common.Functions;
+import TestCOT.CommonFunctions.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
 
 public class CreateResume {
     private WebDriver driver;
@@ -27,7 +25,7 @@ public class CreateResume {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
+        baseUrl = "http://satishtest.devcloud.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
     }
@@ -39,10 +37,12 @@ public class CreateResume {
         func.LoginRole("Student");
         driver.get(baseUrl + "/journals");
 
+        // Click Resume
         driver.findElement(By.linkText("RESUME")).click();
         // Click Add Resume
         driver.findElement(By.linkText("ADD RESUME")).click();
 
+        // Create Resume
         // Enter Contact Info
         driver.findElement(By.id("edit-field-resume-contact-info-und-0-value")).clear();
         Tracking = func.RandomWords(7);
@@ -50,7 +50,6 @@ public class CreateResume {
             TrackingValues = TrackingValues + " " + Tracking[i];
         }
         driver.findElement(By.id("edit-field-resume-contact-info-und-0-value")).sendKeys(TrackingValues);
-
         // Enter Objective
         driver.findElement(By.id("edit-field-essay-objective-und-0-value")).clear();
         Tracking = func.RandomWords(10);
@@ -58,7 +57,6 @@ public class CreateResume {
             TrackingValues = TrackingValues + " " + Tracking[i];
         }
         driver.findElement(By.id("edit-field-essay-objective-und-0-value")).sendKeys(TrackingValues);
-
         // Education
         // Enter School/College/Course
         driver.findElement(By.id("edit-field-essay-education-und-0-field-education-school-college-und-0-value")).clear();
@@ -81,17 +79,14 @@ public class CreateResume {
             TrackingValues = TrackingValues + " " + Tracking[i];
         }
         driver.findElement(By.id("edit-field-essay-education-und-0-field-education-brief-info-und-0-value")).sendKeys(TrackingValues);
-
         // Enter Awards & Honors
         driver.findElement(By.id("edit-field-essay-award-honors-und-0-value")).clear();
         Tracking = func.RandomWords(3);
         driver.findElement(By.id("edit-field-essay-award-honors-und-0-value")).sendKeys(Tracking[0] + " " + Tracking[1] + " " + Tracking[2]);
-
-        // Enter Experience
+        // Enter Extracurricular & Leadership Experience
         driver.findElement(By.id("edit-field-essay-extracurricular-und-0-value")).clear();
         Tracking = func.RandomWords(1);
         driver.findElement(By.id("edit-field-essay-extracurricular-und-0-value")).sendKeys(Tracking[0]);
-
         // Enter Work Experience
         // Enter organisation
         driver.findElement(By.id("edit-field-essay-work-und-0-field-work-organisation-und-0-value")).clear();
@@ -106,7 +101,9 @@ public class CreateResume {
         driver.findElement(By.id("edit-field-essay-work-und-0-field-work-year-und-0-value")).sendKeys("June 2013 - April 2014");
         // Save Resume
         driver.findElement(By.id("edit-submit")).click();
-        driver.findElement(By.linkText("Print")).click();
+
+        // Click PDF Link
+        driver.findElement(By.xpath("//a[2]")).click();
     }
 
     @After
