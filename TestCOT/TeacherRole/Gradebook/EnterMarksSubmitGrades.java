@@ -1,8 +1,9 @@
-package TestCOT.TeacherRole.Dashboard;
+package TestCOT.TeacherRole.Gradebook;
 
 /**
- * Created by om on 11/12/2014.
+ * Created by om on 11/19/2014.
  */
+
 import java.util.concurrent.TimeUnit;
 
 import TestCOT.CommonFunctions.Functions;
@@ -14,11 +15,12 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class SeeCheckListOfColleges_Pending {
+public class EnterMarksSubmitGrades {
     private WebDriver driver;
     private String baseUrl;
-    private String SearchValue = null;
     private WebDriverWait wait;
+    private int Max = 0;
+    private int IntegerValue = 0;
     private String[] Tracking = null;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
@@ -27,41 +29,49 @@ public class SeeCheckListOfColleges_Pending {
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
         wait = new WebDriverWait(driver, 10);
-        baseUrl = "http://satishtest.devcloud.acquia-sites.com/";
+        baseUrl = "http://satishdev.devcloud.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
     }
 
     @Test
-    public void testSeeChecklistOfColleges() throws Exception {
+    public void testEnterMarksSubmitGrade() throws Exception {
         Functions func = new Functions(driver);
         func.CheckLogin();
         func.LoginRole("Teacher");
-        driver.get(baseUrl + "/students-dashboard/75486");
+        driver.get(baseUrl + "/my-assignments");
 
-        // Click Colleges
-        driver.findElement(By.xpath("(//a[contains(text(),'Colleges')])[2]")).click();
-        // Check Applied
-        driver.findElement(By.id("edit-checkbox-applied--2")).click();
+        // Click Submit Grades
+        driver.findElement(By.linkText("SUBMIT GRADES")).click();
 
-        // Click Book Icon
-        driver.findElement(By.xpath("//tr[2]/td/div[2]")).click();
-        // Click Checklist
-        driver.findElement(By.xpath("//div[2]/div[6]/div/div[2]/div")).click();
-        // Add Item To Checklist
-        // Enter Application Item
-        driver.findElement(By.id("edit-title")).clear();
+        // Wait for Select list To Load
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ajax-waiting")));
+        // Select My Classes
+        driver.findElement(By.xpath("//form/div/div/div/div/div/div/ul/li[3]")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ajax-waiting")));
+        // Select My Grading Attribute
+        driver.findElement(By.xpath("//div[2]/div/div/div/div/ul/li[3]")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ajax-waiting")));
+        // Select Assignment/Quiz
+        driver.findElement(By.xpath("//div[3]/div/div/div/div/ul/li[2]")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ajax-waiting")));
+        // Enter Accuracy
+        driver.findElement(By.xpath("//td[3]/div/input")).clear();
+        Max = 10;
+        IntegerValue = func.RandomIntegerNumber(Max);
+        driver.findElement(By.xpath("//td[3]/div/input")).sendKeys(String.valueOf(IntegerValue));
+        // Enter Demonstration of Process
+        driver.findElement(By.xpath("//td[4]/div/input")).clear();
+        Max = 5;
+        IntegerValue = func.RandomIntegerNumber(Max);
+        driver.findElement(By.xpath("//td[4]/div/input")).sendKeys(String.valueOf(IntegerValue));
+        // Enter Comment
+        driver.findElement(By.xpath("//textarea")).clear();
         Tracking = func.RandomWords(1);
-        SearchValue = Tracking[0];
-        driver.findElement(By.id("edit-title")).sendKeys(Tracking[0]);
+        driver.findElement(By.xpath("//textarea")).sendKeys(Tracking[0]);
         // Click Save Button
-        driver.findElement(By.xpath("//div[@id='edit-actions--3']/input")).click();
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@id='edit-actions--3']/input")));
-
-        // Click Book Icon
-        driver.findElement(By.xpath("//tr[2]/td/div[2]")).click();
-        // Search Application Item
-        System.out.println(driver.findElement(By.linkText(SearchValue)).getLocation());
+        driver.findElement(By.xpath("//div[4]/form/div/input[3]")).click();
+        Thread.sleep(2000);
     }
 
     @After
@@ -107,4 +117,4 @@ public class SeeCheckListOfColleges_Pending {
     }
 }
 
-// Selenium IDE steps not available at site.
+// Unable to find the steps on site.

@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class AddCourseInCoursePlanner_Pending {
+public class AddCourseInCoursePlanner {
     private WebDriver driver;
     private String baseUrl;
     private boolean acceptNextAlert = true;
@@ -21,7 +21,7 @@ public class AddCourseInCoursePlanner_Pending {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
+        baseUrl = "http://satishtest.devcloud.acquia-sites.com";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
     }
@@ -33,38 +33,61 @@ public class AddCourseInCoursePlanner_Pending {
         func.LoginRole("Teacher");
         driver.get(baseUrl + "/student-planner");
 
-        driver.findElement(By.cssSelector("a.chzn-single.chzn-single-with-drop > span")).click();
-        driver.findElement(By.cssSelector("a.chzn-single > span")).click();
+        // Select Student
+        driver.findElement(By.xpath("//a/span")).click();
+        driver.findElement(By.xpath("//*[@id=\"edit_students_chzn_o_2\"]")).click();
+        // Click Add To Planner
         driver.findElement(By.linkText("Add to Planner")).click();
+
+        // Add Course
+        // Select Subjects
         driver.findElement(By.id("subject-mathematics")).click();
-        driver.findElement(By.id("grade-9")).click();
-        driver.findElement(By.id("node-891271")).click();
-        driver.findElement(By.id("grade-9")).click();
+        // Select Course Title
+        driver.findElement(By.xpath("//div[27]")).click();
+        // Select Grade
         driver.findElement(By.id("grade-11")).click();
-        driver.findElement(By.id("edit-submit")).click();
-        driver.findElement(By.id("subject-mathematics")).click();
-        driver.findElement(By.id("grade-9")).click();
-        driver.findElement(By.id("node-891271")).click();
-        driver.findElement(By.id("grade-9")).click();
-        driver.findElement(By.id("grade-10")).click();
-        driver.findElement(By.id("edit-submit")).click();
-        driver.findElement(By.linkText("Course Planner")).click();
-        driver.findElement(By.linkText("Course Planner")).click();
-        driver.findElement(By.linkText("A-G tracking")).click();
-        driver.findElement(By.linkText("Accept")).click();
+        // Select Duration
+        driver.findElement(By.xpath("(//input[@name='semester'])[2]")).click();
+        // Click Save Button
+        driver.findElement(By.xpath("//div[2]/form/div/div[2]/input")).click();
+
+        // Add Another Course
+        // Select Subjects
+        driver.findElement(By.id("subject-physical_education")).click();
+        // Select Course Title
+        driver.findElement(By.xpath("//div[163]")).click();
+        // Select Grade
+        driver.findElement(By.id("grade-12")).click();
+        // Click Save Button
+        driver.findElement(By.xpath("//div[2]/form/div/div[2]/input")).click();
+        // Click Course Planner
+        driver.findElement(By.linkText("COURSE PLANNER")).click();
+
+        // Select Course Requirements
+        driver.findElement(By.xpath("//div[5]/div/div/form/div/div/div/a/span")).click();
+        driver.findElement(By.xpath("//*[@id=\"edit_tracking_name_chzn_o_1\"]")).click();
+        // Click Accept
+        driver.findElement(By.linkText("ACCEPT")).click();
+
+        // Remove Created Course
+        // Click Cross Image
+        driver.findElement(By.xpath("//td[5]/div/div[2]/span/img")).click();
+        // Click Yes Button
+        driver.findElement(By.xpath("//div[2]/input")).click();
+        // Remove Another Created Course
+        // Click Cross Image
+        driver.findElement(By.xpath("//tr[3]/td[4]/div/div[2]/span/img")).click();
+        // Click Yes Button
+        driver.findElement(By.xpath("//tr[3]/td[4]/div/form/div/div[2]/input")).click();
+
+        // Click Plan Approvals
         driver.findElement(By.cssSelector("span.course-acceptance-link")).click();
+        // Click Close Button
         driver.findElement(By.cssSelector("div.close-button > img")).click();
+        // Click Admissions Requirement
         driver.findElement(By.cssSelector("span.course-requirements-overlay-link")).click();
-        driver.findElement(By.cssSelector("a.chzn-single.chzn-single-with-drop > span")).click();
-        driver.findElement(By.cssSelector("a.chzn-single.chzn-single-with-drop > span")).click();
-        driver.findElement(By.cssSelector("a.chzn-single.chzn-single-with-drop > span")).click();
-        driver.findElement(By.linkText("Add to Planner")).click();
-        driver.findElement(By.id("subject-mathematics")).click();
-        driver.findElement(By.id("grade-9")).click();
-        driver.findElement(By.id("node-891271")).click();
-        driver.findElement(By.id("grade-9")).click();
-        driver.findElement(By.id("grade-11")).click();
-        driver.findElement(By.id("edit-submit")).click();
+        // Click Close Button
+        driver.findElement(By.cssSelector("span.confirm-button > img")).click();
     }
 
     @After

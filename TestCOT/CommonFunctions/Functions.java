@@ -46,8 +46,8 @@ public class Functions {
             UserName = "anna@anna.com";
             Password = "annalu";
         } else if (Role.equals("Teacher")) {
-            UserName = "mukesh.agarwal@gmail.com";
-            Password = "password";
+            UserName = "satishmirle";
+            Password = "marketing1234";
         } else if (Role.equals("SchoolAdmin")) {
             UserName = "dewanzeng";
             Password = "marketing1234";
@@ -64,7 +64,7 @@ public class Functions {
         driver.findElement(By.id("edit-name")).sendKeys(UserName);
         driver.findElement(By.id("edit-pass")).clear();
         driver.findElement(By.id("edit-pass")).sendKeys(Password);
-        driver.findElement(By.id("edit-submit--7")).click();
+        driver.findElement(By.xpath("//div[4]/input")).click();
     }
 
     public int RandomIntegerNumberBetweenRange(int Max, int Min) throws IOException {
