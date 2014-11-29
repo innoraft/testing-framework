@@ -67,6 +67,14 @@ public class Functions {
         driver.findElement(By.xpath("//div[4]/input")).click();
     }
 
+    public Boolean isTextPresent(String Result) throws IOException {
+        if(Result.contains("results retrieved")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public int RandomIntegerNumberBetweenRange(int Max, int Min) throws IOException {
         Random random = new Random();
         int number = random.nextInt(Max - Min) + 6;

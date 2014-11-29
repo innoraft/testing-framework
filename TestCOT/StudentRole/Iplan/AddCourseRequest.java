@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class AddCourseRequest_Pending {
+public class AddCourseRequest {
     private WebDriver driver;
     private String baseUrl;
     private boolean acceptNextAlert = true;
@@ -35,17 +35,33 @@ public class AddCourseRequest_Pending {
 
         // Click Course Planner
         driver.findElement(By.linkText("COURSE PLANNER")).click();
-        //
+        // Click Add Class
         driver.findElement(By.linkText("Add Class")).click();
-        driver.findElement(By.id("subject-social_science")).click();
-        driver.findElement(By.id("grade-9")).click();
+
+        // Click Subject
+        driver.findElement(By.id("subject-history_social_science")).click();
+        // Click Course Title
+        driver.findElement(By.id("node-17164")).click();
+        // Click Grade
         driver.findElement(By.id("grade-12")).click();
-        driver.findElement(By.id("edit-submit")).click();
-        driver.findElement(By.id("subject-foreign_languages")).click();
-        driver.findElement(By.id("grade-9")).click();
-        driver.findElement(By.id("edit-submit")).click();
-        driver.findElement(By.id("grade-9")).click();
-        driver.findElement(By.id("edit-submit")).click();
+        // Click Duration
+        driver.findElement(By.xpath("//div[3]/input")).click();
+        // Click Save
+        driver.findElement(By.xpath("//div[@id='edit-actions']/input")).click();
+
+        // Click Subject
+        driver.findElement(By.id("subject-physical_education")).click();
+        // Click Course Title
+        driver.findElement(By.id("node-17188")).click();
+        // Click Grade
+        driver.findElement(By.id("grade-11")).click();
+        // Click Duration
+        driver.findElement(By.xpath("//div[3]/input")).click();
+        // Click Save
+        driver.findElement(By.xpath("//div[@id='edit-actions']/input")).click();
+
+        // Click Finish
+        driver.findElement(By.linkText("Finish")).click();
     }
 
     @After

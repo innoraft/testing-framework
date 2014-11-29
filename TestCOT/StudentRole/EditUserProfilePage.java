@@ -1,8 +1,5 @@
-package TestCOT.StudentRole.Scholarship;
+package TestCOT.StudentRole;
 
-/**
- * Created by om on 11/12/2014.
- */
 import java.util.concurrent.TimeUnit;
 
 import TestCOT.CommonFunctions.Functions;
@@ -12,7 +9,7 @@ import static org.junit.Assert.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class UpdateScholarshipFeeAndRemoveCollegeFromWishlist_Pending {
+public class EditUserProfilePage {
     private WebDriver driver;
     private String baseUrl;
     private boolean acceptNextAlert = true;
@@ -21,29 +18,37 @@ public class UpdateScholarshipFeeAndRemoveCollegeFromWishlist_Pending {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
+        baseUrl = "http://satishtest.devcloud.acquia-sites.com";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
     }
 
     @Test
-    public void testUpdateSchoarshipFeeAndRemoveCollegeFromWishlist() throws Exception {
+    public void testEditUserProfilePage() throws Exception {
         Functions func = new Functions(driver);
         func.CheckLogin();
         func.LoginRole("Student");
-        driver.get(baseUrl + "/scholarship-search");
 
-        // Click Scholarship Search
-        driver.findElement(By.linkText("Scholarship Search")).click();
-        driver.findElement(By.linkText("SCHOLARSHIP WISH LIST")).click();
-        // Check Checkbox
-        driver.findElement(By.id("edit-checkbox-applied")).click();
-        // Click $400
-        driver.findElement(By.xpath("//td[5]/div/div/div")).click();
-        driver.findElement(By.xpath("//div[2]/input")).clear();
-        driver.findElement(By.xpath("//div[2]/input")).sendKeys("400");
-        driver.findElement(By.name("name=op")).click();
-        driver.findElement(By.linkText("link=Remove from Wish List")).click();
+        // Click Account Holder Name
+        driver.findElement(By.cssSelector("img[alt=\"my image\"]")).click();
+        // Click My Account
+        driver.findElement(By.linkText("My Account")).click();
+
+        // Click Edit Link
+        driver.findElement(By.linkText("Edit")).click();
+        // Enter Address Line 2
+        driver.findElement(By.id("edit-field-user-address2-und-0-value")).clear();
+        driver.findElement(By.id("edit-field-user-address2-und-0-value")).sendKeys("3/228 jaipur road");
+        // Click Save
+        driver.findElement(By.xpath("//input[@id='edit-submit']")).click();
+        // Click Edit link
+        driver.findElement(By.linkText("Edit")).click();
+        // Click Disabled
+        driver.findElement(By.id("edit-field-user-my-digital-presence-und-1")).click();
+        // Click Enabled
+        driver.findElement(By.id("edit-field-user-my-digital-presence-und-0")).click();
+        // Click Save
+        driver.findElement(By.xpath("//input[@id='edit-submit']")).click();
     }
 
     @After
@@ -88,5 +93,3 @@ public class UpdateScholarshipFeeAndRemoveCollegeFromWishlist_Pending {
         }
     }
 }
-
-// Remove college from wish list.

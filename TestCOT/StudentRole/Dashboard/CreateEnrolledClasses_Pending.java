@@ -1,3 +1,8 @@
+/**
+ * Student can select which course of which subject he want to study from which teacher. That request will be send to selected
+ * teacher.
+ */
+
 package TestCOT.StudentRole.Dashboard;
 
 /**
@@ -27,7 +32,7 @@ public class CreateEnrolledClasses_Pending {
     }
 
     @Test
-    public void testCreeateEnrolledClasses() throws Exception {
+    public void testCreateEnrolledClasses() throws Exception {
         Functions func = new Functions(driver);
         func.CheckLogin();
         func.LoginRole("Student");
@@ -37,15 +42,15 @@ public class CreateEnrolledClasses_Pending {
         driver.findElement(By.linkText("DASHBOARD")).click();
         // Click Current Enrolled Classes
         driver.findElement(By.linkText("Current Enrolled Classes")).click();
+
         // Click "+" Symbol
         driver.findElement(By.cssSelector("div.plus-symbol")).click();
-
-        // Select Classes
         // Select Subject
-        driver.findElement(By.xpath("//div[@id='edit_subjects_filter_chzn']/a/span")).click();
-        driver.findElement(By.xpath("//*[@id=\"edit_subjects_filter_chzn_o_1\"]")).click();
-        // Wait For Course
-        driver.findElement(By.cssSelector("b")).click();
+        driver.findElement(By.xpath("//a/span")).click();
+        driver.findElement(By.xpath("//*[@id=\"edit_subjects_filter__2_chzn_o_6\"]")).click();
+        // Wait For Course Select List To Load
+        driver.findElement(By.xpath("//div[2]/div/a/span")).click();
+        driver.findElement(By.xpath("//*[@id=\"edit_course_filter__3_chzn_o_2\"]")).click();
 //        List<WebElement> options = driver.findElements(By.cssSelector("b"));
 //        for (WebElement option : options) {
 //            if(option.getText() == "Mathematics") {

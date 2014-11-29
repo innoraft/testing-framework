@@ -1,12 +1,9 @@
+package TestCOT.TeacherRole.Messages;
+
 /**
- * Teacher can create online test form using elements that inherit by drag and drop feature. To create question, teacher have
- * to provide following information such as name of question, how much marks for it, name of options and correct option. After
- * create online test form, teacher will assign test to students. When student submit the test, it will automatically test by
- * the system and teacher can see the submitted test through "Grade Test".
+ * Created by om on 11/12/2014.
  */
-
-package TestCOT.TeacherRole.Homework;
-
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import TestCOT.CommonFunctions.Functions;
@@ -17,51 +14,45 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class CreateDigitalTest {
+public class CreateSurvey {
     private WebDriver driver;
     private String baseUrl;
-    private WebDriverWait wait;
-    private int Max = 0;
-    private int IntegerValue = 0;
     private String[] Tracking = null;
+    private String TrackingValues = null;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        wait = new WebDriverWait(driver, 5);
         baseUrl = "http://satishtest.devcloud.acquia-sites.com";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
     }
 
     @Test
-    public void testCreateDigital() throws Exception {
+    public void testCreateSurvey() throws Exception {
         Functions func = new Functions(driver);
         func.CheckLogin();
         func.LoginRole("Teacher");
-        driver.get(baseUrl + "/lesson-library");
+        driver.get(baseUrl + "/messages");
 
-        // Click Online Tests
-        driver.findElement(By.linkText("ONLINE TESTS")).click();
+        // Click Survey
+        driver.findElement(By.linkText("SURVEY")).click();
 
-        // Create Test
-        // Click Create Online Tests
-        driver.findElement(By.linkText("Create Online Tests")).click();
-        // Enter Test Title
-        driver.findElement(By.id("edit-title")).clear();
+        // Create Survey
+        // Click Create Survey
+        driver.findElement(By.linkText("CREATE SURVEY")).click();
+        // Enter Title
+        driver.findElement(By.id("edit-survey-title")).clear();
         Tracking = func.RandomWords(2);
-        driver.findElement(By.id("edit-title")).sendKeys(Tracking[0] + " " + Tracking[1]);
-        // Click Save Button
-        driver.findElement(By.xpath("//form[@id='onlinetest-title-form']/div/input")).click();
-        // Drag And Drop "Multiple Answers" Element
-        WebElement dragElement = driver.findElement(By.xpath("//div[@id='form-builder-field-palette']/div/ul/li"));
-        WebElement dropElement = driver.findElement(By.xpath("//div[@id='form-builder']/div[4]"));
+        driver.findElement(By.id("edit-survey-title")).sendKeys(Tracking[0] + " " + Tracking[1]);
+        // Click Create New Survey
+        driver.findElement(By.xpath("//form/div/input")).click();
+        // Drag And Drop "Checkboxes" Element
+        WebElement dragElement = driver.findElement(By.xpath("//div[2]/div/div/ul/li"));
+        WebElement dropElement = driver.findElement(By.xpath("//div[2]/div[2]"));
         Actions dragAndDrop = new Actions(driver);
         // Drag dragElement and drop at dropElement
         Action action = dragAndDrop.dragAndDrop(dragElement, dropElement).build();
@@ -69,15 +60,10 @@ public class CreateDigitalTest {
         // Click Edit Link of Element
         driver.findElement(By.xpath("//a[2]")).click();
         // Enter Title of Question
-        driver.findElement(By.id("edit-title")).clear();
+        driver.findElement(By.xpath("//fieldset/div/div/input")).clear();
         Tracking = func.RandomWords(2);
-        driver.findElement(By.id("edit-title")).sendKeys(Tracking[0] + " " + Tracking[1]);
-        // Enter Maximum Marks
-        driver.findElement(By.id("edit-max-marks")).clear();
-        Max = 10;
-        IntegerValue = func.RandomIntegerNumber(Max);
-        driver.findElement(By.id("edit-max-marks")).sendKeys(String.valueOf(IntegerValue));
-        // Wait For Title And Marks To Save
+        driver.findElement(By.xpath("//fieldset/div/div/input")).sendKeys(Tracking[0] + " " + Tracking[1]);
+        // Wait For Title To Save
         Thread.sleep(3000);
         // Click Options
         driver.findElement(By.xpath("//form[@id='form-builder-field-configure']/div/ul/li[2]/span")).click();
@@ -102,33 +88,27 @@ public class CreateDigitalTest {
         // Click Correct Option Checkbox
         driver.findElement(By.xpath("//tr[2]/td/input[3]")).click();
         // Wait For Options To Save
-        Thread.sleep(5000);
-        // Click Save Test
-        driver.findElement(By.cssSelector("a.form-submit.test-save-link")).click();
-        // Click Publish Test
-        driver.findElement(By.cssSelector("a.form-submit.test-publish-link")).click();
+        Thread.sleep(3000);
+        // Click Validation
+        driver.findElement(By.xpath("//form[@id='form-builder-field-configure']/div/ul/li[3]/span")).click();
+        // Click Required
+        driver.findElement(By.id("edit-required")).click();
+        // Wait For Validation  To Save
+        Thread.sleep(3000);
+        // Click Save Survey
+        driver.findElement(By.linkText("SAVE SURVEY")).click();
 
-        // Assign Test
-        // Click Assign Link
-        driver.findElement(By.xpath("//td[5]/a")).click();
-        // Select Class
-        new Select(driver.findElement(By.xpath("//select"))).selectByVisibleText("AP Biology : Period 1");
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("throbber")));
-        // Select Student
-        new Select(driver.findElement(By.id("assign_students"))).selectByVisibleText("[11] Eric Lu");
-        // Click Add Link
-        driver.findElement(By.xpath("//div[5]/div/ul/li/a")).click();
-        // Select Date
-        driver.findElement(By.name("due_date[date]")).click();
-        driver.findElement(By.linkText("18")).click();
-        // Click Assign Button
-        driver.findElement(By.xpath("//form/div/input")).click();
-        // Click Online Tests
-        driver.findElement(By.linkText("ONLINE TESTS")).click();
-
-        // Look At Submitted Test
-        // Click Grade Test Link
-        driver.findElement(By.xpath("//td[6]/a")).click();
+        // Assign Survey
+        // Click Assign Survey
+        driver.findElement(By.linkText("ASSIGN SURVEY")).click();
+        // Select Survey
+        driver.findElement(By.xpath("//a/span")).click();
+        driver.findElement(By.xpath("//*[@id=\"edit_field_admin_survey_und_chzn_o_4\"]")).click();
+        // Select Group
+        driver.findElement(By.xpath("//div[5]/div/div/a/span")).click();
+        driver.findElement(By.xpath("//*[@id=\"edit_group_id_chzn_o_6\"]")).click();
+        // Click Save Button
+        driver.findElement(By.xpath("//div[7]/input")).click();
     }
 
     @After

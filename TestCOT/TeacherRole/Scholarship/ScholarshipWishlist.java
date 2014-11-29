@@ -1,5 +1,9 @@
-package TestCOT.StudentRole.StudentAssessment;
+package TestCOT.TeacherRole.Scholarship;
 
+/**
+ * Created by om on 11/12/2014.
+ */
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import TestCOT.CommonFunctions.Functions;
@@ -8,35 +12,50 @@ import static org.junit.Assert.*;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class LearningStyle_Pending {
+public class ScholarshipWishlist {
     private WebDriver driver;
     private String baseUrl;
+    private int RandomRow = 0;
+    private WebDriverWait wait;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
+        wait = new WebDriverWait(driver, 10);
+        baseUrl = "http://satishtest.devcloud.acquia-sites.com";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
     }
 
     @Test
-    public void testLearningStyle() throws Exception {
+    public void testScholarshipWishlist() throws Exception {
         Functions func = new Functions(driver);
         func.CheckLogin();
-        func.LoginRole("Student");
-        driver.get(baseUrl + "/learning-styles/75486");
+        func.LoginRole("Teacher");
+        driver.get(baseUrl + "/scholarship-search/75501");
 
-        driver.findElement(By.linkText("LEARNING STYLES INVENTORY")).click();
-        driver.findElement(By.id("continue")).click();
-        driver.findElement(By.id("11")).click();
-        driver.findElement(By.id("10")).click();
-        driver.findElement(By.id("14")).click();
-        driver.findElement(By.id("14")).click();
-        driver.findElement(By.cssSelector("div.back.autosize > div")).click();
+        // Click Scholarship Wish List
+        driver.findElement(By.linkText("SCHOLARSHIP WISH LIST")).click();
+
+        // Select Student
+        driver.findElement(By.xpath("//div[@id='edit_students_chzn']/a/span")).click();
+        driver.findElement(By.xpath("//*[@id=\"edit_students_chzn_o_4\"]")).click();
+        // Check Row Data Exist or Not
+        List<WebElement> TableRows = driver.findElements(By.xpath("//table/tbody/tr"));
+        int rowNumber = TableRows.size();
+        if(rowNumber > 0) {
+            // Access Random Row
+            RandomRow = func.RandomIntegerNumber(rowNumber);
+            // Remove Random Scholarship
+            driver.findElement(By.xpath("//tr[" + RandomRow + "]/td[6]/a")).click();
+            // Wait To Check Scholarship Removed
+            Thread.sleep(5000);
+        }
     }
 
     @After
@@ -82,4 +101,4 @@ public class LearningStyle_Pending {
     }
 }
 
-// Unable to find the steps
+// Write code for single chosen select list.

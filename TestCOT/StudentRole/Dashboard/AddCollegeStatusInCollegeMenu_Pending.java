@@ -1,8 +1,14 @@
+/**
+ * Student first click checkbox in front of college, to specify what he has decide till now about wishList college. There are some
+ * default milestone of college and Student can also define the milestone(What he need to do, to get admission) for college.
+ */
+
 package TestCOT.StudentRole.Dashboard;
 
 /**
  * Created by om on 11/12/2014.
  */
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import TestCOT.CommonFunctions.Functions;
@@ -11,10 +17,15 @@ import static org.junit.Assert.*;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AddCollegeStatusInCollegeMenu_Pending {
     private WebDriver driver;
     private String baseUrl;
+    private int RandomRow = 0;
+    private WebDriverWait wait;
+    private String ApplicationItem = null;
     private String[] Tracking = null;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
@@ -22,6 +33,7 @@ public class AddCollegeStatusInCollegeMenu_Pending {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
+        wait = new WebDriverWait(driver, 5);
         baseUrl = "http://satishtest.devcloud.acquia-sites.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(baseUrl + "/");
@@ -35,28 +47,41 @@ public class AddCollegeStatusInCollegeMenu_Pending {
         driver.get(baseUrl + "/students-dashboard");
 
         // Click Colleges
-        driver.findElement(By.xpath("(//a[contains(text(),'Colleges')])[2]")).click();
+        driver.findElement(By.xpath("//div[5]/a")).click();
 
-        driver.findElement(By.cssSelector("div.10756")).click();
-        driver.findElement(By.cssSelector("div.cot-overlay-content > div.10756")).click();
-        driver.findElement(By.id("edit-title")).clear();
-        Tracking = func.RandomWords(1);
-        driver.findElement(By.id("edit-title")).sendKeys(Tracking[0] + " " + Tracking[1]);
-        driver.findElement(By.xpath("'//input[@type=\"submit\" and @title=\"SAVE\"]'")).click();
-        driver.findElement(By.xpath("//div[@id='edit-select-status']/div")).click();
-        driver.findElement(By.id("edit-status-options-5")).click();
-        driver.findElement(By.xpath("//div[@id='edit-status-options']/div[5]/label")).click();
-        driver.findElement(By.id("edit-checkbox-applied--2")).click();
-        driver.findElement(By.xpath("//div[@id='edit-select-status--2']/div")).click();
-        driver.findElement(By.id("edit-status-options-4--2")).click();
-        driver.findElement(By.xpath("//div[@id='edit-status-options--2']/div[4]/label")).click();
-        driver.findElement(By.cssSelector("div.10726")).click();
-        driver.findElement(By.id("edit-checkbox-checklist--14")).click();
-        driver.findElement(By.id("edit-checkbox-checklist--13")).click();
-        driver.findElement(By.id("edit-checkbox-checklist--12")).click();
-        driver.findElement(By.id("edit-checkbox-checklist--16")).click();
-        driver.findElement(By.id("edit-checkbox-checklist--15")).click();
-        driver.findElement(By.xpath("//div[@id='page-wrapper']/div/div[5]/div/div/div/div[5]/div/div/div/div[2]/div/div/div[2]/div[2]/div[4]/div/div[2]/div[2]/span/img")).click();
+        // Check Row Data Exist or Not
+        List<WebElement> TableRows = driver.findElements(By.xpath("//table[2]/tbody/tr"));
+        int rowNumber = TableRows.size();
+        if(rowNumber > 0) {
+            // Access Random Row
+            RandomRow = func.RandomIntegerNumber(rowNumber);
+            // Check Applied Checkbox Clicked or Not
+            if (!driver.findElement(By.xpath("//tr[" + RandomRow  + "]/td[6]/form/div/div/div/input")).isSelected()) {
+                driver.findElement(By.xpath("//tr[" + RandomRow  + "]/td[6]/form/div/div/div/input")).click();
+                // Wait for checkbox to be Clicked
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("throbber")));
+            }
+            // Click Accepted Div
+            driver.findElement(By.xpath("//tr[" + RandomRow  + "]/td[7]/form/div/div/div/div")).click();
+            // Click Approved
+            driver.findElement(By.xpath("//tr[" + RandomRow  + "]/td[7]/form/div/div[2]/div/div/input")).click();
+
+            // Click Book Icon
+            driver.findElement(By.xpath("//tr[" + RandomRow  + "]/td/div[2]")).click();
+            // Click Checklist
+            driver.findElement(By.xpath("//div[@class='cot-overlay-content']/div")).click();
+            // Enter Application Item
+            driver.findElement(By.xpath("//div[@class='form-item form-type-textfield form-item-title']/label/input")).clear();
+            Tracking = func.RandomWords(2);
+            ApplicationItem = Tracking[0] + " " + Tracking[1];
+            driver.findElement(By.xpath("//div[@class='form-item form-type-textfield form-item-title']/label/input")).sendKeys(Tracking[0] + " " + Tracking[1]);
+            // Click Save
+            driver.findElement(By.xpath("//div[@class='vertical-tabs-panes vertical-tabs-processed']/div/input")).click();
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@class='vertical-tabs-panes vertical-tabs-processed']/div/input")));
+            // Find Created Application Item
+            WebElement userName = driver.findElement(By.xpath("//input[@*='dummy']"));
+            System.out.println(userName.getText());
+        }
     }
 
     @After

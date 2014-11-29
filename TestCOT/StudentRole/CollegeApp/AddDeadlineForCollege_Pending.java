@@ -1,15 +1,24 @@
-package TestCOT.StudentRole;
+/**
+ * Student search college in SearchCollege page and then add the college to wishList. The list of wishList colleges are shown at
+ * wishList page. Student can also know how much he eligible for the wishList colleges according to his scores or target scores in
+ * ACT or SAT. Student can set date in calender for college about his action.
+ */
 
+package TestCOT.StudentRole.CollegeApp;
+
+/**
+ * Created by om on 11/12/2014.
+ */
+import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
-
-import TestCOT.CommonFunctions.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
-
+import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
 
-public class EditUserProfilePage_Pending {
+public class AddDeadlineForCollege_Pending {
     private WebDriver driver;
     private String baseUrl;
     private boolean acceptNextAlert = true;
@@ -18,25 +27,24 @@ public class EditUserProfilePage_Pending {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
+        baseUrl = "http://satishtest.devcloud.acquia-sites.com";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.get(baseUrl + "/");
     }
 
     @Test
-    public void testEditUserProfilePage() throws Exception {
-        Functions func = new Functions(driver);
-        func.CheckLogin();
-        func.LoginRole("Student");
-        driver.findElement(By.cssSelector("img[alt=\"my image\"]")).click();
-        driver.findElement(By.linkText("My Account")).click();
-        driver.findElement(By.linkText("Edit")).click();
-        driver.findElement(By.id("edit-field-user-address2-und-0-value")).clear();
-        driver.findElement(By.id("edit-field-user-address2-und-0-value")).sendKeys("3/228 jaipur road");
-        driver.findElement(By.id("edit-submit")).click();
-        driver.findElement(By.linkText("Edit")).click();
-        driver.findElement(By.id("edit-field-user-my-digital-presence-und-1")).click();
-        driver.findElement(By.id("edit-field-user-my-digital-presence-und-0")).click();
+    public void testAddDealineForCollege() throws Exception {
+        driver.get(baseUrl + "/college-search");
+
+        // Click WishList
+        driver.findElement(By.linkText("WISHLIST")).click();
+        // Click ACT
+        driver.findElement(By.id("edit-act-sat-select-act")).click();
+        // Click Target Scores
+        driver.findElement(By.id("edit-sat-select-score-target-score")).click();
+        ///
+        driver.findElement(By.xpath("//div[@id='act_math_slider_jq_slider']/a")).click();
+        driver.findElement(By.id("edit-user-deadline-datepicker-popup-0")).click();
+        driver.findElement(By.linkText("21")).click();
         driver.findElement(By.id("edit-submit")).click();
     }
 
@@ -82,3 +90,5 @@ public class EditUserProfilePage_Pending {
         }
     }
 }
+
+// Data not available at site.
