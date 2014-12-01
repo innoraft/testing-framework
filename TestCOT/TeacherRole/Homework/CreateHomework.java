@@ -13,8 +13,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CreateHomework {
+    Functions func;
     private WebDriver driver;
-    private String baseUrl;
     private WebDriverWait wait;
     private String[] Tracking = null;
     private int IntegerValue = 0;
@@ -24,19 +24,18 @@ public class CreateHomework {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        wait = new WebDriverWait(driver, 20);
-        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.get(baseUrl + "/");
+        func = new Functions(driver);
+        wait = new WebDriverWait(driver, func.timeoutOfOneElement);
+        driver.manage().timeouts().implicitlyWait(func.timeoutOFAllElement, TimeUnit.SECONDS);
+
+        driver.get(func.baseUrl + "/");
+        func.CheckLogin();
+        func.LoginRole("Teacher");
+        driver.get(func.baseUrl + "/lesson-library");
     }
 
     @Test
     public void testCreateHomework() throws Exception {
-        Functions func = new Functions(driver);
-        func.CheckLogin();
-        func.LoginRole("Teacher");
-        driver.get(baseUrl + "/lesson-library");
-
         // Click Homework Library
         driver.findElement(By.linkText("HOMEWORK LIBRARY")).click();
         // Create New Homework Assignment
@@ -154,5 +153,3 @@ public class CreateHomework {
         }
     }
 }
-
-// Unable to find the steps on site.

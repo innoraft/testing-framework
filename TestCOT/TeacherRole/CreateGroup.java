@@ -13,10 +13,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CreateGroup {
+    Functions func;
     private WebDriver driver;
-    private String baseUrl;
-    private String[] Tracking = null;
     private WebDriverWait wait;
+    private String[] Tracking = null;
     private int RandomRow = 0;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
@@ -24,20 +24,20 @@ public class CreateGroup {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        wait = new WebDriverWait(driver, 5);
-        baseUrl = "http://satishtest.devcloud.acquia-sites.com";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.get(baseUrl + "/");
+        func = new Functions(driver);
+        wait = new WebDriverWait(driver, func.timeoutOfOneElement);
+        driver.manage().timeouts().implicitlyWait(func.timeoutOFAllElement, TimeUnit.SECONDS);
+
+        driver.get(func.baseUrl + "/");
+        func.CheckLogin();
+        func.LoginRole("Teacher");
     }
 
     @Test
     public void testCreateAGroup() throws Exception {
-        Functions func = new Functions(driver);
-        func.CheckLogin();
-        func.LoginRole("Teacher");
-
         // Click Account Holder Name
         driver.findElement(By.cssSelector("div.top-logout-list.top-menu")).click();
+
         // My Account
         driver.findElement(By.linkText("My Account")).click();
         // My Groups
@@ -66,7 +66,7 @@ public class CreateGroup {
         driver.findElement(By.xpath("//*[@id=\"edit_all_relation_groups_chzn_o_8\"]")).click();
         // Select Members
         driver.findElement(By.xpath("//div[@id='edit_gmembers_chzn']/ul")).click();
-        driver.findElement(By.xpath("//*[@id=\"edit_gmembers_chzn_o_1\"]")).click();
+        driver.findElement(By.xpath("//*[@id=\"edit_gmembers_chzn_o_0\"]")).click();
         // Click Add
         driver.findElement(By.xpath("//form[@id='add-to-relation-group-form']/div/input")).click();
         // Wait To See The Added Member
@@ -130,5 +130,3 @@ public class CreateGroup {
         }
     }
 }
-
-// Write code for multiple chosen select list.

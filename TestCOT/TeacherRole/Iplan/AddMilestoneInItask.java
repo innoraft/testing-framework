@@ -15,8 +15,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AddMilestoneInItask {
+    Functions func;
     private WebDriver driver;
-    private String baseUrl;
     private WebDriverWait wait;
     private String[] Tracking = null;
     private boolean acceptNextAlert = true;
@@ -25,19 +25,18 @@ public class AddMilestoneInItask {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        wait = new WebDriverWait(driver, 10);
-        baseUrl = "http://satishtest.devcloud.acquia-sites.com";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.get(baseUrl + "/");
+        func = new Functions(driver);
+        wait = new WebDriverWait(driver, func.timeoutOfOneElement);
+        driver.manage().timeouts().implicitlyWait(func.timeoutOFAllElement, TimeUnit.SECONDS);
+
+        driver.get(func.baseUrl + "/");
+        func.CheckLogin();
+        func.LoginRole("Teacher");
+        driver.get(func.baseUrl + "/student-planner");
     }
 
     @Test
     public void testAddMilestoneInItask() throws Exception {
-        Functions func = new Functions(driver);
-        func.CheckLogin();
-        func.LoginRole("Teacher");
-        driver.get(baseUrl + "/student-planner");
-
         // Click ITasks
         driver.findElement(By.linkText("ITASKS")).click();
 
@@ -127,5 +126,3 @@ public class AddMilestoneInItask {
         }
     }
 }
-
-// Write code for single chosen select list and submit button.

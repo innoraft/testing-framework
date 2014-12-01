@@ -13,22 +13,21 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import TestCOT.CommonFunctions.*;
 
 public class LoginSchoolAdmin {
+    Functions func;
     private WebDriver driver;
-    private String baseUrl;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        func = new Functions(driver);
+        driver.manage().timeouts().implicitlyWait(func.timeoutOFAllElement, TimeUnit.SECONDS);
+        driver.get(func.baseUrl + "/");
     }
 
     @Test
     public void testLoginSchoolAdmin() throws Exception {
-        driver.get(baseUrl + "/");
-        Functions func = new Functions(driver);
         func.CheckLogin();
         func.LoginRole("SchoolAdmin");
     }

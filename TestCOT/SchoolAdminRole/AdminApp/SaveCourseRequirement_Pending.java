@@ -12,8 +12,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import TestCOT.CommonFunctions.*;
 
 public class SaveCourseRequirement_Pending {
+    Functions func;
     private WebDriver driver;
-    private String baseUrl;
     private int Max = 50;
     private int IntegerValue = 0;
     private String[] Tracking = null;
@@ -23,18 +23,17 @@ public class SaveCourseRequirement_Pending {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.get(baseUrl + "/");
+        func = new Functions(driver);
+        driver.manage().timeouts().implicitlyWait(func.timeoutOFAllElement, TimeUnit.SECONDS);
+
+        driver.get(func.baseUrl + "/");
+        func.CheckLogin();
+        func.LoginRole("SchoolAdmin");
+        driver.get(func.baseUrl + "/long-term-planner-config");
     }
 
     @Test
     public void testSaveCourseRequirement() throws Exception {
-        Functions func = new Functions(driver);
-        func.CheckLogin();
-        func.LoginRole("SchoolAdmin");
-        driver.get(baseUrl + "/long-term-planner-config");
-
         driver.findElement(By.linkText("Course Requirements")).click();
         if(isElementPresent(By.linkText("Graduation Requirement Tracking"))) {
             driver.findElement(By.linkText("Graduation Requirement Tracking")).click();

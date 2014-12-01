@@ -16,28 +16,26 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 
 public class CreateSurvey {
+    Functions func;
     private WebDriver driver;
-    private String baseUrl;
     private String[] Tracking = null;
-    private String TrackingValues = null;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://satishtest.devcloud.acquia-sites.com";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.get(baseUrl + "/");
+        func = new Functions(driver);
+        driver.manage().timeouts().implicitlyWait(func.timeoutOFAllElement, TimeUnit.SECONDS);
+
+        driver.get(func.baseUrl + "/");
+        func.CheckLogin();
+        func.LoginRole("Teacher");
+        driver.get(func.baseUrl + "/messages");
     }
 
     @Test
     public void testCreateSurvey() throws Exception {
-        Functions func = new Functions(driver);
-        func.CheckLogin();
-        func.LoginRole("Teacher");
-        driver.get(baseUrl + "/messages");
-
         // Click Survey
         driver.findElement(By.linkText("SURVEY")).click();
 
@@ -153,5 +151,3 @@ public class CreateSurvey {
         }
     }
 }
-
-// Write code for drag and drop of element.

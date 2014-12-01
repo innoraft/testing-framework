@@ -20,38 +20,36 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SearchCollege {
+    Functions func;
     private WebDriver driver;
-    private String baseUrl;
-    private WebDriverWait wait;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://satishtest.devcloud.acquia-sites.com";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.get(baseUrl + "/");
+        func = new Functions(driver);
+        driver.manage().timeouts().implicitlyWait(func.timeoutOFAllElement, TimeUnit.SECONDS);
+
+        driver.get(func.baseUrl + "/");
+        func.CheckLogin();
+        func.LoginRole("SchoolAdmin");
+        driver.get(func.baseUrl + "/college-search");
     }
 
     @Test
     public void testCollege() throws Exception {
-        Functions func = new Functions(driver);
-        func.CheckLogin();
-        func.LoginRole("SchoolAdmin");
-        driver.get(baseUrl + "/college-search");
-
         // Functions For Find Colleges
-        SearchButton(func);
-        TypesOfSchool(func);
-        AreaOfStudy(func);
-        SpecialNeeds(func);
-        ActivitiesOfInterest(func);
-        Sports(func);
-        Location(func);
+        SearchButton();
+        TypesOfSchool();
+        AreaOfStudy();
+        SpecialNeeds();
+        ActivitiesOfInterest();
+        Sports();
+        Location();
     }
 
-    private void SearchButton(Functions func) throws IOException {
+    private void SearchButton() throws IOException {
         // Enter Text To Be Search
         driver.findElement(By.id("edit-keys")).clear();
         driver.findElement(By.id("edit-keys")).sendKeys("Abilene");
@@ -67,7 +65,7 @@ public class SearchCollege {
         driver.findElement(By.linkText("Clear All Selections")).click();
     }
 
-    private void TypesOfSchool(Functions func) throws IOException {
+    private void TypesOfSchool() throws IOException {
         // Click Type of School
         driver.findElement(By.cssSelector("strong")).click();
         // Click Private
@@ -96,7 +94,7 @@ public class SearchCollege {
         driver.findElement(By.linkText("Clear All Selections")).click();
     }
 
-    private void AreaOfStudy(Functions func) throws IOException, InterruptedException {
+    private void AreaOfStudy() throws IOException, InterruptedException {
         // Click Area of School
         driver.findElement(By.xpath("//li[2]/a/strong")).click();
         // Select One Area Study
@@ -117,7 +115,7 @@ public class SearchCollege {
         driver.findElement(By.linkText("Clear All Selections")).click();
     }
 
-    private void SpecialNeeds(Functions func) throws IOException {
+    private void SpecialNeeds() throws IOException {
         // Click Special Needs
         driver.findElement(By.xpath("//li[3]/a/strong")).click();
         // Select Special Needs
@@ -138,7 +136,7 @@ public class SearchCollege {
         driver.findElement(By.linkText("Clear All Selections")).click();
     }
 
-    private void ActivitiesOfInterest(Functions func) throws IOException {
+    private void ActivitiesOfInterest() throws IOException {
         // Click Activities of Interest
         driver.findElement(By.xpath("//li[4]/a/strong")).click();
         // Click Student Newspaper Checkbox
@@ -157,7 +155,7 @@ public class SearchCollege {
         driver.findElement(By.linkText("Clear All Selections")).click();
     }
 
-    private void Sports(Functions func) throws IOException {
+    private void Sports() throws IOException {
         // Click Sports
         driver.findElement(By.xpath("//li[5]/a/strong")).click();
         // Select Sports
@@ -178,7 +176,7 @@ public class SearchCollege {
         driver.findElement(By.linkText("Clear All Selections")).click();
     }
 
-    private void Location(Functions func) throws IOException {
+    private void Location() throws IOException {
         // Click Location
         driver.findElement(By.xpath("//li[6]/a/strong")).click();
         // Click West Checkbox

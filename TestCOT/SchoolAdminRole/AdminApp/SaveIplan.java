@@ -13,8 +13,8 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class SaveIplan {
+    Functions func;
     private WebDriver driver;
-    private String baseUrl;
     private String[] Tracking = null;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
@@ -22,18 +22,17 @@ public class SaveIplan {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://satishtest.devcloud.acquia-sites.com";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.get(baseUrl + "/");
+        func = new Functions(driver);
+        driver.manage().timeouts().implicitlyWait(func.timeoutOFAllElement, TimeUnit.SECONDS);
+
+        driver.get(func.baseUrl + "/");
+        func.CheckLogin();
+        func.LoginRole("SchoolAdmin");
+        driver.get(func.baseUrl + "/grad-req");
     }
 
     @Test
     public void testSaveIplan() throws Exception {
-        Functions func = new Functions(driver);
-        func.CheckLogin();
-        func.LoginRole("SchoolAdmin");
-        driver.get(baseUrl + "/grad-req");
-
         // Click IPlan
         driver.findElement(By.cssSelector("a.long_term_planner_admin-link.admin-menu-tab-link")).click();
         // Click Add Milestone

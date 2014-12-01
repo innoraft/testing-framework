@@ -13,8 +13,8 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class SendSMS {
+    Functions func;
     private WebDriver driver;
-    private String baseUrl;
     private String[] Tracking = null;
     private String TrackingValues = null;
     private boolean acceptNextAlert = true;
@@ -23,18 +23,17 @@ public class SendSMS {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.get(baseUrl + "/");
+        func = new Functions(driver);
+        driver.manage().timeouts().implicitlyWait(func.timeoutOFAllElement, TimeUnit.SECONDS);
+
+        driver.get(func.baseUrl + "/");
+        func.CheckLogin();
+        func.LoginRole("Teacher");
+        driver.get(func.baseUrl + "/students-dashboard/75486");
     }
 
     @Test
     public void testSendSms() throws Exception {
-        Functions func = new Functions(driver);
-        func.CheckLogin();
-        func.LoginRole("Teacher");
-        driver.get(baseUrl + "/students-dashboard/75486");
-
         // Click SMS
         driver.findElement(By.linkText("SMS")).click();
 
@@ -116,5 +115,3 @@ public class SendSMS {
         }
     }
 }
-
-// Write code for single chosen select list.

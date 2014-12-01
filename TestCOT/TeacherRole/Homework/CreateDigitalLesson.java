@@ -13,8 +13,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CreateDigitalLesson {
+    Functions func;
     private WebDriver driver;
-    private String baseUrl;
     private WebDriverWait wait;
     private String TrackingValues = null;
     private String[] Tracking = null;
@@ -24,19 +24,18 @@ public class CreateDigitalLesson {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        wait = new WebDriverWait(driver, 20);
-        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.get(baseUrl + "/");
+        func = new Functions(driver);
+        wait = new WebDriverWait(driver, func.timeoutOfOneElement);
+        driver.manage().timeouts().implicitlyWait(func.timeoutOFAllElement, TimeUnit.SECONDS);
+
+        driver.get(func.baseUrl + "/");
+        func.CheckLogin();
+        func.LoginRole("Teacher");
+        driver.get(func.baseUrl + "/lesson-library");
     }
 
     @Test
     public void testCreateDigitalLesson() throws Exception {
-        Functions func = new Functions(driver);
-        func.CheckLogin();
-        func.LoginRole("Teacher");
-        driver.get(baseUrl + "/lesson-library");
-
         // Click Digital Lessons
         driver.findElement(By.linkText("DIGITAL LESSONS")).click();
         // Click Add a New Unit or Lesson

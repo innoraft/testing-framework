@@ -14,8 +14,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
 public class CreateEssay {
+    Functions func;
     private WebDriver driver;
-    private String baseUrl;
     private String[] Tracking = null;
     private String TrackingValues = "";
     private boolean acceptNextAlert = true;
@@ -24,18 +24,17 @@ public class CreateEssay {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://satishtest.devcloud.acquia-sites.com/";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.get(baseUrl + "/");
+        func = new Functions(driver);
+        driver.manage().timeouts().implicitlyWait(func.timeoutOFAllElement, TimeUnit.SECONDS);
+
+        driver.get(func.baseUrl + "/");
+        func.CheckLogin();
+        func.LoginRole("Student");
+        driver.get(func.baseUrl + "/college-search");
     }
 
     @Test
     public void testCreateEssay() throws Exception {
-        Functions func = new Functions(driver);
-        func.CheckLogin();
-        func.LoginRole("Student");
-        driver.get(baseUrl + "/college-search");
-
         // Click Essay
         driver.findElement(By.linkText("ESSAYS")).click();
 

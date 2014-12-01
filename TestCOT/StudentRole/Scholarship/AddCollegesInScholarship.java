@@ -20,8 +20,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AddCollegesInScholarship {
+    Functions func;
     private WebDriver driver;
-    private String baseUrl;
     private WebDriverWait wait;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
@@ -29,19 +29,18 @@ public class AddCollegesInScholarship {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        wait = new WebDriverWait(driver, 10);
-        baseUrl = "http://satishtest.devcloud.acquia-sites.com";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.get(baseUrl + "/");
+        func = new Functions(driver);
+        wait = new WebDriverWait(driver, func.timeoutOfOneElement);
+        driver.manage().timeouts().implicitlyWait(func.timeoutOFAllElement, TimeUnit.SECONDS);
+
+        driver.get(func.baseUrl + "/");
+        func.CheckLogin();
+        func.LoginRole("Student");
+        driver.get(func.baseUrl + "/scholarship-search");
     }
 
     @Test
     public void testAddCollegesInScholarship() throws Exception {
-        Functions func = new Functions(driver);
-        func.CheckLogin();
-        func.LoginRole("Student");
-        driver.get(baseUrl + "/scholarship-search");
-
         // Click Scholarship Search
         driver.findElement(By.linkText("SCHOLARSHIP SEARCH")).click();
 
@@ -168,5 +167,3 @@ public class AddCollegesInScholarship {
         }
     }
 }
-
-// Understand the steps

@@ -13,8 +13,8 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class SaveGradePercentage {
+    Functions func;
     private WebDriver driver;
-    private String baseUrl;
     private boolean acceptNextAlert = true;
     private int Max = 50;
     private Double DecimalValue = 0.0;
@@ -23,18 +23,17 @@ public class SaveGradePercentage {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://satishtest.devcloud.acquia-sites.com/";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.get(baseUrl + "/");
+        func = new Functions(driver);
+        driver.manage().timeouts().implicitlyWait(func.timeoutOFAllElement, TimeUnit.SECONDS);
+
+        driver.get(func.baseUrl + "/");
+        func.CheckLogin();
+        func.LoginRole("SchoolAdmin");
+        driver.get(func.baseUrl + "/discipline-admin");
     }
 
     @Test
     public void testSaveGradePercentage() throws Exception {
-        Functions func = new Functions(driver);
-        func.CheckLogin();
-        func.LoginRole("SchoolAdmin");
-        driver.get(baseUrl + "/discipline-admin");
-
         // Click Grade Percentage
         driver.findElement(By.linkText("Grade Percentages")).click();
 

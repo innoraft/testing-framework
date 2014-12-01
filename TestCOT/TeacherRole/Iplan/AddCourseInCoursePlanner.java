@@ -13,26 +13,25 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class AddCourseInCoursePlanner {
+    Functions func;
     private WebDriver driver;
-    private String baseUrl;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://satishtest.devcloud.acquia-sites.com";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.get(baseUrl + "/");
+        func = new Functions(driver);
+        driver.manage().timeouts().implicitlyWait(func.timeoutOFAllElement, TimeUnit.SECONDS);
+
+        driver.get(func.baseUrl + "/");
+        func.CheckLogin();
+        func.LoginRole("Teacher");
+        driver.get(func.baseUrl + "/student-planner");
     }
 
     @Test
     public void testAddCourseInCoursePlanner() throws Exception {
-        Functions func = new Functions(driver);
-        func.CheckLogin();
-        func.LoginRole("Teacher");
-        driver.get(baseUrl + "/student-planner");
-
         // Select Student
         driver.findElement(By.xpath("//a/span")).click();
         driver.findElement(By.xpath("//*[@id=\"edit_students_chzn_o_2\"]")).click();
@@ -132,5 +131,3 @@ public class AddCourseInCoursePlanner {
         }
     }
 }
-
-// Write code for single chosen select list.

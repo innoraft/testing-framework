@@ -15,12 +15,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AddActivity {
+    Functions func;
     private WebDriver driver;
-    private String baseUrl;
+    private WebDriverWait wait;
     private int Max = 12;
     private int Min = 6;
     private int IntegerValue = 0;
-    private WebDriverWait wait;
     private String[] Tracking = null;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
@@ -28,19 +28,18 @@ public class AddActivity {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        wait = new WebDriverWait(driver, 400);
-        baseUrl = "http://satishtest.devcloud.acquia-sites.com/";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.get(baseUrl + "/");
+        func = new Functions(driver);
+        wait = new WebDriverWait(driver, func.timeoutOfOneElement);
+        driver.manage().timeouts().implicitlyWait(func.timeoutOFAllElement, TimeUnit.SECONDS);
+
+        driver.get(func.baseUrl + "/");
+        func.CheckLogin();
+        func.LoginRole("Student");
+        driver.get(func.baseUrl + "/journals");
     }
 
     @Test
     public void testAddActivity() throws Exception {
-        Functions func = new Functions(driver);
-        func.CheckLogin();
-        func.LoginRole("Student");
-        driver.get(baseUrl + "/journals");
-
         // Click Activities
         driver.findElement(By.linkText("ACTIVITIES")).click();
         // Click Create Activity

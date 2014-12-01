@@ -16,8 +16,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AddCoursesInIplan {
+    Functions func;
     private WebDriver driver;
-    private String baseUrl;
     private WebDriverWait wait;
     private int Max = 10;
     private int IntegerValue = 0;
@@ -28,19 +28,18 @@ public class AddCoursesInIplan {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        wait = new WebDriverWait(driver, 10);
-        baseUrl = "http://satishtest.devcloud.acquia-sites.com/";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.get(baseUrl + "/");
+        func = new Functions(driver);
+        wait = new WebDriverWait(driver, func.timeoutOfOneElement);
+        driver.manage().timeouts().implicitlyWait(func.timeoutOFAllElement, TimeUnit.SECONDS);
+
+        driver.get(func.baseUrl + "/");
+        func.CheckLogin();
+        func.LoginRole("Student");
+        driver.get(func.baseUrl + "/student-planner");
     }
 
     @Test
     public void testAddCoursesInIplan() throws Exception {
-        Functions func = new Functions(driver);
-        func.CheckLogin();
-        func.LoginRole("Student");
-        driver.get(baseUrl + "/student-planner");
-
         // Click Add To Planner
         driver.findElement(By.linkText("Add to Planner")).click();
 
@@ -146,4 +145,3 @@ public class AddCoursesInIplan {
     }
 }
 
-// How to write code for submit button

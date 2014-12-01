@@ -21,29 +21,28 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class UpdateScholarshipFeeAndRemoveCollegeFromWishlist {
+    Functions func;
     private WebDriver driver;
-    private String baseUrl;
-    private int RandomRow = 0;
     private WebDriverWait wait;
+    private int RandomRow = 0;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        wait = new WebDriverWait(driver, 10);
-        baseUrl = "http://satishtest.devcloud.acquia-sites.com";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.get(baseUrl + "/");
+        func = new Functions(driver);
+        wait = new WebDriverWait(driver, func.timeoutOfOneElement);
+        driver.manage().timeouts().implicitlyWait(func.timeoutOFAllElement, TimeUnit.SECONDS);
+
+        driver.get(func.baseUrl + "/");
+        func.CheckLogin();
+        func.LoginRole("Student");
+        driver.get(func.baseUrl + "/scholarship-search");
     }
 
     @Test
     public void testUpdateSchoarshipFeeAndRemoveCollegeFromWishlist() throws Exception {
-        Functions func = new Functions(driver);
-        func.CheckLogin();
-        func.LoginRole("Student");
-        driver.get(baseUrl + "/scholarship-search");
-
         // Click Scholarship Wish List
         driver.findElement(By.linkText("SCHOLARSHIP WISH LIST")).click();
         // Check Row Data Exist or Not
@@ -113,5 +112,3 @@ public class UpdateScholarshipFeeAndRemoveCollegeFromWishlist {
         }
     }
 }
-
-// Remove college from wish list.

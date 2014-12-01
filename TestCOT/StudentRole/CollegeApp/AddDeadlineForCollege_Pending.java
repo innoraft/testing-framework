@@ -11,6 +11,8 @@ package TestCOT.StudentRole.CollegeApp;
  */
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
+
+import TestCOT.CommonFunctions.Functions;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -19,29 +21,32 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
 public class AddDeadlineForCollege_Pending {
+    Functions func;
     private WebDriver driver;
-    private String baseUrl;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://satishtest.devcloud.acquia-sites.com";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        func = new Functions(driver);
+        driver.manage().timeouts().implicitlyWait(func.timeoutOFAllElement, TimeUnit.SECONDS);
+
+        driver.get(func.baseUrl + "/");
+        func.CheckLogin();
+        func.LoginRole("Student");
+        driver.get(func.baseUrl + "/college-search");
     }
 
     @Test
     public void testAddDealineForCollege() throws Exception {
-        driver.get(baseUrl + "/college-search");
-
         // Click WishList
         driver.findElement(By.linkText("WISHLIST")).click();
         // Click ACT
         driver.findElement(By.id("edit-act-sat-select-act")).click();
         // Click Target Scores
         driver.findElement(By.id("edit-sat-select-score-target-score")).click();
-        ///
+        //
         driver.findElement(By.xpath("//div[@id='act_math_slider_jq_slider']/a")).click();
         driver.findElement(By.id("edit-user-deadline-datepicker-popup-0")).click();
         driver.findElement(By.linkText("21")).click();

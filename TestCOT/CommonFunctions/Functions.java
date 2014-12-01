@@ -14,6 +14,9 @@ import static junit.framework.Assert.assertTrue;
  */
 public class Functions {
     private WebDriver driver;
+    public int timeoutOfOneElement = 15;
+    public int timeoutOFAllElement = 10;
+    public String baseUrl = "http://satishtest.devcloud.acquia-sites.com/";
 
     public Functions(WebDriver driver) {
         this.driver = driver;

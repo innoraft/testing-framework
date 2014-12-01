@@ -13,8 +13,8 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class SaveGraduationRequirement {
+    Functions func;
     private WebDriver driver;
-    private String baseUrl;
     private String[] Tracking = null;
     private String TrackingValues = "";
     private boolean acceptNextAlert = true;
@@ -23,18 +23,17 @@ public class SaveGraduationRequirement {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://satishtest.devcloud.acquia-sites.com/";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.get(baseUrl + "/");
+        func = new Functions(driver);
+        driver.manage().timeouts().implicitlyWait(func.timeoutOFAllElement, TimeUnit.SECONDS);
+
+        driver.get(func.baseUrl + "/");
+        func.CheckLogin();
+        func.LoginRole("SchoolAdmin");
+        driver.get(func.baseUrl + "/grad-req");
     }
 
     @Test
     public void testSaveGraducationRequirement() throws Exception {
-        Functions func = new Functions(driver);
-        func.CheckLogin();
-        func.LoginRole("SchoolAdmin");
-        driver.get(baseUrl + "/grad-req");
-
         // Click Graduation Requirement
         driver.findElement(By.linkText("Graduation Requirements")).click();
 

@@ -13,10 +13,8 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class CreateResume {
+    Functions func;
     private WebDriver driver;
-    private String baseUrl;
-    private int Max = 50;
-    private int IntegerValue = 0;
     private String[] Tracking = null;
     private String TrackingValues = "";
     private boolean acceptNextAlert = true;
@@ -25,18 +23,17 @@ public class CreateResume {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://satishtest.devcloud.acquia-sites.com/";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.get(baseUrl + "/");
+        func = new Functions(driver);
+        driver.manage().timeouts().implicitlyWait(func.timeoutOFAllElement, TimeUnit.SECONDS);
+
+        driver.get(func.baseUrl + "/");
+        func.CheckLogin();
+        func.LoginRole("Student");
+        driver.get(func.baseUrl + "/journals");
     }
 
     @Test
     public void testCreateResume() throws Exception {
-        Functions func = new Functions(driver);
-        func.CheckLogin();
-        func.LoginRole("Student");
-        driver.get(baseUrl + "/journals");
-
         // Click Resume
         driver.findElement(By.linkText("RESUME")).click();
         // Click Add Resume
@@ -149,4 +146,3 @@ public class CreateResume {
     }
 }
 
-// How to fill up the form.

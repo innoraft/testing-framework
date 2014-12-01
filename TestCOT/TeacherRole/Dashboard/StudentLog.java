@@ -15,8 +15,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class StudentLog {
+    Functions func;
     private WebDriver driver;
-    private String baseUrl;
     private WebDriverWait wait;
     private String[] Tracking = null;
     private boolean acceptNextAlert = true;
@@ -25,19 +25,18 @@ public class StudentLog {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        wait = new WebDriverWait(driver, 20);
-        baseUrl = "http://collegeontrackdev.prod.acquia-sites.com/";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.get(baseUrl + "/");
+        func = new Functions(driver);
+        wait = new WebDriverWait(driver, func.timeoutOfOneElement);
+        driver.manage().timeouts().implicitlyWait(func.timeoutOFAllElement, TimeUnit.SECONDS);
+
+        driver.get(func.baseUrl + "/");
+        func.CheckLogin();
+        func.LoginRole("Teacher");
+        driver.get(func.baseUrl + "/students-dashboard/75486");
     }
 
     @Test
     public void testStudentLog() throws Exception {
-        Functions func = new Functions(driver);
-        func.CheckLogin();
-        func.LoginRole("Teacher");
-        driver.get(baseUrl + "/students-dashboard/75486");
-
         // Click Student Log
         driver.findElement(By.linkText("Student Log")).click();
         if(isElementPresent(By.linkText("Click here to create a log entry"))) {
@@ -131,6 +130,3 @@ public class StudentLog {
         }
     }
 }
-
-// Write code for single chosen select list at step
-// Write code for multiple chosen select list at step
