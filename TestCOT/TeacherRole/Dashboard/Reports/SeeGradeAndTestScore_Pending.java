@@ -40,14 +40,13 @@ public class SeeGradeAndTestScore_Pending {
         driver.findElement(By.linkText("Grades & Test Score")).click();
         // Select Class of
         driver.findElement(By.className("chzn-single")).click();
-        driver.findElement(By.xpath("//*[@id=\"selWUI_chzn_o_1\"]")).click();
+        driver.findElement(By.xpath("//*[@id=\"selURS_chzn_o_1\"]")).click();
         // Enter Name
         driver.findElement(By.cssSelector("input.form-text")).clear();
         driver.findElement(By.cssSelector("input.form-text")).sendKeys("basant");
         // Click Search
         driver.findElement(By.cssSelector("input[name=\"op\"]")).click();
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ajax-progress-throbber")));
-
         // Enter Name
         driver.findElement(By.cssSelector("input.form-text")).clear();
         driver.findElement(By.cssSelector("input.form-text")).sendKeys("pa");

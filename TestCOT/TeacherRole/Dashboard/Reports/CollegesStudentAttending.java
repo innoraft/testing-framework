@@ -69,7 +69,7 @@ public class CollegesStudentAttending {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ajax-progress-throbber")));
 
         // Click PDF Link
-        driver.findElement(By.xpath("//div[3]/a/img")).click();
+        driver.findElement(By.xpath("//div[4]/a/img")).click();
         Thread.sleep(200);
     }
 

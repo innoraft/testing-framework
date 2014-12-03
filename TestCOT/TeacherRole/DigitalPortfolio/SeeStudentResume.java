@@ -3,6 +3,7 @@ package TestCOT.TeacherRole.DigitalPortfolio;
 /**
  * Created by om on 11/12/2014.
  */
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import TestCOT.CommonFunctions.Functions;
@@ -15,6 +16,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class SeeStudentResume {
     Functions func;
     private WebDriver driver;
+    private int RandomOption = 0;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
@@ -34,9 +36,16 @@ public class SeeStudentResume {
     public void testSeeStudentResume() throws Exception {
         // Click Resume
         driver.findElement(By.linkText("RESUME")).click();
-        // Select Options
-        driver.findElement(By.xpath("//div[@id='edit_students_chzn']/a/div/b")).click();
-        driver.findElement(By.xpath("//*[@id=\"edit_students_chzn_o_1\"]")).click();
+        // Check Select List Options exist or not
+        List<WebElement> SelectListOptions = driver.findElements(By.xpath("//ul[@class='chzn-results']/li"));
+        int OptionsNumber = SelectListOptions.size();
+        if(OptionsNumber > 0) {
+            // Access Random Option
+            RandomOption = func.RandomIntegerNumber(OptionsNumber) - 1;
+            // Select Random Option
+            driver.findElement(By.xpath("//div[@id='edit_students_chzn']/a/div/b")).click();
+            driver.findElement(By.xpath("//*[@id=\"edit_students_chzn_o_" + RandomOption + "\"]")).click();
+        }
         Thread.sleep(2000);
     }
 

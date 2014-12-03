@@ -1,5 +1,6 @@
 package TestCOT.TeacherRole.Gradebook;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import TestCOT.CommonFunctions.Functions;
@@ -16,6 +17,7 @@ public class CreateGradingStandard {
     Functions func;
     private WebDriver driver;
     private WebDriverWait wait;
+    private int RandomOption = 0;
     private String[] Tracking = null;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
@@ -40,8 +42,16 @@ public class CreateGradingStandard {
         if(isElementPresent(By.linkText("Click Here"))) {
             // Click "Click Here"
             driver.findElement(By.linkText("Click Here")).click();
-            // Select Course
-            new Select(driver.findElement(By.id("edit-field-gr-std-course-ref-und"))).selectByVisibleText("algebra");
+            // Check Select List Options exist or not
+            List<WebElement> SelectListOptions = driver.findElements(By.xpath("//form[@id='grading-standard-node-form']//select/option"));
+            int OptionsNumber = SelectListOptions.size();
+            int TotalOptionsNumber = OptionsNumber - 1;
+            if(TotalOptionsNumber > 0) {
+                // Access Random Option
+                RandomOption = func.RandomIntegerNumber(TotalOptionsNumber);
+                // Select Random Option
+                new Select(driver.findElement(By.id("edit-field-gr-std-course-ref-und"))).selectByIndex(RandomOption);
+            }
             // Enter Grading Attributes
             driver.findElement(By.xpath("//form[@id='grading-standard-node-form']/div/div[3]/input")).clear();
             Tracking = func.RandomWords(2);
@@ -55,8 +65,16 @@ public class CreateGradingStandard {
         } else if (isElementPresent(By.linkText("+"))) {
             // Click "+" Symbol
             driver.findElement(By.linkText("+")).click();
-            // Select Course
-            new Select(driver.findElement(By.id("edit-field-gr-std-course-ref-und"))).selectByVisibleText("algebra");
+            // Check Select List Options exist or not
+            List<WebElement> SelectListOptions = driver.findElements(By.xpath("//form[@id='grading-standard-node-form']//select/option"));
+            int OptionsNumber = SelectListOptions.size();
+            int TotalOptionsNumber = OptionsNumber - 1;
+            if(TotalOptionsNumber > 0) {
+                // Access Random Option
+                RandomOption = func.RandomIntegerNumber(TotalOptionsNumber);
+                // Select Random Option
+                new Select(driver.findElement(By.id("edit-field-gr-std-course-ref-und"))).selectByIndex(RandomOption);
+            }
             // Enter Grading Attributes
             driver.findElement(By.xpath("//form[@id='grading-standard-node-form']/div/div[3]/input")).clear();
             Tracking = func.RandomWords(2);
