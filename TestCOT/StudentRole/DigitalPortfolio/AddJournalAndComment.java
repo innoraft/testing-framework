@@ -45,9 +45,9 @@ public class AddJournalAndComment {
 
         // Add Journal Entry
         // Enter Title
-        driver.findElement(By.id("edit-title")).clear();
+        driver.findElement(By.xpath("//input[@name='title']")).clear();
         Tracking = func.RandomWords(2);
-        driver.findElement(By.id("edit-title")).sendKeys(Tracking[0] + " " + Tracking[1]);
+        driver.findElement(By.xpath("//input[@name='title']")).sendKeys(Tracking[0] + " " + Tracking[1]);
         // Click Source
         driver.findElement(By.id("cke_83_label")).click();
         // Enter Description
@@ -58,27 +58,23 @@ public class AddJournalAndComment {
         }
         driver.findElement(By.cssSelector("textarea.cke_source.cke_enable_context_menu")).sendKeys("<p>" + TrackingValues + " </p>");
         // Click Upload Video
-        driver.findElement(By.id("botr-upload-button")).click();
+        driver.findElement(By.xpath("//input[@id='botr-upload-button']")).click();
         driver.findElement(By.className("botr-upload-file")).sendKeys("C:\\Users\\om\\Downloads\\Andaman & Nicobar Islands(2 sec video)-BzosVry7nc4.mp4");
         // Click Upload
-        driver.findElement(By.xpath("//input[@value='Upload']")).click();
+        driver.findElement(By.className("botr-upload-submit")).click();
         // Wait for upload
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.botr-close > img")));
         // Save journal entry
-        driver.findElement(By.xpath("//div[2]/input")).click();
+        driver.findElement(By.xpath("//input[@value='Save']")).click();
 
         // Click Add New Comment
         driver.findElement(By.id("comment-add")).click();
         // Enter Comment
-        driver.findElement(By.id("edit-comment-body-und-0-value")).clear();
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-comment-body')]//textarea")).clear();
         Tracking = func.RandomWords(2);
-        driver.findElement(By.id("edit-comment-body-und-0-value")).sendKeys(Tracking[0] + " " + Tracking[1]);
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-comment-body')]//textarea")).sendKeys(Tracking[0] + " " + Tracking[1]);
         // Click Save
-        driver.findElement(By.xpath("//form/div/div[2]/input")).click();
-
-        // Click Comment
-        driver.findElement(By.xpath("//div[5]/a")).click();
-        Thread.sleep(300);
+        driver.findElement(By.xpath("//form[@id='comment-form']//input[@class='form-submit']")).click();
     }
 
     @After

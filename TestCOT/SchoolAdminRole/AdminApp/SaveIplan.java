@@ -45,27 +45,27 @@ public class SaveIplan {
         driver.findElement(By.id("edit-title")).sendKeys(Tracking[0] + Tracking[1] + Tracking[2] + Tracking[3]);
         // Click Add To Calender
         driver.findElement(By.linkText("Add to Calendar")).click();
-        driver.findElement(By.id("edit-field-task-due-date-und-0-value-datepicker-popup-0")).click();
+        driver.findElement(By.xpath("//div[@class='date-padding']//input")).click();
         driver.findElement(By.linkText("25")).click();
         // Click "+" Symbol And Enter Task
         driver.findElement(By.id("edit-field-ltp-milestone-task-und-add-more")).click();
         Tracking = func.RandomWords(4);
-        driver.findElement(By.id("edit-field-ltp-milestone-task-und-1-value")).sendKeys(Tracking[0] + Tracking[1] + Tracking[2] + Tracking[3]);
+        driver.findElement(By.xpath("//tr[@class='draggable even']//input")).sendKeys(Tracking[0] + Tracking[1] + Tracking[2] + Tracking[3]);
         // Select Grade
-        driver.findElement(By.xpath("//div[5]/div/a/span")).click();
+        driver.findElement(By.xpath("//div[@id='edit_field_ltp_milestone_grade_dummy_chzn']//span")).click();
         driver.findElement(By.xpath("//*[@id=\"edit_field_ltp_milestone_grade_dummy_chzn_o_3\"]")).click();
         // Select Team
-        driver.findElement(By.xpath("//div[6]/div/a/span")).click();
+        driver.findElement(By.xpath("//div[@id='edit_field_ltp_milestone_month_dummy_chzn']//span")).click();
         driver.findElement(By.xpath("//*[@id=\"edit_field_ltp_milestone_month_dummy_chzn_o_2\"]")).click();
         // Enter Order
-        driver.findElement(By.id("edit-field-ltp-milestone-order-und-0-value")).clear();
-        driver.findElement(By.id("edit-field-ltp-milestone-order-und-0-value")).sendKeys("4");
+        driver.findElement(By.xpath("//div[@id='field-ltp-milestone-order-add-more-wrapper']//input")).clear();
+        driver.findElement(By.xpath("//div[@id='field-ltp-milestone-order-add-more-wrapper']//input")).sendKeys("4");
         // Enter Notes
-        driver.findElement(By.id("edit-field-ltp-milestone-notes-und-0-value")).clear();
+        driver.findElement(By.className("form-textarea")).clear();
         Tracking = func.RandomWords(4);
-        driver.findElement(By.id("edit-field-ltp-milestone-notes-und-0-value")).sendKeys(Tracking[0] + Tracking[1] + Tracking[2] + Tracking[3]);
+        driver.findElement(By.className("form-textarea")).sendKeys(Tracking[0] + Tracking[1] + Tracking[2] + Tracking[3]);
         // Click Save Button
-        driver.findElement(By.xpath("//div[11]/input")).click();
+        driver.findElement(By.id("edit-submit")).click();
     }
 
     @After

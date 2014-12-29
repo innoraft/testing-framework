@@ -3,6 +3,7 @@ package TestCOT.StudentRole.Messages;
 /**
  * Created by om on 11/12/2014.
  */
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import TestCOT.CommonFunctions.Functions;
@@ -15,6 +16,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class CreateAMessages {
     Functions func;
     private WebDriver driver;
+    private int RandomOption = 0;
     private String[] Tracking = null;
     private String TrackingValues = "";
     private boolean acceptNextAlert = true;
@@ -38,36 +40,46 @@ public class CreateAMessages {
         driver.findElement(By.linkText("DIALOG")).click();
 
         // Send Message
-        // Select Options
-        driver.findElement(By.xpath("//div[@id='edit_recipient_individuals_chzn']/ul")).click();
-        driver.findElement(By.xpath("//*[@id=\"edit_recipient_individuals_chzn_o_1\"]")).click();
+        // Click Individual Checkbox
+        driver.findElement(By.id("edit-recipient-type-0")).click();
+        // Check Select List Options exist or not
+        List<WebElement> SelectListOptions = driver.findElements(By.xpath("//div[@id='edit_recipient_individuals_chzn']//ul[@class='chzn-results']/li"));
+        int OptionsNumber = SelectListOptions.size();
+        System.out.println(OptionsNumber);
+        if(OptionsNumber > 0) {
+            // Access Random Option
+            RandomOption = func.RandomIntegerNumber(OptionsNumber) - 1;
+            System.out.println(RandomOption);
+            // Select Random Option
+            driver.findElement(By.xpath("//div[@id='edit_recipient_individuals_chzn']/ul")).click();
+            driver.findElement(By.xpath("//*[@id=\"edit_recipient_individuals_chzn_o_" + RandomOption + "\"]")).click();
+        }
         // Enter Subject
-        driver.findElement(By.id("edit-subject")).click();
-        driver.findElement(By.id("edit-subject")).clear();
+        driver.findElement(By.xpath("//div[contains(@class, 'form-item-subject')]//input")).clear();
         Tracking = func.RandomWords(1);
-        driver.findElement(By.id("edit-subject")).sendKeys(Tracking[0]);
+        driver.findElement(By.xpath("//div[contains(@class, 'form-item-subject')]//input")).sendKeys(Tracking[0]);
         // Enter Message
-        driver.findElement(By.id("edit-body-value")).clear();
+        driver.findElement(By.xpath("//form[@id='privatemsg-new']//textarea")).clear();
         Tracking = func.RandomWords(5);
         for(int i= 0 ; i < Tracking.length ; i++) {
             TrackingValues = TrackingValues + " " + Tracking[i];
         }
-        driver.findElement(By.id("edit-body-value")).sendKeys(TrackingValues);
+        driver.findElement(By.xpath("//form[@id='privatemsg-new']//textarea")).sendKeys(TrackingValues);
         // Click Send Message
-        driver.findElement(By.xpath("//div[@id='edit-actions--2']/input")).click();
+        driver.findElement(By.xpath("//form[@id='privatemsg-new']//input[@type='submit']")).click();
 
         // Send Message
         // Click Subject
         driver.findElement(By.cssSelector("a.use-ajax.ajax-processed")).click();
         // Enter Message
-        driver.findElement(By.id("edit-body-value--2")).clear();
+        driver.findElement(By.xpath("//div[@id='dialog-view-msg']//textarea")).clear();
         Tracking = func.RandomWords(10);
         for(int i= 0 ; i < Tracking.length ; i++) {
             TrackingValues = TrackingValues + " " + Tracking[i];
         }
-        driver.findElement(By.id("edit-body-value--2")).sendKeys("this is a dummy message");
+        driver.findElement(By.xpath("//div[@id='dialog-view-msg']//textarea")).sendKeys("this is a dummy message");
         // Click Send Message
-        driver.findElement(By.xpath("//div[@id='edit-actions--3']/input")).click();
+        driver.findElement(By.xpath("//div[@id='dialog-view-msg']//input[@type='submit']")).click();
 
         // To Remove Message
         driver.findElement(By.linkText("Remove")).click();

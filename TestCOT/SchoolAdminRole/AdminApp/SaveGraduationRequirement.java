@@ -47,7 +47,7 @@ public class SaveGraduationRequirement {
         }
         driver.findElement(By.cssSelector("textarea.cke_source.cke_enable_context_menu")).sendKeys("<p>" + TrackingValues + " </p>");
         // Click Save Button
-        driver.findElement(By.xpath("//div[3]/input")).click();
+        driver.findElement(By.id("edit-submit")).click();
     }
 
     @After

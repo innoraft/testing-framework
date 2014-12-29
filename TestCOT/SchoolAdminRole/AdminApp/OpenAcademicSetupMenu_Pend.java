@@ -11,10 +11,13 @@ import static org.junit.Assert.*;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class OpenAcademicSetupMenu {
+public class OpenAcademicSetupMenu_Pend {
     Functions func;
     private WebDriver driver;
+    private WebDriverWait wait;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
@@ -22,6 +25,7 @@ public class OpenAcademicSetupMenu {
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
         func = new Functions(driver);
+        wait = new WebDriverWait(driver, func.timeoutOfOneElement);
         driver.manage().timeouts().implicitlyWait(func.timeoutOFAllElement, TimeUnit.SECONDS);
 
         driver.get(func.baseUrl + "/");
@@ -37,6 +41,9 @@ public class OpenAcademicSetupMenu {
         driver.findElement(By.linkText("Administration")).click();
         // Click Academic Setup
         driver.findElement(By.linkText("ACADEMIC SETUP")).click();
+        // TODO validate academic setup page
+        // Wait for page to load
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("edit-submit")));
     }
 
     @After

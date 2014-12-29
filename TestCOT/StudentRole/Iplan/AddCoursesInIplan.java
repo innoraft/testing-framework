@@ -42,23 +42,28 @@ public class AddCoursesInIplan {
     public void testAddCoursesInIplan() throws Exception {
         // Click Add To Planner
         driver.findElement(By.linkText("Add to Planner")).click();
-
-        // Add Course To Planner
-        // Click Grade
-        driver.findElement(By.id("grade-11")).click();
-        // Click Duration
-        driver.findElement(By.xpath("(//input[@name='semester'])[2]")).click();
-        // Click Save
-        driver.findElement(By.xpath("//div[@id='edit-actions']/input")).click();
-
-        // Add Another Course To Planner
         // Click Subject
-        driver.findElement(By.id("subject-social_science")).click();
+        func.SelectRandomElement("//div[@class='planner-subject border']/div/div", "");
+        // Click Course
+        func.SelectRandomElement("//div[@class='subject-topic border']/div/div[@style='display: block;']", "");
         // Click Grade
-        driver.findElement(By.id("grade-10")).click();
-        driver.findElement(By.id("grade-12")).click();
+        func.SelectRandomElement("//div[@class='planner-grade border']/div/div", "");
+        // Click Duration
+        func.SelectRandomElement("//form[@id='display-year']/div/div[@style='display: block;']", "/input");
         // Click Save
-        driver.findElement(By.xpath("//div[@id='edit-actions']/input")).click();
+        driver.findElement(By.xpath("//div[contains(@class, 'form-actions')]/input")).click();
+        // Click Subject
+        func.SelectRandomElement("//div[@class='planner-subject border']/div/div", "");
+        // Click Course
+        func.SelectRandomElement("//div[@class='subject-topic border']/div/div[@style='display: block;']", "");
+        // Click Grade
+        func.SelectRandomElement("//div[@class='planner-grade border']/div/div", "");
+        // Click Duration
+        func.SelectRandomElement("//form[@id='display-year']/div/div[@style='display: block;']", "/input");
+        // Click Save
+        driver.findElement(By.xpath("//div[contains(@class, 'form-actions')]/input")).click();
+        // Click Finish
+        driver.findElement(By.linkText("Finish")).click();
 
         // Click Home
         driver.findElement(By.xpath("//div[@id='nav-group-home']")).click();
@@ -78,28 +83,23 @@ public class AddCoursesInIplan {
 
         // Click Add External Courses
         driver.findElement(By.linkText("Add External Courses")).click();
-
-        // External Courses
         // Select Subject
-        new Select(driver.findElement(By.id("edit-subjects-list"))).selectByVisibleText("Mathematics");
+        func.SelectRandomSelectListOption("//div[contains(@class, 'form-item-subjects-list')]//select");
         // Enter Course Name
-        driver.findElement(By.id("edit-course-name")).clear();
+        driver.findElement(By.xpath("//div[contains(@class, 'form-item-course-name')]//input")).clear();
         Tracking = func.RandomWords(2);
-        driver.findElement(By.id("edit-course-name")).sendKeys(Tracking[0] + " " + Tracking[1]);
+        driver.findElement(By.xpath("//div[contains(@class, 'form-item-course-name')]//input")).sendKeys(Tracking[0] + " " + Tracking[1]);
         // Select Grade
-        new Select(driver.findElement(By.id("edit-grade"))).selectByVisibleText("9");
+        func.SelectRandomSelectListOption("//div[contains(@class, 'form-item-grade')]//select");
         // Enter Course Credits
-        driver.findElement(By.id("edit-course-credits")).clear();
+        driver.findElement(By.xpath("//div[contains(@class, 'form-item-course-credits')]//input")).clear();
         IntegerValue = func.RandomIntegerNumber(Max);
-        driver.findElement(By.id("edit-course-credits")).sendKeys(String.valueOf(IntegerValue));
+        driver.findElement(By.xpath("//div[contains(@class, 'form-item-course-credits')]//input")).sendKeys(String.valueOf(IntegerValue));
         // Select Duration
-        new Select(driver.findElement(By.id("edit-duration"))).selectByVisibleText("Second Semester");
+        func.SelectRandomSelectListOption("//div[contains(@class, 'form-item-duration')]//select");
         // Click Submit Button
-        driver.findElement(By.xpath("//div[2]/div/form/div/input[3]")).click();
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[2]/div/form/div/input[3]")));
-
-        // Click PDF Link
-        driver.findElement(By.cssSelector("a.print-pdf.print")).click();
+        driver.findElement(By.xpath("//form[@id='transferred-courses-add-form']//input[contains(@class, 'form-submit')]")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//form[@id='transferred-courses-add-form']//input[contains(@class, 'form-submit')]")));
     }
 
     @After

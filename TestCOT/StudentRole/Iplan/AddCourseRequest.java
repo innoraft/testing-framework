@@ -1,8 +1,17 @@
+/**
+ * Planner can be turn on or off only by the school admin. If planner turn on than add to planner link and delete button visible
+ * to student. Through add to planner link student can directly add the course to his plan and through delete button student can
+ * directly remove the course from his plan. If planner turn off than add class link and drop class link visible to student.
+ * Through add class link student can add the course to his plan and through drop class link student can remove the course from
+ * his plan, only after the school admin approve the add course request and drop course request respectively.
+ */
+
 package TestCOT.StudentRole.Iplan;
 
 /**
  * Created by om on 11/12/2014.
  */
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import TestCOT.CommonFunctions.Functions;
@@ -14,6 +23,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class AddCourseRequest {
     Functions func;
+    private int RandomRow = 0;
     private WebDriver driver;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
@@ -38,26 +48,26 @@ public class AddCourseRequest {
         driver.findElement(By.linkText("Add Class")).click();
 
         // Click Subject
-        driver.findElement(By.id("subject-history_social_science")).click();
-        // Click Course Title
-        driver.findElement(By.id("node-17164")).click();
+        func.SelectRandomElement("//div[@class='planner-subject border']/div/div", "");
+        // Click Course
+        func.SelectRandomElement("//div[@class='subject-topic border']/div/div[@style='display: block;']", "");
         // Click Grade
-        driver.findElement(By.id("grade-12")).click();
+        func.SelectRandomElement("//div[@class='planner-grade border']/div/div", "");
         // Click Duration
-        driver.findElement(By.xpath("//div[3]/input")).click();
+        func.SelectRandomElement("//form[@id='display-year']/div/div[@style='display: block;']", "/input");
         // Click Save
-        driver.findElement(By.xpath("//div[@id='edit-actions']/input")).click();
+        driver.findElement(By.xpath("//div[contains(@class, 'form-actions')]/input")).click();
 
         // Click Subject
-        driver.findElement(By.id("subject-physical_education")).click();
-        // Click Course Title
-        driver.findElement(By.id("node-17188")).click();
+        func.SelectRandomElement("//div[@class='planner-subject border']/div/div", "");
+        // Click Course
+        func.SelectRandomElement("//div[@class='subject-topic border']/div/div[@style='display: block;']", "");
         // Click Grade
-        driver.findElement(By.id("grade-11")).click();
+        func.SelectRandomElement("//div[@class='planner-grade border']/div/div", "");
         // Click Duration
-        driver.findElement(By.xpath("//div[3]/input")).click();
+        func.SelectRandomElement("//form[@id='display-year']/div/div[@style='display: block;']", "/input");
         // Click Save
-        driver.findElement(By.xpath("//div[@id='edit-actions']/input")).click();
+        driver.findElement(By.xpath("//div[contains(@class, 'form-actions')]/input")).click();
 
         // Click Finish
         driver.findElement(By.linkText("Finish")).click();

@@ -36,6 +36,7 @@ public class GoToHomeworkApp {
         driver.findElement(By.xpath("//div[@id='nav-group-home']")).click();
         // Click Lessons & Homework
         driver.findElement(By.linkText("Lessons & Homework")).click();
+        // Wait for page to load.
         wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText("HOMEWORK LIBRARY")));
     }
 

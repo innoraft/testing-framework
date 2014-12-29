@@ -55,7 +55,7 @@ public class SendBroadcastMessage {
         }
         driver.findElement(By.id("edit-body-value")).sendKeys(TrackingValues);
         // Click Send Message
-        driver.findElement(By.xpath("//div[5]/input")).click();
+        driver.findElement(By.className("form-submit")).click();
 
         // Click Subject
         driver.findElement(By.cssSelector("a.use-ajax.ajax-processed")).click();

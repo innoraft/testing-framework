@@ -19,7 +19,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class SearchCollege {
+public class SearchCollege_Pending {
     Functions func;
     private WebDriver driver;
     private boolean acceptNextAlert = true;
@@ -54,10 +54,10 @@ public class SearchCollege {
         driver.findElement(By.id("edit-keys")).clear();
         driver.findElement(By.id("edit-keys")).sendKeys("Abilene");
         // Click Search
-        driver.findElement(By.xpath("//form/div/div/input")).click();
+        driver.findElement(By.id("edit-submit")).click();
         // Check Result Received or Not
         try {
-            assertTrue(func.isTextPresent(driver.findElement(By.xpath("//div[5]/div/div/div[2]/div")).getText()));
+            assertTrue(func.isTextPresent(driver.findElement(By.className("search-total-results")).getText()));
         } catch (Error e) {
             verificationErrors.append(e.toString());
         }
@@ -71,6 +71,7 @@ public class SearchCollege {
         // Click Private
         driver.findElement(By.id("edit-public-private-private")).click();
         // Move School Size Slider
+        // TODO Slider not working properly
         WebElement Slider1 = driver.findElement(By.id("population_jq_slider"));
         Actions moveSlider1 = new Actions(driver);
         Action action1 = moveSlider1.dragAndDropBy(Slider1, 0, 10).build();
@@ -78,15 +79,16 @@ public class SearchCollege {
         // Select Religious Affiliation
         new Select(driver.findElement(By.id("edit-religious-affiliation"))).selectByVisibleText("Church of Christ");
         // Move Tuition Range Slider
+        // TODO Slider not working properly
         WebElement Slider2 = driver.findElement(By.id("tuition_range_jq_slider"));
         Actions moveSlider2 = new Actions(driver);
         Action action2 = moveSlider2.dragAndDropBy(Slider2, 0, 10).build();
         action2.perform();
         // Click Apply
-        driver.findElement(By.xpath("//div[8]/input")).click();
+        driver.findElement(By.id("edit-type-of-school-apply-filter")).click();
         // Check Result Received or Not
         try {
-            assertTrue(func.isTextPresent(driver.findElement(By.xpath("//div[5]/div/div/div[2]/div")).getText()));
+            assertTrue(func.isTextPresent(driver.findElement(By.className("search-total-results")).getText()));
         } catch (Error e) {
             verificationErrors.append(e.toString());
         }
@@ -96,18 +98,18 @@ public class SearchCollege {
 
     private void AreaOfStudy() throws IOException, InterruptedException {
         // Click Area of School
-        driver.findElement(By.xpath("//li[2]/a/strong")).click();
+        driver.findElement(By.xpath("//ul[@class='vertical-tabs-list']/li/a/strong[contains(text(), \"Area of Study\")]")).click();
         // Select One Area Study
         new Select(driver.findElement(By.id("edit-area-of-study-parent"))).selectByVisibleText("Area, Ethnic, Cultural, and Gender Studies");
         // Wait For Another Select List To Load
         Thread.sleep(5000);
         // Select Subareas of Study
-        new Select(driver.findElement(By.id("edit-area-of-study--2"))).selectByVisibleText("Area, Ethnic, Cultural, and Gender Studies, Other");
+        new Select(driver.findElement(By.xpath("//div[@id='child-area-of-study-wrapper']//select"))).selectByVisibleText("Area, Ethnic, Cultural, and Gender Studies, Other");
         // Click Apply
-        driver.findElement(By.xpath("//div[5]/input")).click();
+        driver.findElement(By.id("edit-area-of-study-apply-filter")).click();
         // Check Result Received or Not
         try {
-            assertTrue(func.isTextPresent(driver.findElement(By.xpath("//div[5]/div/div/div[2]/div")).getText()));
+            assertTrue(func.isTextPresent(driver.findElement(By.className("search-total-results")).getText()));
         } catch (Error e) {
             verificationErrors.append(e.toString());
         }
@@ -117,7 +119,7 @@ public class SearchCollege {
 
     private void SpecialNeeds() throws IOException {
         // Click Special Needs
-        driver.findElement(By.xpath("//li[3]/a/strong")).click();
+        driver.findElement(By.xpath("//ul[@class='vertical-tabs-list']/li/a/strong[contains(text(), \"Special Needs\")]")).click();
         // Select Special Needs
         Select SpecialNeeds = new Select(driver.findElement(By.id("edit-special-needs")));
         // Select Learning Center
@@ -125,10 +127,10 @@ public class SearchCollege {
         // Select Early Syllabus
         SpecialNeeds.selectByVisibleText("Early syllabus");
         // Click Apply
-        driver.findElement(By.xpath("//fieldset[3]/div/div[5]/input")).click();
+        driver.findElement(By.id("edit-special-needs-apply-filter")).click();
         // Check Result Received or Not
         try {
-            assertTrue(func.isTextPresent(driver.findElement(By.xpath("//div[5]/div/div/div[2]/div")).getText()));
+            assertTrue(func.isTextPresent(driver.findElement(By.className("search-total-results")).getText()));
         } catch (Error e) {
             verificationErrors.append(e.toString());
         }
@@ -138,16 +140,18 @@ public class SearchCollege {
 
     private void ActivitiesOfInterest() throws IOException {
         // Click Activities of Interest
-        driver.findElement(By.xpath("//li[4]/a/strong")).click();
+        driver.findElement(By.xpath("//ul[@class='vertical-tabs-list']/li/a/strong[contains(text(), \"Activities of Interest\")]")).click();
         // Click Student Newspaper Checkbox
+        // TODO Do not use number in locator
         driver.findElement(By.xpath("//div[11]/input")).click();
         // Click TV Station Checkbox
+        // TODO Do not use number in locator
         driver.findElement(By.xpath("//div[13]/input")).click();
         // Click Apply
-        driver.findElement(By.xpath("//fieldset[4]/div/div[5]/input")).click();
+        driver.findElement(By.id("edit-activities-interests-apply-filter")).click();
         // Check Result Received or Not
         try {
-            assertTrue(func.isTextPresent(driver.findElement(By.xpath("//div[5]/div/div/div[2]/div")).getText()));
+            assertTrue(func.isTextPresent(driver.findElement(By.className("search-total-results")).getText()));
         } catch (Error e) {
             verificationErrors.append(e.toString());
         }
@@ -157,7 +161,7 @@ public class SearchCollege {
 
     private void Sports() throws IOException {
         // Click Sports
-        driver.findElement(By.xpath("//li[5]/a/strong")).click();
+        driver.findElement(By.xpath("//ul[@class='vertical-tabs-list']/li/a/strong[contains(text(), \"Sports\")]")).click();
         // Select Sports
         Select Sports = new Select(driver.findElement(By.id("edit-varsity-sports")));
         // Select Baseball
@@ -165,10 +169,10 @@ public class SearchCollege {
         // Select Basketball
         Sports.selectByVisibleText("basketball");
         // Click Apply
-        driver.findElement(By.xpath("//fieldset[5]/div/div[5]/input")).click();
+        driver.findElement(By.id("edit-varsity-sports-apply-filter")).click();
         // Check Result Received or Not
         try {
-            assertTrue(func.isTextPresent(driver.findElement(By.xpath("//div[5]/div/div/div[2]/div")).getText()));
+            assertTrue(func.isTextPresent(driver.findElement(By.className("search-total-results")).getText()));
         } catch (Error e) {
             verificationErrors.append(e.toString());
         }
@@ -178,16 +182,18 @@ public class SearchCollege {
 
     private void Location() throws IOException {
         // Click Location
-        driver.findElement(By.xpath("//li[6]/a/strong")).click();
+        driver.findElement(By.xpath("//ul[@class='vertical-tabs-list']/li/a/strong[contains(text(), \"Location\")]")).click();
         // Click West Checkbox
+        // TODO Do not use number in Locator
         driver.findElement(By.xpath("//fieldset[6]/div/div[4]/div/div[3]/input")).click();
         // Click South Checkbox
+        // TODO Do not use number in Locator
         driver.findElement(By.xpath("//fieldset[6]/div/div[4]/div/div[6]/input")).click();
         // Click Apply
-        driver.findElement(By.xpath("//fieldset[6]/div/div[5]/input")).click();
+        driver.findElement(By.id("edit-location-apply-filter")).click();
         // Check Result Received or Not
         try {
-            assertTrue(func.isTextPresent(driver.findElement(By.xpath("//div[5]/div/div/div[2]/div")).getText()));
+            assertTrue(func.isTextPresent(driver.findElement(By.className("search-total-results")).getText()));
         } catch (Error e) {
             verificationErrors.append(e.toString());
         }

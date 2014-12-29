@@ -41,11 +41,11 @@ public class SeeBroadcastMessages {
 
         // Remove Subject
         driver.findElement(By.linkText("Remove")).click();
-        // Click No button
+        // Click No Button
         driver.findElement(By.xpath("(//button[@type='button'])[5]")).click();
         // Remove Subject
         driver.findElement(By.linkText("Remove")).click();
-        // Click Yes Subject
+        // Click Yes Button
         driver.findElement(By.xpath("(//button[@type='button'])[4]")).click();
     }
 

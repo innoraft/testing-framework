@@ -1,8 +1,16 @@
+/**
+ * First student create the essay topic for particular university than student write the essay on that topic. After write the
+ * essay student have two option, one to save the essay and another one is save and share the essay with teacher. Teacher
+ * describe how much essay is complete in percentage. After every time student update and share the essay, version will be
+ * created.
+ */
+
 package TestCOT.StudentRole.CollegeApp;
 
 /**
  * Created by om on 11/12/2014.
  */
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import TestCOT.CommonFunctions.Functions;
@@ -16,6 +24,7 @@ import org.openqa.selenium.support.ui.Select;
 public class CreateEssay {
     Functions func;
     private WebDriver driver;
+    private int RandomOption = 0;
     private String[] Tracking = null;
     private String TrackingValues = "";
     private boolean acceptNextAlert = true;
@@ -48,21 +57,22 @@ public class CreateEssay {
 
         // Add Essay Topic
         // Select Type
-        new Select(driver.findElement(By.id("edit-field-essay-type-und"))).selectByVisibleText("Scholarship");
+        func.SelectRandomSelectListOption("//div[contains(@class, 'field-name-field-essay-type-form')]//select");
         // Enter University
-        driver.findElement(By.id("edit-field-essay-university-und-0-value")).clear();
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-essay-university-form')]//input")).clear();
         Tracking = func.RandomWords(1);
-        driver.findElement(By.id("edit-field-essay-university-und-0-value")).sendKeys(Tracking[0]);
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-essay-university-form')]//input")).sendKeys(Tracking[0]);
         // Enter Topic
-        driver.findElement(By.id("edit-body-und-0-value")).clear();
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-body')]//textarea")).clear();
         Tracking = func.RandomWords(2);
-        driver.findElement(By.id("edit-body-und-0-value")).sendKeys(Tracking[0] + " " + Tracking[1]);
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-body')]//textarea")).sendKeys(Tracking[0] + " " + Tracking[1]);
         // Click "+" Symbol
-        driver.findElement(By.xpath("//div[6]/input")).click();
+        driver.findElement(By.xpath("//input[contains(@class, 'form-submit')]")).click();
+        Thread.sleep(3000);
 
         // Create Essay
         // Click "+" Symbol
-        driver.findElement(By.xpath("//td[4]/a")).click();
+        driver.findElement(By.xpath("//tr[@class='odd views-row-first']//a[@class='add-essay']")).click();
         // Click Source
         driver.findElement(By.id("cke_8_label")).click();
         // Enter Essay
@@ -73,7 +83,7 @@ public class CreateEssay {
         }
         driver.findElement(By.cssSelector("textarea.cke_source.cke_enable_context_menu")).sendKeys("<p>" + TrackingValues + " </p>");
         // Click Save
-        driver.findElement(By.id("edit-save-temp")).click();
+        driver.findElement(By.xpath("//input[@value='Save']")).click();
 
         // Click Essay
         driver.findElement(By.linkText("ESSAYS")).click();

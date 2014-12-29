@@ -41,66 +41,64 @@ public class CreateResume {
 
         // Create Resume
         // Enter Contact Info
-        driver.findElement(By.id("edit-field-resume-contact-info-und-0-value")).clear();
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-resume-contact-info-form')]//textarea")).clear();
         Tracking = func.RandomWords(7);
         for(int i= 0 ; i < Tracking.length ; i++) {
             TrackingValues = TrackingValues + " " + Tracking[i];
         }
-        driver.findElement(By.id("edit-field-resume-contact-info-und-0-value")).sendKeys(TrackingValues);
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-resume-contact-info-form')]//textarea")).sendKeys(TrackingValues);
         // Enter Objective
-        driver.findElement(By.id("edit-field-essay-objective-und-0-value")).clear();
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-essay-objective-form')]//textarea")).clear();
         Tracking = func.RandomWords(10);
         for(int i= 0 ; i < Tracking.length ; i++) {
             TrackingValues = TrackingValues + " " + Tracking[i];
         }
-        driver.findElement(By.id("edit-field-essay-objective-und-0-value")).sendKeys(TrackingValues);
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-essay-objective-form')]//textarea")).sendKeys(TrackingValues);
         // Education
         // Enter School/College/Course
-        driver.findElement(By.id("edit-field-essay-education-und-0-field-education-school-college-und-0-value")).clear();
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-education-school-college')]//input")).clear();
         Tracking = func.RandomWords(3);
         for(int i= 0 ; i < Tracking.length ; i++) {
             TrackingValues = TrackingValues + " " + Tracking[i];
         }
-        driver.findElement(By.id("edit-field-essay-education-und-0-field-education-school-college-und-0-value")).sendKeys(TrackingValues);
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-education-school-college')]//input")).sendKeys(TrackingValues);
         // Enter Location
-        driver.findElement(By.id("edit-field-essay-education-und-0-field-education-location-und-0-value")).clear();
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-education-location')]//input")).clear();
         Tracking = func.RandomWords(1);
-        driver.findElement(By.id("edit-field-essay-education-und-0-field-education-location-und-0-value")).sendKeys(Tracking[0]);
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-education-location')]//input")).sendKeys(Tracking[0]);
         // Enter Year
-        driver.findElement(By.id("edit-field-essay-education-und-0-field-education-year-und-0-value")).clear();
-        driver.findElement(By.id("edit-field-essay-education-und-0-field-education-year-und-0-value")).sendKeys("June 2014 - April 2015");
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-education-year')]//input")).clear();
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-education-year')]//input")).sendKeys("June 2014 - April 2015");
         // Enter Brief Info
-        driver.findElement(By.id("edit-field-essay-education-und-0-field-education-brief-info-und-0-value")).clear();
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-education-brief-info')]//textarea")).clear();
         Tracking = func.RandomWords(10);
         for(int i= 0 ; i < Tracking.length ; i++) {
             TrackingValues = TrackingValues + " " + Tracking[i];
         }
-        driver.findElement(By.id("edit-field-essay-education-und-0-field-education-brief-info-und-0-value")).sendKeys(TrackingValues);
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-education-brief-info')]//textarea")).sendKeys(TrackingValues);
+        Thread.sleep(5000);
         // Enter Awards & Honors
-        driver.findElement(By.id("edit-field-essay-award-honors-und-0-value")).clear();
+        driver.findElement(By.xpath("//table[@id='field-essay-award-honors-values']//input")).clear();
         Tracking = func.RandomWords(3);
-        driver.findElement(By.id("edit-field-essay-award-honors-und-0-value")).sendKeys(Tracking[0] + " " + Tracking[1] + " " + Tracking[2]);
+        driver.findElement(By.xpath("//table[@id='field-essay-award-honors-values']//input")).sendKeys(Tracking[0] + " " + Tracking[1] + " " + Tracking[2]);
         // Enter Extracurricular & Leadership Experience
-        driver.findElement(By.id("edit-field-essay-extracurricular-und-0-value")).clear();
+        driver.findElement(By.xpath("//table[@id='field-essay-extracurricular-values']//input")).clear();
         Tracking = func.RandomWords(1);
-        driver.findElement(By.id("edit-field-essay-extracurricular-und-0-value")).sendKeys(Tracking[0]);
+        driver.findElement(By.xpath("//table[@id='field-essay-extracurricular-values']//input")).sendKeys(Tracking[0]);
         // Enter Work Experience
         // Enter organisation
-        driver.findElement(By.id("edit-field-essay-work-und-0-field-work-organisation-und-0-value")).clear();
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-work-organisation')]//input")).clear();
         Tracking = func.RandomWords(1);
-        driver.findElement(By.id("edit-field-essay-work-und-0-field-work-organisation-und-0-value")).sendKeys(Tracking[0]);
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-work-organisation')]//input")).sendKeys(Tracking[0]);
         // Enter Location
-        driver.findElement(By.id("edit-field-essay-work-und-0-field-work-location-und-0-value")).clear();
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-work-location')]//input")).clear();
         Tracking = func.RandomWords(1);
-        driver.findElement(By.id("edit-field-essay-work-und-0-field-work-location-und-0-value")).sendKeys(Tracking[0]);
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-work-location')]//input")).sendKeys(Tracking[0]);
         // Enter Year
-        driver.findElement(By.id("edit-field-essay-work-und-0-field-work-year-und-0-value")).clear();
-        driver.findElement(By.id("edit-field-essay-work-und-0-field-work-year-und-0-value")).sendKeys("June 2013 - April 2014");
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-work-year')]//input")).clear();
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-work-year')]//input")).sendKeys("June 2013 - April 2014");
         // Save Resume
-        driver.findElement(By.id("edit-submit")).click();
-
-        // Click PDF Link
-        driver.findElement(By.xpath("//a[2]")).click();
+        driver.findElement(By.xpath("//div[contains(@class, 'form-actions')]//input[@type='submit']")).click();
     }
 
     @After

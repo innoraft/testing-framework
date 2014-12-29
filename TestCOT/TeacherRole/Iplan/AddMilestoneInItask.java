@@ -1,3 +1,8 @@
+/**
+ * Teacher set the milestone for particular student. Means what student have to do in their lives and in what time. Time can be
+ * set as month or Fall, Spring and Summer.
+ */
+
 package TestCOT.TeacherRole.Iplan;
 
 /**

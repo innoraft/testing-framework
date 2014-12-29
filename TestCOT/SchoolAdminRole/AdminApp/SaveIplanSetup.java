@@ -35,7 +35,7 @@ public class SaveIplanSetup {
         // Click iPlan Setup
         driver.findElement(By.linkText("iPlan Setup")).click();
         // Click Save Button
-        driver.findElement(By.xpath("//div[2]/form/div/input")).click();
+        driver.findElement(By.id("edit-submit")).click();
     }
 
     @After

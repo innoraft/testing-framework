@@ -3,6 +3,7 @@ package TestCOT.StudentRole.DigitalPortfolio;
 /**
  * Created by om on 11/12/2014.
  */
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import TestCOT.CommonFunctions.Functions;
@@ -47,40 +48,32 @@ public class AddActivity {
 
         // Create Activity
         // Enter Activity
-        driver.findElement(By.id("edit-field-activity-activities-und-0-value")).clear();
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-activity-activities-form')]//textarea")).clear();
         Tracking = func.RandomWords(2);
-        driver.findElement(By.id("edit-field-activity-activities-und-0-value")).sendKeys(Tracking[0] + " " + Tracking[1]);
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-activity-activities-form')]//textarea")).sendKeys(Tracking[0] + " " + Tracking[1]);
         // Enter Grade
-        driver.findElement(By.id("edit-field-activity-grade-und-0-value")).clear();
+        driver.findElement(By.xpath("//table[@id='field-activity-grade-values']//input")).clear();
         IntegerValue = func.RandomIntegerNumberBetweenRange(Max, Min);
-        driver.findElement(By.id("edit-field-activity-grade-und-0-value")).sendKeys(String.valueOf(IntegerValue));
+        driver.findElement(By.xpath("//table[@id='field-activity-grade-values']//input")).sendKeys(String.valueOf(IntegerValue));
         // Enter Hours Per Week
-        driver.findElement(By.id("edit-field-activity-hours-p-week-und-0-value")).clear();
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-activity-hours-p-week-form')]//input")).clear();
         Max = 168;
         IntegerValue = func.RandomIntegerNumber(Max);
-        driver.findElement(By.id("edit-field-activity-hours-p-week-und-0-value")).sendKeys(String.valueOf(IntegerValue));
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-activity-hours-p-week-form')]//input")).sendKeys(String.valueOf(IntegerValue));
         // Enter Weeks Per Year
-        driver.findElement(By.id("edit-field-activity-weeks-p-year-und-0-value")).clear();
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-activity-weeks-p-year-form')]//input")).clear();
         Max = 52;
         IntegerValue = func.RandomIntegerNumber(Max);
-        driver.findElement(By.id("edit-field-activity-weeks-p-year-und-0-value")).sendKeys(String.valueOf(IntegerValue));
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-activity-weeks-p-year-form')]//input")).sendKeys(String.valueOf(IntegerValue));
         // Enter Positions
-        driver.findElement(By.id("edit-field-activity-positions-und-0-value")).clear();
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-activity-positions-form')]//textarea")).clear();
         Tracking = func.RandomWords(1);
-        driver.findElement(By.id("edit-field-activity-positions-und-0-value")).sendKeys(Tracking[0]);
-        // Check Citizenship
-        driver.findElement(By.id("edit-field-activity-skills-acquired-und-citizenship")).click();
-        // Check Self-Motivation
-        driver.findElement(By.id("edit-field-activity-skills-acquired-und-self-motivation")).click();
-        // Check Initiative
-        driver.findElement(By.id("edit-field-activity-skills-acquired-und-initiative")).click();
-        // Check Leadership
-        driver.findElement(By.id("edit-field-activity-skills-acquired-und-leadership")).click();
-        // Check Technical Mastery
-        driver.findElement(By.id("edit-field-activity-skills-acquired-und-technical-mastery")).click();
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-activity-positions-form')]//textarea")).sendKeys(Tracking[0]);
+        // Click Skills Required
+        func.ClickRandomCheckboxes(By.xpath("//div[contains(@class, 'field-name-field-activity-skills-acquired-form ')]//input[@type='checkbox']"));
         // Click Save Button
-        driver.findElement(By.xpath("//form/div/div[9]/input")).click();
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.linkText("//form/div/div[9]/input")));
+        driver.findElement(By.xpath("//div[contains(@class, 'form-actions')]//input[@type='submit']")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[contains(@class, 'form-actions')]//input[@type='submit']")));
     }
 
     @After

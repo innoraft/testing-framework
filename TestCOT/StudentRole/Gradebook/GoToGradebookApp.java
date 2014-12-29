@@ -39,6 +39,7 @@ public class GoToGradebookApp {
         driver.findElement(By.xpath("//div[@id='nav-group-home']")).click();
         // Click GradeBook
         driver.findElement(By.linkText("Gradebook")).click();
+        // Wait for page to load.
         wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText("ASSIGNMENTS")));
     }
 

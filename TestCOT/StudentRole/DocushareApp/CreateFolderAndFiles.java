@@ -3,6 +3,7 @@ package TestCOT.StudentRole.DocushareApp;
 /**
  * Created by om on 11/12/2014.
  */
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import TestCOT.CommonFunctions.Functions;
@@ -20,6 +21,7 @@ public class CreateFolderAndFiles {
     Functions func;
     private WebDriver driver;
     private WebDriverWait wait;
+    private int RandomOption = 0;
     private String[] Tracking = null;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
@@ -46,18 +48,18 @@ public class CreateFolderAndFiles {
 
         // Add To Document Locker
         // Enter Document Name
-        driver.findElement(By.id("edit-title")).clear();
+        driver.findElement(By.xpath("//form[@id='content-type-doc-loc-files-node-form']//input[@name='title']")).clear();
         Tracking = func.RandomWords(3);
-        driver.findElement(By.id("edit-title")).sendKeys(Tracking[0] + " " + Tracking[1] + " " + Tracking[2]);
+        driver.findElement(By.xpath("//form[@id='content-type-doc-loc-files-node-form']//input[@name='title']")).sendKeys(Tracking[0] + " " + Tracking[1] + " " + Tracking[2]);
         // Upload File
-        driver.findElement(By.id("edit-field-doc-loc-uploaded-file-und-0-upload")).sendKeys("C:\\Users\\om\\Downloads\\abc.txt");
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-doc-loc-uploaded-file-form')]//input")).sendKeys("C:\\Users\\om\\Downloads\\abc.txt");
         // Click Save
-        driver.findElement(By.xpath("//form/div/div[2]/input")).click();
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//form/div/div[2]/input")));
+        driver.findElement(By.xpath("//form[@id='content-type-doc-loc-files-node-form']//input[@class='form-submit']")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//form[@id='content-type-doc-loc-files-node-form']//input[@class='form-submit']")));
 
         // Click Hidden Checkbox using Actions Class
-        WebElement Element = driver.findElement(By.xpath("//form[@id='views-form-views-document-locker-files-block']/div/div[2]"));
-        WebElement HiddenElement = driver.findElement(By.xpath("//form[@id='views-form-views-document-locker-files-block']/div/div[2]/div[3]/span/div/input"));
+        WebElement Element = driver.findElement(By.xpath("//form[@id='views-form-views-document-locker-files-block']//div[contains(@class, 'views-row-first')]"));
+        WebElement HiddenElement = driver.findElement(By.xpath("//form[@id='views-form-views-document-locker-files-block']//div[contains(@class, 'views-row-first')]//input[@type='checkbox']"));
         Actions action = new Actions(driver);
         // Move To Element
         action.moveToElement(Element).perform();
@@ -66,7 +68,7 @@ public class CreateFolderAndFiles {
         // Click Checkbox
         action.click(HiddenElement).perform();
         // Click download button
-        driver.findElement(By.id("edit-files-submit")).click();
+        driver.findElement(By.xpath("//form[@id='download-files-form']//input[@class='form-submit']")).click();
 
         // See Document in Different Form
         driver.findElement(By.cssSelector("span.show-file-list-form.file-showing-form")).click();
@@ -76,14 +78,14 @@ public class CreateFolderAndFiles {
         driver.findElement(By.cssSelector("span.show-folder-add-form")).click();
         // Create Folder
         // Enter Folder Name
-        driver.findElement(By.id("edit-title--2")).clear();
+        driver.findElement(By.xpath("//form[@id='content-type-doc-loc-folder-node-form']//input[@name='title']")).clear();
         Tracking = func.RandomWords(2);
-        driver.findElement(By.id("edit-title--2")).sendKeys(Tracking[0] + " " + Tracking[1]);
+        driver.findElement(By.xpath("//form[@id='content-type-doc-loc-folder-node-form']//input[@name='title']")).sendKeys(Tracking[0] + " " + Tracking[1]);
         // Select Parent
-        new Select(driver.findElement(By.id("edit-field-doc-loc-parent-folder-und"))).selectByVisibleText("Personal");
+        func.SelectRandomSelectListOption("//div[contains(@class, 'field-name-field-doc-loc-parent-folder-form')]//select");
         // Click Save
-        driver.findElement(By.xpath("//div[3]/input")).click();
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.linkText("//div[3]/input")));
+        driver.findElement(By.xpath("//form[@id='content-type-doc-loc-folder-node-form']//input[@type='submit']")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//form[@id='content-type-doc-loc-folder-node-form']//input[@type='submit']")));
     }
 
     @After

@@ -11,9 +11,12 @@ import static org.junit.Assert.*;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class GoToMessageApp {
     Functions func;
+    private WebDriverWait wait;
     private WebDriver driver;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
@@ -22,6 +25,7 @@ public class GoToMessageApp {
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
         func = new Functions(driver);
+        wait = new WebDriverWait(driver, func.timeoutOfOneElement);
         driver.manage().timeouts().implicitlyWait(func.timeoutOFAllElement, TimeUnit.SECONDS);
 
         driver.get(func.baseUrl + "/");
@@ -35,6 +39,8 @@ public class GoToMessageApp {
         driver.findElement(By.id("nav-group-home")).click();
         // Click Messages
         driver.findElement(By.linkText("Messages")).click();
+        // Wait for page to load
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText("BROADCAST")));
     }
 
     @After

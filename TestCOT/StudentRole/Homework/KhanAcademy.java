@@ -1,5 +1,6 @@
 package TestCOT.StudentRole.Homework;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import TestCOT.CommonFunctions.Functions;
@@ -13,6 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class KhanAcademy {
     Functions func;
+    private int RandomRow = 0;
     private WebDriver driver;
     private WebDriverWait wait;
     private boolean acceptNextAlert = true;
@@ -46,8 +48,8 @@ public class KhanAcademy {
         driver.findElement(By.id("organic-structures")).click();
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ajax-waiting")));
 
-        // Click Video
-        driver.findElement(By.cssSelector("#IOD5Wb-FKyw > td.ka-video > div.ka-play")).click();
+        // Select Video
+        func.SelectRandomElement("//table[@id='ka-videos']//tr", "//div[@class='ka-play']");
         // Close Video
         driver.findElement(By.cssSelector("a.close-button > img")).click();
     }

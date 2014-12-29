@@ -58,8 +58,8 @@ public class SaveGoalAndTickTask {
         }
         driver.findElement(By.cssSelector("textarea.cke_source.cke_enable_context_menu")).sendKeys(TrackingValues);
         // Click Save Button
-        driver.findElement(By.id("edit-submit")).click();
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("edit-submit")));
+        driver.findElement(By.xpath("//form[@id='ltp-goal-form']//input[@class='form-submit']")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//form[@id='ltp-goal-form']//input[@class='form-submit']")));
 
         // Click Title
         driver.findElement(By.cssSelector("div.title")).click();

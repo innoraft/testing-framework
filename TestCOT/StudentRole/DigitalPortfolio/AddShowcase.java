@@ -44,41 +44,39 @@ public class AddShowcase {
 
         // Create Showcase
         // Enter Title
-        driver.findElement(By.id("edit-title")).clear();
+        driver.findElement(By.xpath("//input[@name='title']")).clear();
         Tracking = func.RandomWords(2);
-        driver.findElement(By.id("edit-title")).sendKeys(Tracking[0] + " " + Tracking[1]);
+        driver.findElement(By.xpath("//input[@name='title']")).sendKeys(Tracking[0] + " " + Tracking[1]);
         // Enter Description
-        driver.findElement(By.id("edit-field-showcase-description-und-0-value")).clear();
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-showcase-description-form')]//textarea")).clear();
         Tracking = func.RandomWords(4);
-        driver.findElement(By.id("edit-field-showcase-description-und-0-value")).sendKeys(Tracking[0] + " " + Tracking[1] + " " + Tracking[2] + " " + Tracking[3]);
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-showcase-description-form')]//textarea")).sendKeys(Tracking[0] + " " + Tracking[1] + " " + Tracking[2] + " " + Tracking[3]);
         // Click Skills Required
-        driver.findElement(By.id("edit-field-showcase-skills-acquired-und-8")).click();
-        driver.findElement(By.id("edit-field-showcase-skills-acquired-und-17")).click();
-        driver.findElement(By.id("edit-field-showcase-skills-acquired-und-14")).click();
-        driver.findElement(By.id("edit-field-showcase-skills-acquired-und-15")).click();
+        func.ClickRandomCheckboxes(By.xpath("//div[contains(@class, 'field-name-field-showcase-skills-acquired-form')]//input[@type='checkbox']"));
         // Upload Audio/Video
         driver.findElement(By.id("botr-upload-button")).click();
         driver.findElement(By.className("botr-upload-file")).sendKeys("C:\\Users\\om\\Downloads\\Andaman & Nicobar Islands(2 sec video)-BzosVry7nc4.mp4");
-        driver.findElement(By.xpath("(//input[@value='Upload'])[3]")).click();
+        driver.findElement(By.className("botr-upload-submit")).click();
         // Wait for upload
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.botr-close > img")));
         //Upload Image
         driver.findElement(By.id("showcase-upload-img")).click();
-        driver.findElement(By.id("edit-field-showcase-images-und-0-upload")).sendKeys("C:\\Users\\om\\Downloads\\Business Process Outsourcing (BPO) Services_Market Segments_Healthcare BPO Services.jpg");
-        driver.findElement(By.id("edit-field-showcase-images-und-0-upload-button")).click();
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-showcase-images-form')]//input[@type='file']")).sendKeys("C:\\Users\\om\\Downloads\\abc.jpg");
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-showcase-images-form')]//input[@type='submit']")).click();
         // Wait for upload
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("edit-field-showcase-images-und-0-upload-button")));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[contains(@class, 'field-name-field-showcase-images-form')]//input[@type='submit']")));
         // Upload document
         driver.findElement(By.id("showcase-upload-doc")).click();
-        driver.findElement(By.id("edit-field-showcase-documents-und-0-upload")).sendKeys("C:\\Users\\om\\Downloads\\Integration_with_Other_Tools.pdf");
-        driver.findElement(By.id("edit-field-showcase-documents-und-0-upload-button")).click();
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-showcase-documents-form')]//input[@type='file']")).sendKeys("C:\\Users\\om\\Downloads\\bc.pdf");
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-showcase-documents-form')]//input[@type='submit']")).click();
         // Wait for upload
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("edit-field-showcase-documents-und-0-upload-button")));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[contains(@class, 'field-name-field-showcase-documents-form')]//input[@type='submit']")));
         // Enter Title For Document
-        driver.findElement(By.id("edit-field-showcase-documents-und-0-description")).sendKeys("business");
+        driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-showcase-documents-form')]//input[@type='text']")).sendKeys("business");
+        // Wait for files to upload
+        Thread.sleep(5000);
         // Save Showcase Detail
-        driver.findElement(By.xpath("//form/div/div/div[6]/input")).click();
-        Thread.sleep(300);
+        driver.findElement(By.xpath("//div[contains(@class, 'form-actions')]//input[@type='submit']")).click();
     }
 
     @After

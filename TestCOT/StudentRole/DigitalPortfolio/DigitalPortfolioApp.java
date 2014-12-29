@@ -11,10 +11,13 @@ import static org.junit.Assert.*;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class DigitalPortfolioApp {
     Functions func;
     private WebDriver driver;
+    private WebDriverWait wait;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
@@ -22,6 +25,7 @@ public class DigitalPortfolioApp {
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
         func = new Functions(driver);
+        wait = new WebDriverWait(driver, func.timeoutOfOneElement);
         driver.manage().timeouts().implicitlyWait(func.timeoutOFAllElement, TimeUnit.SECONDS);
 
         driver.get(func.baseUrl + "/");
@@ -35,6 +39,8 @@ public class DigitalPortfolioApp {
         driver.findElement(By.xpath("//div[@id='nav-group-home']")).click();
         // Click Digital Portfolio
         driver.findElement(By.linkText("Digital Portfolio")).click();
+        // Wait for page to load
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText("JOURNAL")));
     }
 
     @After

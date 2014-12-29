@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class SaveGradePercentage {
+public class SaveGradePercentage_Pend {
     Functions func;
     private WebDriver driver;
     private boolean acceptNextAlert = true;
@@ -38,35 +38,39 @@ public class SaveGradePercentage {
         driver.findElement(By.linkText("Grade Percentages")).click();
 
         // Check "Letter Grading" Checked or not. If not, than Check it.
-        if (!driver.findElement(By.id("edit-system-1")).isSelected()) {
-            driver.findElement(By.id("edit-system-1")).click();
+        //TODO edit system 1 is wrong as it can change
+        // TODO edit letter grading with number grading
+        if (!driver.findElement(By.id("edit-system-0")).isSelected()) {
+            driver.findElement(By.id("edit-system-0")).click();
         }
         // Enter Minimum Passing Grade Equivalence
         driver.findElement(By.id("edit-passing-marks")).clear();
         DecimalValue = func.RandomDecimalNumber(Max);
         driver.findElement(By.id("edit-passing-marks")).sendKeys(String.valueOf(DecimalValue));
+        // Click Save For Minimum Passing Grade Equivalence
+        //TODO replace form [1] [2] etc by a proper class
+        driver.findElement(By.xpath("//form[@id='grade-passing-equivalence-form']//input[@class='form-submit']")).click();
         // Enter Minimum Passing Grade Transfer
         driver.findElement(By.id("edit-min-pass-t")).clear();
         DecimalValue = func.RandomDecimalNumber(Max);
         driver.findElement(By.id("edit-min-pass-t")).sendKeys(String.valueOf(DecimalValue));
-        // Click Save For Minimum Passing Grade Equivalence
-        driver.findElement(By.xpath("//form[3]/div/div/input")).click();
         // Click Save For Minimum Passing Grade Transfer
-        driver.findElement(By.xpath("//form[4]/div/div/input")).click();
+        driver.findElement(By.xpath("//form[@id='gradebook-min-passing-t-form']//input[@class='form-submit']")).click();
         // Check "Remove" button for "Signature" present or not. If present than click it.
-        if(isElementPresent(By.id("edit-field-transcript-signature-und-0-remove-button"))) {
-            driver.findElement(By.id("edit-field-transcript-signature-und-0-remove-button")).click();
+        //TODO replace id name
+        if(isElementPresent(By.xpath("//div[@id='edit-field-transcript-signature']//input[@value='Remove']"))) {
+            driver.findElement(By.xpath("//div[@id='edit-field-transcript-signature']//input[@value='Remove']")).click();
         }
         // Upload File
-        driver.findElement(By.id("edit-field-transcript-signature-und-0-upload")).sendKeys("C:\\Users\\om\\Downloads\\abc.jpg");
+        driver.findElement(By.xpath("//div[@id='edit-field-transcript-signature']//input[@type='file']")).sendKeys("C:\\Users\\om\\Downloads\\abc.jpg");
         // Check "Remove" button for "School logo" present or not. If present than click it.
-        if(isElementPresent(By.id("edit-field-transcript-school-logo-und-0-remove-button"))) {
-            driver.findElement(By.id("edit-field-transcript-school-logo-und-0-remove-button")).click();
+        if(isElementPresent(By.xpath("//div[@id='edit-field-transcript-school-logo']//input[@value='Remove']"))) {
+            driver.findElement(By.xpath("//div[@id='edit-field-transcript-school-logo']//input[@value='Remove']")).click();
         }
         // Upload File
-        driver.findElement(By.id("edit-field-transcript-school-logo-und-0-upload")).sendKeys("C:\\Users\\om\\Downloads\\xyz.jpg");
+        driver.findElement(By.xpath("//div[@id='edit-field-transcript-school-logo']//input[@type='file']")).sendKeys("C:\\Users\\om\\Downloads\\xyz.jpg");
         // Click Save
-        driver.findElement(By.xpath("//div[4]/input")).click();
+        driver.findElement(By.xpath("//form[@id='transcript-images-node-form']//input[@value='Save']")).click();
     }
 
     @After
