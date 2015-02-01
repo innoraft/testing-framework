@@ -30,7 +30,6 @@ public class DI_Post extends HCLAbstract {
     private String Date;
     private String FB_Total;
     private String Twitter_Total;
-    private String TestCase;
 
     /**
      * Define a Collection method that will return the collection of parameters to the parallelTestThroughJUnit class
@@ -40,20 +39,19 @@ public class DI_Post extends HCLAbstract {
     public static Collection testData() {
         return Arrays.asList(
                 new Object[][]{
-                        {"Today", "160", "45", "FB Total and Twitter Total are correct"},
-                        {"Today", "-1", "70", "FB Total is negative"},
-                        {"Today", "181", "-1", "Twitter Total is negative"},
-                        {"Today", "178", "abc", "Twitter Total is alphabetic"},
-                        {"Today", "abc", "15","FB Total is alphabetic"},
-                        {"Yesterday", "160", "45", "When date of past"},
-                        {"Tomorrow", "160", "45", "When date of future"}
+                        {"Today", "160", "45", "All inputs are correct"}
+//                        {"Today", "-1", "70", "FB Total is negative"},
+//                        {"Today", "181", "-1", "Twitter Total is negative"},
+//                        {"Today", "178", "abc", "Twitter Total is alphabetic"},
+//                        {"Today", "abc", "15","FB Total is alphabetic"},
+//                        {"Yesterday", "160", "45", "When date of past"},
+//                        {"Tomorrow", "160", "45", "When date of future"}
                 }
         );
     }
 
     // Constructor will be used by the test runner to pass the parameters to the Excel_drive class instance.
-    public DI_Post(String Date, String FB_Total, String Twitter_Total, String TestCase)
-    {
+    public DI_Post(String Date, String FB_Total, String Twitter_Total, String TestCase) {
         this.Date = Date;
         this.FB_Total = FB_Total;
         this.Twitter_Total = Twitter_Total;
@@ -65,12 +63,12 @@ public class DI_Post extends HCLAbstract {
     public void CreateContent() throws Exception {
         try {
             // Move to create content page
-            driver.get(func.baseUrl + "/node/add/di-posts");
+            driver.get(baseUrl + "/node/add/di-posts");
             // Enter Date
             driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-di-date')]//input")).clear();
-            driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-di-date')]//input")).sendKeys(func2.GenerateDate(Date));
+            driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-di-date')]//input")).sendKeys("11/02/2015");
             // Select DI Profile
-            func2.SelectRandomChosenOption("//div[@id='edit_field_di_profile_und_chosen']//ul[@class='chosen-results']/li", "//div[@id='edit_field_di_profile_und_chosen']/a", "//li[@data-option-array-index='");
+            func2.SelectRandomChosenOption("//div[contains(@class, 'field-name-field-di-profile')]//ul[@class='chosen-results']/li", "//div[contains(@class, 'field-name-field-di-profile')]//a", "[@data-option-array-index='");
             // Enter FB Total
             driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-fb-total')]//input")).clear();
             driver.findElement(By.xpath("//div[contains(@class, 'field-name-field-fb-total')]//input")).sendKeys(FB_Total);
@@ -80,7 +78,7 @@ public class DI_Post extends HCLAbstract {
             // Click Save
             driver.findElement(By.xpath("//div[contains(@class, 'form-actions')]/input")).click();
             // Check content created or not
-            driver.findElement(By.xpath("//div[contains(@class, 'field--name-field-di-total-posts')]"));
+            driver.findElement(By.xpath("//div[@class='messages messages--status']"));
             // Set Result Pass
             func.SetResultPass(TestCase);
         } catch (Exception e) {
@@ -93,7 +91,7 @@ public class DI_Post extends HCLAbstract {
     public void UpdateContent() throws Exception {
         try {
             // Click edit link of that content which type is DI Posts
-            driver.get(func.baseUrl + "/admin/content");
+            driver.get(baseUrl + "/admin/content");
             // Click edit link of that content which type is DI Posts
             List<WebElement> Types = driver.findElements(By.xpath("//table[contains(@class, 'sticky-enabled')]/tbody/tr/td[3]"));
             String ContentType = null;

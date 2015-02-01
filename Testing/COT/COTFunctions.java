@@ -229,7 +229,7 @@ public class COTFunctions {
         ExcelValues[3] = ErrorLocation;
 
         // Store exception information in excel.
-        FileInputStream ExcelFile = new FileInputStream("C:\\Users\\om\\Downloads\\Screenshots\\ErrorFile.xlsx");
+        FileInputStream ExcelFile = new FileInputStream("C:\\Users\\om\\Downloads\\NewInfo\\COTTestCases.xlsx");
         XSSFWorkbook ExcelWBook = new XSSFWorkbook(Package.open(ExcelFile));
         XSSFSheet ExcelWSheet = ExcelWBook.getSheet("ErrorList");
 
@@ -240,7 +240,7 @@ public class COTFunctions {
             Cell.setCellValue(ExcelValues[i]);
         }
 
-        FileOutputStream fileOut = new FileOutputStream("C:\\Users\\om\\Downloads\\Screenshots\\ErrorFile.xlsx");
+        FileOutputStream fileOut = new FileOutputStream("C:\\Users\\om\\Downloads\\NewInfo\\COTTestCases.xlsx");
         ExcelWBook.write(fileOut);
         fileOut.flush();
         fileOut.close();

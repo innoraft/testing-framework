@@ -16,9 +16,6 @@ import java.util.*;
  */
 public class CommonFunction {
     private WebDriver driver;
-    private WebDriverWait wait;
-    public int timeoutOfOneElement = 15;
-    public int timeoutOFAllElement = 10;
 
     public CommonFunction(WebDriver driver) {
         this.driver = driver;
@@ -27,7 +24,7 @@ public class CommonFunction {
     public String GenerateDate(String Time) throws IOException {
         String Date = null;
         Calendar Cal = Calendar.getInstance();
-        DateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat DateFormat = new SimpleDateFormat("MM/dd/yyyy");
         if (Time == "Today") {
             Date = DateFormat.format(Cal.getTime());
         } else if (Time == "Yesterday") {
@@ -38,6 +35,16 @@ public class CommonFunction {
             Date = DateFormat.format(Cal.getTime());
         }
         return Date;
+    }
+
+
+    public boolean isAttributePresent(String Element, String Attribute) {
+        Boolean result = false;
+        String value = driver.findElement(By.xpath(Element)).getAttribute(Attribute);
+        if (value != null){
+            result = true;
+        }
+        return result;
     }
 
     public void ClickRandomCheckboxes(By Locator) throws IOException {
@@ -52,6 +59,18 @@ public class CommonFunction {
         }
     }
 
+    // Locator -> //div[contains(@class, field-name-field-job-posting-type)]//input
+    public void ClickRandomRadioButton(By Locator) throws IOException {
+        List<WebElement> RadioButtons = driver.findElements(Locator);
+        int NumberOfRadioButtons = RadioButtons.size();
+        if (NumberOfRadioButtons > 0) {
+            // Access Random radio button
+            int RandomElement = RandomIntegerNumber(NumberOfRadioButtons) - 1;
+            // Click Random Element
+            RadioButtons.get(RandomElement).click();
+        }
+    }
+
     public void SelectRandomElement(String MainLocator, String RestLocator) throws IOException {
         List<WebElement> Elements = driver.findElements(By.xpath(MainLocator));
         int NumberOfElements = Elements.size();
@@ -63,6 +82,9 @@ public class CommonFunction {
         }
     }
 
+    // CountItem -> //div[contains(@class, 'field-name-field-site-section')]//ul[@class='chosen-results']/li
+    // Click Chosen -> //div[contains(@class, 'field-name-field-site-section')]//ul
+    // SelectItem -> [@data-option-array-index='
     public void SelectRandomChosenOption(String CountItem, String ClickChosen, String SelectItem) throws IOException {
         // Click chosen select list
         driver.findElement(By.xpath(ClickChosen)).click();
@@ -73,10 +95,11 @@ public class CommonFunction {
             // Access Random Option
             int RandomOption = RandomIntegerNumber(OptionsNumber) - 1;
             // Select Random Option
-            driver.findElement(By.xpath(SelectItem + RandomOption + "']")).click();
+            driver.findElement(By.xpath(CountItem + SelectItem + RandomOption + "']")).click();
         }
     }
 
+    // Locator -> //div[contains(@class, 'form-item-job-posting-cid')]//select
     public void SelectRandomSelectListOption(String Locator) throws IOException {
         // Check Select List Options exist or not
         List<WebElement> SelectListOptions = driver.findElements(By.xpath(Locator + "/option"));

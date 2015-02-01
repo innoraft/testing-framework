@@ -1,14 +1,13 @@
 package Testing.HCL;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.openxml4j.opc.Package;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.openqa.selenium.By;
+import org.openqa.selenium.*;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -26,14 +25,12 @@ import static junit.framework.Assert.assertTrue;
 public class HCLFunctions {
     private WebDriver driver;
     private WebDriverWait wait;
-    public int timeoutOfOneElement = 15;
-    public int timeoutOFAllElement = 10;
-    public String baseUrl = "http://demoaws.innoraft.com";
     private String SheetName = "ContentType";
-    private String ExcelFilePath = "C:\\Users\\om\\Downloads\\Screenshots\\HCLTestCases.xlsx";
+    private String ExcelFilePath = "C:\\Users\\om\\Downloads\\NewInfo\\HCLTestCases.xlsx";
 
-    public HCLFunctions(WebDriver driver) {
+    public HCLFunctions(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
+        this.wait = wait;
     }
 
     public void CheckLogin() throws IOException {
@@ -69,7 +66,6 @@ public class HCLFunctions {
     }
 
     public void Login(String UserName, String Password) throws IOException {
-        wait = new WebDriverWait(driver, timeoutOfOneElement);
         driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.xpath("//div[contains(@class, 'form-item-name')]//input")).clear();
         driver.findElement(By.xpath("//div[contains(@class, 'form-item-name')]//input")).sendKeys(UserName);
@@ -81,7 +77,7 @@ public class HCLFunctions {
 
     public void SetResultPass(String TestCase) throws Exception {
         // Get different information
-        String[] ExcelValues = new String[4];
+        String[] ExcelValues = new String[6];
         // Content Type
         String FileName = Thread.currentThread().getStackTrace()[2].getFileName();
         String ContentType = FileName.substring(0, FileName.indexOf("."));
@@ -93,6 +89,14 @@ public class HCLFunctions {
         ExcelValues[2] = TestCase;
         // Result
         ExcelValues[3] = "Pass";
+        // Current Url
+        String CurrentUrl = driver.getCurrentUrl();
+        ExcelValues[4] = CurrentUrl;
+        // Take Screenshot
+        File screen = ((TakesScreenshot)this.driver).getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(screen, new File("C:\\Users\\om\\Downloads\\NewInfo\\HCLTestCaseScreens\\" + ContentType + "\\" + Operation + ".png"));
+        // FileName
+        ExcelValues[5] = ContentType + "_" + Operation;
 
         // Store information in excel.
         FileInputStream ExcelFile = new FileInputStream(ExcelFilePath);
@@ -101,7 +105,7 @@ public class HCLFunctions {
 
         int RowNumber = ExcelWSheet.getLastRowNum() + 1;
         XSSFRow Row = ExcelWSheet.createRow(RowNumber);
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 6; i++) {
             XSSFCell Cell = Row.createCell(i);
             Cell.setCellValue(ExcelValues[i]);
         }
@@ -120,7 +124,7 @@ public class HCLFunctions {
         String StackTrace = SW.toString();
 
         // Get different information
-        String[] ExcelValues = new String[7];
+        String[] ExcelValues = new String[8];
         // Content Type
         String FileName = Thread.currentThread().getStackTrace()[2].getFileName();
         String ContentType = FileName.substring(0, FileName.indexOf("."));
@@ -135,10 +139,14 @@ public class HCLFunctions {
         // Current Url
         String CurrentUrl = driver.getCurrentUrl();
         ExcelValues[4] = CurrentUrl;
+        // Take Screenshot
+        File screen = ((TakesScreenshot)this.driver).getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(screen, new File("C:\\Users\\om\\Downloads\\NewInfo\\HCLTestCaseScreens\\" + ContentType + "\\" + Operation + ".png"));
+        // FileName
+        ExcelValues[5] = ContentType + "_" + Operation;
         // Error
         String[] Error = StackTrace.split("Command");
-        ExcelValues[5] = Error[0];
-
+        ExcelValues[6] = Error[0];
         // Error Location
         String[] Lines = StackTrace.split("\n");
         String ErrorLocation = null;
@@ -148,7 +156,7 @@ public class HCLFunctions {
                 break;
             }
         }
-        ExcelValues[6] = ErrorLocation;
+        ExcelValues[7] = ErrorLocation;
 
         // Store information in excel.
         FileInputStream ExcelFile = new FileInputStream(ExcelFilePath);
@@ -157,7 +165,7 @@ public class HCLFunctions {
 
         int RowNumber = ExcelWSheet.getLastRowNum() + 1;
         XSSFRow Row = ExcelWSheet.createRow(RowNumber);
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 8; i++) {
             XSSFCell Cell = Row.createCell(i);
             Cell.setCellValue(ExcelValues[i]);
         }
