@@ -1,27 +1,22 @@
-package Testing;
+package Screenshot;
 
-import Testing.ScreenshotFunctions;
-import org.apache.commons.io.FilenameUtils;
-
-import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
-import Testing.ScreenshotFunctions.*;
 
 /**
  * Created by om on 11/7/2014.
  */
-public class MergeScreenshotFolders {
+public class ScreenshotFoldersMerge {
     public static void main(String[] args) throws IOException {
-        String Sitelevel1 = "Test";
-        String Sitelevel2 = "Mt";
+        // Give sitelevel without stack or driver
+        String SiteLevel1 = "DemoLive";
+        String SiteLevel2 = "DemoProd";
+        String ScreenshotThrough = "Stack";
         String Site = "HCL";
-        String Path = "Screenshots\\" + Site + "\\";
+        String Path = "TestingFiles\\Screenshots\\" + Site + "\\";
 
         ScreenshotFunctions func = new ScreenshotFunctions();
-        func.Folder_Setup(Sitelevel1, Sitelevel2, Site, Path);
+        func.MergeFolders(SiteLevel1, SiteLevel2, ScreenshotThrough, Site, Path);
+        func.ChangeWidth(SiteLevel1, SiteLevel2, ScreenshotThrough, Site, Path);
 
         /**
          * After merge the screenshots of two sitelevel, we will do screenshot comparision.
